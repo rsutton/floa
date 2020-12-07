@@ -1,0 +1,1350 @@
+[
+    {
+        "id": 1,
+        "title": "Herman Melville: Typee, Omoo, Mardi"
+    },
+    {
+        "id": 2,
+        "title": "Nathaniel Hawthorne: Tales & Sketches"
+    },
+    {
+        "id": 3,
+        "title": "Walt Whitman: Poetry & Prose"
+    },
+    {
+        "id": 4,
+        "title": "Harriet Beecher Stowe: Three Novels"
+    },
+    {
+        "id": 5,
+        "title": "Mark Twain: Mississippi Writings"
+    },
+    {
+        "id": 6,
+        "title": "Jack London: Novels and Stories"
+    },
+    {
+        "id": 7,
+        "title": "Jack London: Novels and Social Writings"
+    },
+    {
+        "id": 8,
+        "title": "William Dean Howells: Novels 1875-1886"
+    },
+    {
+        "id": 9,
+        "title": "Herman Melville: Redburn, White-Jacket, Moby-Dick"
+    },
+    {
+        "id": 10,
+        "title": "Nathaniel Hawthorne: Collected Novels"
+    },
+    {
+        "id": 11,
+        "title": "Francis Parkman: France and England in North America: Volume One"
+    },
+    {
+        "id": 12,
+        "title": "Francis Parkman: France and England in North America: Volume Two"
+    },
+    {
+        "id": 13,
+        "title": "Henry James: Novels 1871-1880"
+    },
+    {
+        "id": 14,
+        "title": "Henry Adams: Novels, Mont Saint Michel, The Education"
+    },
+    {
+        "id": 15,
+        "title": "Ralph Waldo Emerson: Essays & Lectures"
+    },
+    {
+        "id": 16,
+        "title": "Washington Irving: History, Tales & Sketches"
+    },
+    {
+        "id": 17,
+        "title": "Thomas Jefferson: Writings"
+    },
+    {
+        "id": 18,
+        "title": "Stephen Crane: Prose & Poetry"
+    },
+    {
+        "id": 19,
+        "title": "Edgar Allan Poe: Poetry & Tales"
+    },
+    {
+        "id": 20,
+        "title": "Edgar Allan Poe: Essays & Reviews"
+    },
+    {
+        "id": 21,
+        "title": "Mark Twain: The Innocents Abroad, Roughing It"
+    },
+    {
+        "id": 22,
+        "title": "Henry James: Literary Criticism: Essays on Literature, American Writers, English Writers"
+    },
+    {
+        "id": 23,
+        "title": "Henry James: Literary Criticism: French Writers, Other European Writers, Prefaces to the New York Edition"
+    },
+    {
+        "id": 24,
+        "title": "Herman Melville: Pierre, Israel Potter, The Piazza Tales, The Confidence-Man, Billy Budd, Uncollected Prose"
+    },
+    {
+        "id": 25,
+        "title": "William Faulkner: Novels 1930-1935"
+    },
+    {
+        "id": 26,
+        "title": "James Fenimore Cooper: The Leatherstocking Tales: Volume One"
+    },
+    {
+        "id": 27,
+        "title": "James Fenimore Cooper: The Leatherstocking Tales: Volume Two"
+    },
+    {
+        "id": 28,
+        "title": "Henry David Thoreau: A Week, Walden, The Maine Woods, Cape Cod"
+    },
+    {
+        "id": 29,
+        "title": "Henry James: Novels 1881-1886"
+    },
+    {
+        "id": 30,
+        "title": "Edith Wharton: Novels"
+    },
+    {
+        "id": 31,
+        "title": "Henry Adams: History of the United States During the Administrations of Thomas Jefferson (1801-1809)"
+    },
+    {
+        "id": 32,
+        "title": "Henry Adams: History of the United States During the Administrations of James Madison (1809-1817)"
+    },
+    {
+        "id": 33,
+        "title": "Frank Norris: Novels & Essays"
+    },
+    {
+        "id": 34,
+        "title": "W.E.B. Du Bois: Writings"
+    },
+    {
+        "id": 35,
+        "title": "Willa Cather: Early Novels & Stories"
+    },
+    {
+        "id": 36,
+        "title": "Theodore Dreiser: Sister Carrie, Jennie Gerhardt, Twelve Men"
+    },
+    {
+        "id": 37,
+        "title": "Benjamin Franklin: Autobiography, Poor Richard, & Later Writings"
+    },
+    {
+        "id": 38,
+        "title": "William James: Writings 1902-1910"
+    },
+    {
+        "id": 39,
+        "title": "Flannery O'Connor: Collected Works"
+    },
+    {
+        "id": 40,
+        "title": "Eugene O'Neill: Complete Plays 1913-1920"
+    },
+    {
+        "id": 41,
+        "title": "Eugene O'Neill: Complete Plays 1920-1931"
+    },
+    {
+        "id": 42,
+        "title": "Eugene O'Neill: Complete Plays 1932-1943"
+    },
+    {
+        "id": 43,
+        "title": "Henry James: Novels 1886-1890"
+    },
+    {
+        "id": 44,
+        "title": "William Dean Howells: Novels 1886-1888"
+    },
+    {
+        "id": 45,
+        "title": "Abraham Lincoln: Speeches and Writings 1832-1858"
+    },
+    {
+        "id": 46,
+        "title": "Abraham Lincoln: Speeches and Writings 1859-1865"
+    },
+    {
+        "id": 47,
+        "title": "Edith Wharton: Novellas and Other Writings"
+    },
+    {
+        "id": 48,
+        "title": "William Faulkner: Novels 1936-1940"
+    },
+    {
+        "id": 49,
+        "title": "Willa Cather: Later Novels"
+    },
+    {
+        "id": 50,
+        "title": "Ulysses S. Grant: Memoirs & Selected Letters"
+    },
+    {
+        "id": 51,
+        "title": "William Tecumseh Sherman: Memoirs of General W. T. Sherman"
+    },
+    {
+        "id": 52,
+        "title": "Washington Irving: Bracebridge Hall, Tales of a Traveller, The Alhambra"
+    },
+    {
+        "id": 53,
+        "title": "Francis Parkman: The Oregon Trail, The Conspiracy of Pontiac"
+    },
+    {
+        "id": 54,
+        "title": "James Fenimore Cooper: Sea Tales"
+    },
+    {
+        "id": 55,
+        "title": "Richard Wright: Early Works"
+    },
+    {
+        "id": 56,
+        "title": "Richard Wright: Later Works"
+    },
+    {
+        "id": 57,
+        "title": "Willa Cather: Stories, Poems, & Other Writings"
+    },
+    {
+        "id": 58,
+        "title": "William James: Writings 1878-1899"
+    },
+    {
+        "id": 59,
+        "title": "Sinclair Lewis: Main Street & Babbitt"
+    },
+    {
+        "id": 60,
+        "title": "Mark Twain: Collected Tales, Sketches, Speeches, & Essays 1852-1890"
+    },
+    {
+        "id": 61,
+        "title": "Mark Twain: Collected Tales, Sketches, Speeches, & Essays 1891-1910"
+    },
+    {
+        "id": 62,
+        "title": "The Debate on the Constitution: Part One: September 1787 to February 1788"
+    },
+    {
+        "id": 63,
+        "title": "The Debate on the Constitution: Part Two: January to August 1788"
+    },
+    {
+        "id": 64,
+        "title": "Henry James: Collected Travel Writings: Great Britain and America"
+    },
+    {
+        "id": 65,
+        "title": "Henry James: Collected Travel Writings: The Continent"
+    },
+    {
+        "id": 66,
+        "title": "American Poetry: The Nineteenth Century, Volume One: Freneau to Whitman"
+    },
+    {
+        "id": 67,
+        "title": "American Poetry: The Nineteenth Century, Volume Two: Melville to Stickney, American Indian Poetry, Folk Songs and Spirituals"
+    },
+    {
+        "id": 68,
+        "title": "Frederick Douglass: Autobiographies"
+    },
+    {
+        "id": 69,
+        "title": "Sarah Orne Jewett: Novels and Stories"
+    },
+    {
+        "id": 70,
+        "title": "Ralph Waldo Emerson: Collected Poems & Translations"
+    },
+    {
+        "id": 71,
+        "title": "Mark Twain: Historical Romances"
+    },
+    {
+        "id": 72,
+        "title": "John Steinbeck: Novels and Stories 1932-1937"
+    },
+    {
+        "id": 73,
+        "title": "William Faulkner: Novels 1942-1954"
+    },
+    {
+        "id": 74,
+        "title": "Zora Neale Hurston: Novels & Stories"
+    },
+    {
+        "id": 75,
+        "title": "Zora Neale Hurston: Folklore, Memoirs, & Other Writings"
+    },
+    {
+        "id": 76,
+        "title": "Thomas Paine: Collected Writings"
+    },
+    {
+        "id": 77,
+        "title": "Reporting World War II: American Journalism 1938-1944"
+    },
+    {
+        "id": 78,
+        "title": "Reporting World War II: American Journalism 1944-1946"
+    },
+    {
+        "id": 79,
+        "title": "Raymond Chandler: Stories and Early Novels"
+    },
+    {
+        "id": 80,
+        "title": "Raymond Chandler: Later Novels and Other Writings"
+    },
+    {
+        "id": 81,
+        "title": "Robert Frost: Collected Poems, Prose, & Plays"
+    },
+    {
+        "id": 82,
+        "title": "Henry James: Complete Stories 1892-1898"
+    },
+    {
+        "id": 83,
+        "title": "Henry James: Complete Stories 1898-1910"
+    },
+    {
+        "id": 84,
+        "title": "William Bartram: Travels and Other Writings"
+    },
+    {
+        "id": 85,
+        "title": "John Dos Passos: U.S.A."
+    },
+    {
+        "id": 86,
+        "title": "John Steinbeck: The Grapes of Wrath and Other Writings 1936-1941"
+    },
+    {
+        "id": 87,
+        "title": "Vladimir Nabokov: Novels &  Memoirs 1941-1951"
+    },
+    {
+        "id": 88,
+        "title": "Vladimir Nabokov: Novels 1955-1962"
+    },
+    {
+        "id": 89,
+        "title": "Vladimir Nabokov: Novels 1969-1974"
+    },
+    {
+        "id": 90,
+        "title": "James Thurber: Writings & Drawings"
+    },
+    {
+        "id": 91,
+        "title": "George Washington: Writings"
+    },
+    {
+        "id": 92,
+        "title": "John Muir: Nature Writings"
+    },
+    {
+        "id": 93,
+        "title": "Nathanael West: Novels and Other Writings"
+    },
+    {
+        "id": 94,
+        "title": "Crime Novels: American Noir of the 1930s and 40s"
+    },
+    {
+        "id": 95,
+        "title": "Crime Novels: American Noir of the 1950s"
+    },
+    {
+        "id": 96,
+        "title": "Wallace Stevens: Collected Poetry & Prose"
+    },
+    {
+        "id": 97,
+        "title": "James Baldwin: Early Novels & Stories"
+    },
+    {
+        "id": 98,
+        "title": "James Baldwin: Collected Essays"
+    },
+    {
+        "id": 99,
+        "title": "Gertrude Stein: Writings 1903-1932"
+    },
+    {
+        "id": 100,
+        "title": "Gertrude Stein: Writings 1932-1946"
+    },
+    {
+        "id": 101,
+        "title": "Eudora Welty: Complete Novels"
+    },
+    {
+        "id": 102,
+        "title": "Eudora Welty: Stories, Essays, & Memoir"
+    },
+    {
+        "id": 103,
+        "title": "Charles Brockden Brown: Three Gothic Novels"
+    },
+    {
+        "id": 104,
+        "title": "Reporting Vietnam: American Journalism 1959-1969"
+    },
+    {
+        "id": 105,
+        "title": "Reporting Vietnam: American Journalism 1969-1975"
+    },
+    {
+        "id": 106,
+        "title": "Henry James: Complete Stories 1874-1884"
+    },
+    {
+        "id": 107,
+        "title": "Henry James: Complete Stories 1884-1891"
+    },
+    {
+        "id": 108,
+        "title": "American Sermons: The Pilgrims to Martin Luther King Jr."
+    },
+    {
+        "id": 109,
+        "title": "James Madison: Writings"
+    },
+    {
+        "id": 110,
+        "title": "Dashiell Hammett: Complete Novels"
+    },
+    {
+        "id": 111,
+        "title": "Henry James: Complete Stories 1864-1874"
+    },
+    {
+        "id": 112,
+        "title": "William Faulkner: Novels 1957-1962"
+    },
+    {
+        "id": 113,
+        "title": "John James Audubon: Writings & Drawings"
+    },
+    {
+        "id": 114,
+        "title": "Slave Narratives"
+    },
+    {
+        "id": 115,
+        "title": "American Poetry: The Twentieth Century, Volume One: Henry Adams to Dorothy Parker"
+    },
+    {
+        "id": 116,
+        "title": "American Poetry: The Twentieth Century, Volume Two: E.E. Cummings to May Swenson"
+    },
+    {
+        "id": 117,
+        "title": "F. Scott Fitzgerald: Novels & Stories 1920-1922"
+    },
+    {
+        "id": 118,
+        "title": "Henry Wadsworth Longfellow: Poems & Other Writings"
+    },
+    {
+        "id": 119,
+        "title": "Tennessee Williams: Plays 1937-1955"
+    },
+    {
+        "id": 120,
+        "title": "Tennessee Williams: Plays 1957-1980"
+    },
+    {
+        "id": 121,
+        "title": "Edith Wharton: Collected Stories 1891-1910"
+    },
+    {
+        "id": 122,
+        "title": "Edith Wharton: Collected Stories 1911-1937"
+    },
+    {
+        "id": 123,
+        "title": "The American Revolution: Writings from the War of Independence 1775-1783"
+    },
+    {
+        "id": 124,
+        "title": "Henry David Thoreau: Collected Essays & Poems"
+    },
+    {
+        "id": 125,
+        "title": "Dashiell Hammett: Crime Stories and Other Writings"
+    },
+    {
+        "id": 126,
+        "title": "Dawn Powell: Novels 1930-1942"
+    },
+    {
+        "id": 127,
+        "title": "Dawn Powell: Novels 1944-1962"
+    },
+    {
+        "id": 128,
+        "title": "Carson McCullers: Complete Novels"
+    },
+    {
+        "id": 129,
+        "title": "Alexander Hamilton: Writings"
+    },
+    {
+        "id": 130,
+        "title": "Mark Twain: The Gilded Age & Later Novels"
+    },
+    {
+        "id": 131,
+        "title": "Charles W. Chesnutt: Stories, Novels, and Essays"
+    },
+    {
+        "id": 132,
+        "title": "John Steinbeck: Novels 1942-1952"
+    },
+    {
+        "id": 133,
+        "title": "Sinclair Lewis: Arrowsmith, Elmer Gantry, Dodsworth"
+    },
+    {
+        "id": 134,
+        "title": "Paul Bowles: The Sheltering Sky, Let It Come Down, The Spider's House"
+    },
+    {
+        "id": 135,
+        "title": "Paul Bowles: Collected Stories & Later Writings"
+    },
+    {
+        "id": 136,
+        "title": "Kate Chopin: Complete Novels & Stories"
+    },
+    {
+        "id": 137,
+        "title": "Reporting Civil Rights: American Journalism 1941-1963"
+    },
+    {
+        "id": 138,
+        "title": "Reporting Civil Rights: American Journalism 1963-1973"
+    },
+    {
+        "id": 139,
+        "title": "Henry James: Novels 1896-1899"
+    },
+    {
+        "id": 140,
+        "title": "Theodore Dreiser: An American Tragedy"
+    },
+    {
+        "id": 141,
+        "title": "Saul Bellow: Novels 1944-1953"
+    },
+    {
+        "id": 142,
+        "title": "John Dos Passos: Novels 1920-1925"
+    },
+    {
+        "id": 143,
+        "title": "John Dos Passos: Travel Books & Other Writings 1916-1941"
+    },
+    {
+        "id": 144,
+        "title": "Ezra Pound: Poems & Translations"
+    },
+    {
+        "id": 145,
+        "title": "James Weldon Johnson: Writings"
+    },
+    {
+        "id": 146,
+        "title": "Washington Irving: Three Western Narratives"
+    },
+    {
+        "id": 147,
+        "title": "Alexis de Tocqueville: Democracy in America"
+    },
+    {
+        "id": 148,
+        "title": "James T. Farrell: Studs Lonigan: A Trilogy"
+    },
+    {
+        "id": 149,
+        "title": "Isaac Bashevis Singer: Collected Stories: Gimpel the Fool to The Letter Writer"
+    },
+    {
+        "id": 150,
+        "title": "Isaac Bashevis Singer: Collected Stories: A Friend of Kafka to Passions"
+    },
+    {
+        "id": 151,
+        "title": "Isaac Bashevis Singer: Collected Stories: One Night In Brazil to The Death Of Methuselah"
+    },
+    {
+        "id": 152,
+        "title": "Kaufman & Co.: Broadway Comedies"
+    },
+    {
+        "id": 153,
+        "title": "Theodore Roosevelt: The Rough Riders, An Autobiography"
+    },
+    {
+        "id": 154,
+        "title": "Theodore Roosevelt: Letters & Speeches"
+    },
+    {
+        "id": 155,
+        "title": "H. P. Lovecraft: Tales"
+    },
+    {
+        "id": 156,
+        "title": "Louisa May Alcott: Little Women, Little Men, Jo's Boys"
+    },
+    {
+        "id": 157,
+        "title": "Philip Roth: Novels & Stories 1959-1962"
+    },
+    {
+        "id": 158,
+        "title": "Philip Roth: Novels 1967-1972"
+    },
+    {
+        "id": 159,
+        "title": "James Agee: Let Us Now Praise Famous Men, A Death in the Family, and Shorter Fiction"
+    },
+    {
+        "id": 160,
+        "title": "James Agee: Film Writing and Selected Journalism"
+    },
+    {
+        "id": 161,
+        "title": "Richard Henry Dana, Jr. : Two Years Before the Mast & Other Voyages"
+    },
+    {
+        "id": 162,
+        "title": "Henry James: Novels 1901-1902"
+    },
+    {
+        "id": 163,
+        "title": "Arthur Miller: Collected Plays 1944-1961"
+    },
+    {
+        "id": 164,
+        "title": "William Faulkner: Novels 1926-1929"
+    },
+    {
+        "id": 165,
+        "title": "Philip Roth: Novels 1973-1977"
+    },
+    {
+        "id": 166,
+        "title": "American Speeches: Political Oratory from the Revolution to the Civil War"
+    },
+    {
+        "id": 167,
+        "title": "American Speeches: Political Oratory from Abraham Lincoln to Bill Clinton"
+    },
+    {
+        "id": 168,
+        "title": "Hart Crane: Complete Poems & Selected Letters"
+    },
+    {
+        "id": 169,
+        "title": "Saul Bellow: Novels 1956-1964"
+    },
+    {
+        "id": 170,
+        "title": "John Steinbeck: Travels with Charley and Later Novels 1947-1962"
+    },
+    {
+        "id": 171,
+        "title": "Capt. John Smith: Writings, with Other Narratives of Roanoke, Jamestown, and the First English Settlement of America"
+    },
+    {
+        "id": 172,
+        "title": "Thornton Wilder: Collected Plays & Writings on Theater"
+    },
+    {
+        "id": 173,
+        "title": "Philip K. Dick: Four Novels of the 1960s"
+    },
+    {
+        "id": 174,
+        "title": "Jack Kerouac: Road Novels 1957-1960"
+    },
+    {
+        "id": 175,
+        "title": "Philip Roth: Zuckerman Bound: A Trilogy & Epilogue 1979-1985"
+    },
+    {
+        "id": 176,
+        "title": "Edmund Wilson: Literary Essays and Reviews of the 1920s and 30s"
+    },
+    {
+        "id": 177,
+        "title": "Edmund Wilson: Literary Essays and Reviews of the 1930s and 40s"
+    },
+    {
+        "id": 178,
+        "title": "American Poetry: The Seventeenth and Eighteenth Centuries"
+    },
+    {
+        "id": 179,
+        "title": "William Maxwell: Early Novels and Stories"
+    },
+    {
+        "id": 180,
+        "title": "Elizabeth Bishop: Poems, Prose, & Letters"
+    },
+    {
+        "id": 181,
+        "title": "A. J. Liebling: World War II Writings"
+    },
+    {
+        "id": 182,
+        "title": "American Earth: Environmental Writing Since Thoreau"
+    },
+    {
+        "id": 183,
+        "title": "Philip K. Dick: Five Novels of the 1960s & 70s"
+    },
+    {
+        "id": 184,
+        "title": "William Maxwell: Later Novels and Stories"
+    },
+    {
+        "id": 185,
+        "title": "Philip Roth: Novels & Other Narratives 1986-1991"
+    },
+    {
+        "id": 186,
+        "title": "Katherine Anne Porter: Collected Stories & Other Writings"
+    },
+    {
+        "id": 187,
+        "title": "John Ashbery: Collected Poems 1956-1987"
+    },
+    {
+        "id": 188,
+        "title": "John Cheever: Collected Stories and Other Writings"
+    },
+    {
+        "id": 189,
+        "title": "John Cheever: Complete Novels"
+    },
+    {
+        "id": 190,
+        "title": "Lafcadio Hearn: American Writings"
+    },
+    {
+        "id": 191,
+        "title": "A. J. Liebling: The Sweet Science and Other Writings"
+    },
+    {
+        "id": 192,
+        "title": "The Lincoln Anthology: Great Writers on His Life and Legacy from 1860 to Now"
+    },
+    {
+        "id": 193,
+        "title": "Philip K. Dick: VALIS & Later Novels"
+    },
+    {
+        "id": 194,
+        "title": "Thornton Wilder: The Bridge of San Luis Rey & Other Novels 1926-1948"
+    },
+    {
+        "id": 195,
+        "title": "Raymond Carver: Collected Stories"
+    },
+    {
+        "id": 196,
+        "title": "American Fantastic Tales: Terror and the Uncanny from Poe to the Pulps"
+    },
+    {
+        "id": 197,
+        "title": "American Fantastic Tales: Terror and the Uncanny from the 1940s to Now"
+    },
+    {
+        "id": 198,
+        "title": "John Marshall: Writings"
+    },
+    {
+        "id": 199,
+        "title": "The Mark Twain Anthology: Great Writers on His Life and Works"
+    },
+    {
+        "id": 200,
+        "title": "Mark Twain: A Tramp Abroad, Following the Equator, Other Travels"
+    },
+    {
+        "id": 201,
+        "title": "Ralph Waldo Emerson: Selected Journals 1820-1842"
+    },
+    {
+        "id": 202,
+        "title": "Ralph Waldo Emerson: Selected Journals 1841-1877"
+    },
+    {
+        "id": 203,
+        "title": "The American Stage: Writing on Theater from Washington Irving to Tony Kushner"
+    },
+    {
+        "id": 204,
+        "title": "Shirley Jackson: Novels & Stories"
+    },
+    {
+        "id": 205,
+        "title": "Philip Roth: Novels 1993-1995"
+    },
+    {
+        "id": 206,
+        "title": "H. L.  Mencken: Prejudices: First, Second, & Third Series"
+    },
+    {
+        "id": 207,
+        "title": "H. L.  Mencken: Prejudices: Fourth, Fifth, & Sixth Series"
+    },
+    {
+        "id": 208,
+        "title": "John Kenneth Galbraith: The Affluent Society & Other Writings 1952-1967"
+    },
+    {
+        "id": 209,
+        "title": "Saul Bellow: Novels 1970-1982"
+    },
+    {
+        "id": 210,
+        "title": "Lynd Ward: Gods- Man, Madman-s Drum, Wild Pilgrimage "
+    },
+    {
+        "id": 211,
+        "title": "Lynd Ward: Prelude to a Million Years, Song Without Words, Vertigo"
+    },
+    {
+        "id": 212,
+        "title": "The Civil War: The First Year Told by Those Who Lived It"
+    },
+    {
+        "id": 213,
+        "title": "John Adams: Revolutionary Writings 1755-1775"
+    },
+    {
+        "id": 214,
+        "title": "John Adams: Revolutionary Writings 1775-1783"
+    },
+    {
+        "id": 215,
+        "title": "Henry James: Novels 1903-1911"
+    },
+    {
+        "id": 216,
+        "title": "Kurt Vonnegut: Novels & Stories 1963-1973"
+    },
+    {
+        "id": 217,
+        "title": "Harlem Renaissance: Five Novels of the 1920s"
+    },
+    {
+        "id": 218,
+        "title": "Harlem Renaissance: Four Novels of the 1930s"
+    },
+    {
+        "id": 219,
+        "title": "Ambrose Bierce: The Devil-s Dictionary, Tales, & Memoirs"
+    },
+    {
+        "id": 220,
+        "title": "Philip Roth: The American Trilogy 1997-2000"
+    },
+    {
+        "id": 221,
+        "title": "The Civil War: The Second Year Told by Those Who Lived It"
+    },
+    {
+        "id": 222,
+        "title": "Barbara W. Tuchman: The Guns of August, The Proud Tower"
+    },
+    {
+        "id": 223,
+        "title": "Arthur Miller: Collected Plays 1964-1982"
+    },
+    {
+        "id": 224,
+        "title": "Thornton Wilder: The Eighth Day, Theophilus North, Autobiographical Writings"
+    },
+    {
+        "id": 225,
+        "title": "David Goodis: Five Noir Novels of the 1940s & 50s"
+    },
+    {
+        "id": 226,
+        "title": "Kurt Vonnegut: Novels & Stories 1950-1962"
+    },
+    {
+        "id": 227,
+        "title": "American Science Fiction: Four Classic Novels 1953-1956"
+    },
+    {
+        "id": 228,
+        "title": "American Science Fiction: Five Classic Novels 1956-1958"
+    },
+    {
+        "id": 229,
+        "title": "Laura Ingalls Wilder: The Little House Books, Volume 1"
+    },
+    {
+        "id": 230,
+        "title": "Laura Ingalls Wilder: The Little House Books, Volume 2"
+    },
+    {
+        "id": 231,
+        "title": "Jack Kerouac: Collected Poems"
+    },
+    {
+        "id": 232,
+        "title": "The War of 1812: Writings from America-s Second War of Independence"
+    },
+    {
+        "id": 233,
+        "title": "American Antislavery Writings: Colonial Beginnings to Emancipation"
+    },
+    {
+        "id": 234,
+        "title": "The Civil War: The Third Year Told By Those Who Lived It"
+    },
+    {
+        "id": 235,
+        "title": "Sherwood Anderson: Collected Stories"
+    },
+    {
+        "id": 236,
+        "title": "Philip Roth: Novels 2001-2007"
+    },
+    {
+        "id": 237,
+        "title": "Philip Roth: Nemeses"
+    },
+    {
+        "id": 238,
+        "title": "Aldo Leopold: A Sand County Almanac & Other Writings on Ecology and Conservation"
+    },
+    {
+        "id": 239,
+        "title": "May Swenson: Collected Poems"
+    },
+    {
+        "id": 240,
+        "title": "W. S. Merwin: Collected Poems 1952-1993"
+    },
+    {
+        "id": 241,
+        "title": "W. S. Merwin: Collected Poems 1996-2011"
+    },
+    {
+        "id": 242,
+        "title": "John Updike: Collected Early Stories"
+    },
+    {
+        "id": 243,
+        "title": "John Updike: Collected Later Stories"
+    },
+    {
+        "id": 244,
+        "title": "Ring Lardner: Stories & Other Writings"
+    },
+    {
+        "id": 245,
+        "title": "Jonathan Edwards: Writings from the Great Awakening"
+    },
+    {
+        "id": 246,
+        "title": "Susan Sontag: Essays of the 1960s & 70s"
+    },
+    {
+        "id": 247,
+        "title": "William Wells Brown: Clotel & Other Writings"
+    },
+    {
+        "id": 248,
+        "title": "Bernard Malamud: Novels and Stories of the 1940s & 50s"
+    },
+    {
+        "id": 249,
+        "title": "Bernard Malamud: Novels and Stories of the 1960s"
+    },
+    {
+        "id": 250,
+        "title": "The Civil War: The Final Year Told by Those Who Lived It"
+    },
+    {
+        "id": 251,
+        "title": "Shakespeare in America: An Anthology from the Revolution to Now (hardcover)"
+    },
+    {
+        "id": 252,
+        "title": "Kurt Vonnegut: Novels 1976-1985"
+    },
+    {
+        "id": 253,
+        "title": "American Musicals 1927-1949: The Complete Books & Lyrics of Eight Broadway Classics"
+    },
+    {
+        "id": 254,
+        "title": "American Musicals 1950-1969: The Complete Books & Lyrics of Eight Broadway Classics"
+    },
+    {
+        "id": 255,
+        "title": "Elmore Leonard: Four Novels of the 1970s"
+    },
+    {
+        "id": 256,
+        "title": "Louisa May Alcott: Work, Eight Cousins, Rose in Bloom, Stories & Other Writings"
+    },
+    {
+        "id": 257,
+        "title": "H. L.  Mencken: The Days Trilogy, Expanded Edition"
+    },
+    {
+        "id": 258,
+        "title": "Virgil Thomson: Music Chronicles 1940-1954"
+    },
+    {
+        "id": 259,
+        "title": "Art in America 1945-1970: Writings from the Age of Abstract Expressionism, Pop Art, and Minimalism"
+    },
+    {
+        "id": 260,
+        "title": "Saul Bellow: Novels 1984-2000"
+    },
+    {
+        "id": 261,
+        "title": "Arthur Miller: Collected Plays 1987-2004, with Stage and Radio Plays of the 1930s & 40s"
+    },
+    {
+        "id": 262,
+        "title": "Jack Kerouac: Visions of Cody, Visions of Gerard, Big Sur"
+    },
+    {
+        "id": 263,
+        "title": "Reinhold Niebuhr: Major Works on Religion and Politics"
+    },
+    {
+        "id": 264,
+        "title": "Ross Macdonald: Four Novels of the 1950s"
+    },
+    {
+        "id": 265,
+        "title": "The American Revolution: Writings from the Pamphlet Debate: Volume 1, 1764-1772"
+    },
+    {
+        "id": 266,
+        "title": "The American Revolution: Writings from the Pamphlet Debate: Volume 2, 1773-1776"
+    },
+    {
+        "id": 267,
+        "title": "Elmore Leonard: Four Novels of the 1980s"
+    },
+    {
+        "id": 268,
+        "title": "Women Crime Writers: Four Suspense Novels of the 1940s"
+    },
+    {
+        "id": 269,
+        "title": "Women Crime Writers: Four Suspense Novels of the 1950s"
+    },
+    {
+        "id": 270,
+        "title": "Frederick Law Olmsted: Writings on Landscape, Culture, and Society"
+    },
+    {
+        "id": 271,
+        "title": "Edith Wharton: Four Novels of the 1920s"
+    },
+    {
+        "id": 272,
+        "title": "James Baldwin: Later Novels"
+    },
+    {
+        "id": 273,
+        "title": "Kurt Vonnegut: Novels 1987-1997 "
+    },
+    {
+        "id": 274,
+        "title": "Henry James: Autobiographies"
+    },
+    {
+        "id": 275,
+        "title": "Abigail Adams: Letters"
+    },
+    {
+        "id": 276,
+        "title": "John Adams: Writings from the New Nation 1784-1826 "
+    },
+    {
+        "id": 277,
+        "title": "Virgil Thomson: The State of Music & Other Writings"
+    },
+    {
+        "id": 278,
+        "title": "War No More: Three Centuries of American Antiwar & Peace Writing"
+    },
+    {
+        "id": 279,
+        "title": "Ross Macdonald: Three Novels of the Early 1960s"
+    },
+    {
+        "id": 280,
+        "title": "Elmore Leonard: Four Later Novels"
+    },
+    {
+        "id": 281,
+        "title": "Ursula K. Le Guin: The Complete Orsinia"
+    },
+    {
+        "id": 282,
+        "title": "John O'Hara: Stories"
+    },
+    {
+        "id": 283,
+        "title": "The Unknown Kerouac: Rare, Unpublished & Newly Translated Writings"
+    },
+    {
+        "id": 284,
+        "title": "Albert Murray: Collected Essays & Memoirs"
+    },
+    {
+        "id": 285,
+        "title": "Loren Eiseley: Collected Essays on Evolution, Nature, and the Cosmos, Volume One"
+    },
+    {
+        "id": 286,
+        "title": "Loren Eiseley: Collected Essays on Evolution, Nature, and the Cosmos, Volume Two"
+    },
+    {
+        "id": 287,
+        "title": "Carson McCullers: Stories, Plays, & Other Writings"
+    },
+    {
+        "id": 288,
+        "title": "Jane Bowles: Collected Writings"
+    },
+    {
+        "id": 289,
+        "title": "World War I and America: Told by the Americans Who Lived It "
+    },
+    {
+        "id": 290,
+        "title": "Mary McCarthy: Novels & Stories 1942-1963"
+    },
+    {
+        "id": 291,
+        "title": "Mary McCarthy: Novels 1963-1979 "
+    },
+    {
+        "id": 292,
+        "title": "Susan Sontag: Later Essays"
+    },
+    {
+        "id": 293,
+        "title": "John Quincy Adams: Diaries 1779-1821"
+    },
+    {
+        "id": 294,
+        "title": "John Quincy Adams: Diaries 1821-1848"
+    },
+    {
+        "id": 295,
+        "title": "Ross Macdonald: Four Later Novels"
+    },
+    {
+        "id": 296,
+        "title": "Ursula K. Le Guin: Hainish Novels & Stories, Volume One"
+    },
+    {
+        "id": 297,
+        "title": "Ursula K. Le Guin: Hainish Novels & Stories, Volume Two"
+    },
+    {
+        "id": 298,
+        "title": "Peter Taylor: Complete Stories 1938-1959"
+    },
+    {
+        "id": 299,
+        "title": "Peter Taylor: Complete Stories 1960-1992"
+    },
+    {
+        "id": 300,
+        "title": "Philip Roth: Why Write- Collected Nonfiction 1960-2013"
+    },
+    {
+        "id": 301,
+        "title": "John Ashbery: Collected Poems 1991-2000"
+    },
+    {
+        "id": 302,
+        "title": "Wendell Berry: Port William Novels & Stories (The Civil War to World War II)"
+    },
+    {
+        "id": 303,
+        "title": "Reconstruction: Voices from America's First Great Struggle for Racial Equality"
+    },
+    {
+        "id": 304,
+        "title": "Albert Murray: Collected Novels & Poems"
+    },
+    {
+        "id": 305,
+        "title": "Norman Mailer: Four Books of the 1960s"
+    },
+    {
+        "id": 306,
+        "title": "Norman Mailer: Collected Essays of the 1960s"
+    },
+    {
+        "id": 307,
+        "title": "Rachel Carson: Silent Spring & Other Writings on the Environment"
+    },
+    {
+        "id": 308,
+        "title": "Elmore Leonard: Westerns"
+    },
+    {
+        "id": 309,
+        "title": "Madeleine L-Engle: The Wrinkle in Time Quartet "
+    },
+    {
+        "id": 310,
+        "title": "Madeleine L-Engle: The Polly O-Keefe Quartet"
+    },
+    {
+        "id": 311,
+        "title": "John Updike: Novels 1959-1965"
+    },
+    {
+        "id": 312,
+        "title": "James Fenimore Cooper: Two Novels of the American Revolution"
+    },
+    {
+        "id": 313,
+        "title": "John O'Hara: Four Novels of the 1930s"
+    },
+    {
+        "id": 314,
+        "title": "Ann Petry: The Street, The Narrows"
+    },
+    {
+        "id": 315,
+        "title": "Ursula K. Le Guin: Always Coming Home (Author's Expanded Edition)"
+    },
+    {
+        "id": 316,
+        "title": "Wendell Berry: Essays 1969-1990"
+    },
+    {
+        "id": 317,
+        "title": "Wendell Berry: Essays 1993-2017"
+    },
+    {
+        "id": 318,
+        "title": "Cornelius Ryan: The Longest Day, A Bridge Too Far"
+    },
+    {
+        "id": 319,
+        "title": "Booth Tarkington: Novels & Stories"
+    },
+    {
+        "id": 320,
+        "title": "Herman Melville: Complete Poems"
+    },
+    {
+        "id": 321,
+        "title": "American Science Fiction: Four Classic Novels 1960-1966"
+    },
+    {
+        "id": 322,
+        "title": "American Science Fiction: Four Classic Novels 1968-1969"
+    },
+    {
+        "id": 323,
+        "title": "Frances Hodgson Burnett: The Secret Garden, A Little Princess, Little Lord Fauntleroy"
+    },
+    {
+        "id": 324,
+        "title": "Jean Stafford: Complete Novels"
+    },
+    {
+        "id": 325,
+        "title": "Joan  Didion: The 1960s & 70s"
+    },
+    {
+        "id": 326,
+        "title": "John Updike: Novels 1968-1975"
+    },
+    {
+        "id": 327,
+        "title": "Constance Fenimore Woolson: Collected Stories"
+    },
+    {
+        "id": 328,
+        "title": "Robert Stone: Dog Soldiers, A Flag for Sunrise, Outerbridge Reach"
+    },
+    {
+        "id": 329,
+        "title": "Jonathan Schell: The Fate of the Earth, The Abolition, The Unconquerable World"
+    },
+    {
+        "id": 330,
+        "title": "Richard Hofstadter: Anti-Intellectualism in American Life, The Paranoid Style in American Politics, Uncollected Essays 1956-1965"
+    },
+    {
+        "id": 331,
+        "title": "The Western: Four Classic Novels of the 1940s & 50s"
+    },
+    {
+        "id": 332,
+        "title": "American Women-s Suffrage: Voices from the Long Struggle for the Vote 1776-1965"
+    },
+    {
+        "id": 333,
+        "title": "African American Poetry: 250 Years of Struggle & Song"
+    },
+    {
+        "id": 334,
+        "title": "Ernest Hemingway: The Sun Also Rises & Other Writings 1918-1926"
+    },
+    {
+        "id": 335,
+        "title": "Ursula K. Le Guin: Annals of the Western Shore"
+    },
+    {
+        "id": 336,
+        "title": "Shirley Jackson: Four Novels of the 1940s & 50s"
+    },
+    {
+        "id": 338,
+        "title": "Octavia E. Butler: Kindred, Fledgling, Collected Stories"
+    }
+]
