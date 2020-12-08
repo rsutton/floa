@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Home{% endblock %}</h1>
+<h1>{% block title %}My Library of America{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-<b>Home</b>
+    <ul>
+    {% for book in library %}
+        {% if book['have'] == 1 %} 
+        <li>{{ book['id'] }}  <b>{{ book['title'] }}</b></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
 {% endblock %}

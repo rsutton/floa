@@ -11,7 +11,7 @@ bp = Blueprint(
 
 @bp.route("/")
 def home():
-    return render_template('home.html')
+    return render_template('home.html', library=library)
 
 @bp.route("/<id>")
 def find_by_id(id):
