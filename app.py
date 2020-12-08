@@ -80,6 +80,7 @@ def check_for_update():
     message = "No updates, {} records".format(len(loa_new))
     if len(loa_diff) > 0:
         message = "Found {} new records {}".format(len(loa_diff), loa_diff)
+        # loa_new is authoritative so overwrite 
         json.dump(loa_new, open('loa.json', 'w'))
         for i in loa_diff:
             add(i['id'], i['title'])
