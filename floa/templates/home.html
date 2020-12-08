@@ -5,11 +5,22 @@
 {% endblock %}
 
 {% block content %}
-    <ul>
-    {% for book in library %}
-        {% if book['have'] == 1 %} 
-        <li>{{ book['id'] }}  <b>{{ book['title'] }}</b></li>
-        {% endif %}
-    {% endfor %}
-    </ul>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Volume</th>
+            <th scope="col">Title</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in library %}
+            {% if book['have'] == 1 %}
+            <tr>
+                <th scope="row">{{ book['id'] }}</th>
+                <td>{{ book['title'] }}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

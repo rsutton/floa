@@ -67,14 +67,14 @@ def check_for_update():
         book = {"id": id, "title": title}
         loa_new.append(book)
 
-    loa_old = json.load(open('./loa/loa.json', 'r'))
+    loa_old = json.load(open('./floa/loa.json', 'r'))
     loa_diff = [i for i in loa_new + loa_old if i not in loa_new or i not in loa_old]
 
     message = "No updates, {} records".format(len(loa_new))
     if len(loa_diff) > 0:
         message = "Found {} new records {}".format(len(loa_diff), loa_diff)
         # loa_new is authoritative so overwrite 
-        json.dump(loa_new, open('./loa/loa.json', 'w'))
+        json.dump(loa_new, open('./floa/loa.json', 'w'))
         for i in loa_diff:
             add(i['id'], i['title'])
 
@@ -85,11 +85,11 @@ def add(id, title):
     save_library()
 
 def save_library():
-    json.dump(library, open('./loa/library.json', 'w'))
+    json.dump(library, open('./floa/library.json', 'w'))
     load_library()
 
 def load_library():
     global library 
-    library = json.load(open('./loa/library.json', 'r'))
+    library = json.load(open('./floa/library.json', 'r'))
     
 load_library()
