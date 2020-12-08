@@ -1,4 +1,5 @@
 import json
+import datetime as dt
 
 from flask import Flask, jsonify
 app = Flask(__name__)
@@ -11,14 +12,15 @@ def home():
 def find_by_id(id):
     for i in library:
         if i['id'] == int(id):
-            break
-    return i
+            return i
+    return "id {} not found".format(id)
 
 @app.route("/have/<id>")
 def have(id):
     item = find_by_id(id)
     item['have'] = 1
     item['want'] = 0
+    save_library()
     return item
 
 @app.route("/want/<id>")
@@ -26,10 +28,11 @@ def want(id):
     item = find_by_id(id)
     item['have'] = 0
     item['want'] = 1
+    save_library()
     return item
 
 @app.route("/title/<query>")
-def search(query):
+def find_title(query):
     results = []
     q = query.lower()
     for i in library:
@@ -39,17 +42,51 @@ def search(query):
 
 def add(id, title):
     library.append({'id': id, 'title': title, 'have': 0, 'want': 0})
+    save_library()
 
-def save():
+def save_library():
     json.dump(library, open('library.json', 'w'))
+    load_library()
+
+def load_library():
+    global library 
+    library = json.load(open('library.json', 'r'))
 
 @app.route("/list")
 def list():
     return jsonify(library)
 
-# library.json is the annotated version of loa.json
-# containing 'have' and 'want' fields
-library = json.load(open('library.json', 'r'))
+@app.route("/update")
+def check_for_update():
+    ''' webscrape to create a list of LoA titles '''
+    import requests
+    from bs4 import BeautifulSoup  
+    url = 'https://loa.org/books/loa_collection'
+    page = requests.get(url)
+
+    soup = BeautifulSoup(page.content, 'html.parser')
+    books = soup.find_all('li', class_='content-listing--book')
+    loa_new = []
+
+    for book in books:
+        id = int(book.find('i', class_='book-listing__number').text)
+        title = book.find('b', class_='content-listing__title').text
+        book = {"id": id, "title": title}
+        loa_new.append(book)
+
+    loa_old = json.load(open('loa.json', 'r'))
+    loa_diff = [i for i in loa_new + loa_old if i not in loa_new or i not in loa_old]
+
+    message = "No updates, {} records".format(len(loa_new))
+    if len(loa_diff) > 0:
+        message = "Found {} new records {}".format(len(loa_diff), loa_diff)
+        json.dump(loa_new, open('loa.json', 'w'))
+        for i in loa_diff:
+            add(i['id'], i['title'])
+
+    return message
+
+load_library()
 
 if __name__ == "__main__":
     app.run(debug=True)
