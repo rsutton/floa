@@ -1,0 +1,4 @@
+include loa/*.json
+graft loa/templates
+graft loa/static
+global-exclue *.pyc
