@@ -1,21 +1,26 @@
+
+from flask import Blueprint, render_template, jsonify
+from flask import current_app as app
 import json
-import datetime as dt
 
-from flask import Flask, jsonify
-app = Flask(__name__)
+bp = Blueprint(
+    'home',
+    'routes',
+    url_prefix="/"
+)
 
-@app.route("/")
+@bp.route("/")
 def home():
-    return "Hello, Flask!"
+    return render_template('home.html')
 
-@app.route("/<id>")
+@bp.route("/<id>")
 def find_by_id(id):
     for i in library:
         if i['id'] == int(id):
             return i
     return "id {} not found".format(id)
 
-@app.route("/have/<id>")
+@bp.route("/have/<id>")
 def have(id):
     item = find_by_id(id)
     item['have'] = 1
@@ -23,7 +28,7 @@ def have(id):
     save_library()
     return item
 
-@app.route("/want/<id>")
+@bp.route("/want/<id>")
 def want(id):
     item = find_by_id(id)
     item['have'] = 0
@@ -31,7 +36,7 @@ def want(id):
     save_library()
     return item
 
-@app.route("/title/<query>")
+@bp.route("/title/<query>")
 def find_title(query):
     results = []
     q = query.lower()
@@ -40,23 +45,11 @@ def find_title(query):
             results.append(i)
     return jsonify(results)
 
-def add(id, title):
-    library.append({'id': id, 'title': title, 'have': 0, 'want': 0})
-    save_library()
-
-def save_library():
-    json.dump(library, open('library.json', 'w'))
-    load_library()
-
-def load_library():
-    global library 
-    library = json.load(open('library.json', 'r'))
-
-@app.route("/list")
+@bp.route("/list")
 def list():
     return jsonify(library)
 
-@app.route("/update")
+@bp.route("/update")
 def check_for_update():
     ''' webscrape to create a list of LoA titles '''
     import requests
@@ -74,20 +67,29 @@ def check_for_update():
         book = {"id": id, "title": title}
         loa_new.append(book)
 
-    loa_old = json.load(open('loa.json', 'r'))
+    loa_old = json.load(open('./loa/loa.json', 'r'))
     loa_diff = [i for i in loa_new + loa_old if i not in loa_new or i not in loa_old]
 
     message = "No updates, {} records".format(len(loa_new))
     if len(loa_diff) > 0:
         message = "Found {} new records {}".format(len(loa_diff), loa_diff)
         # loa_new is authoritative so overwrite 
-        json.dump(loa_new, open('loa.json', 'w'))
+        json.dump(loa_new, open('./loa/loa.json', 'w'))
         for i in loa_diff:
             add(i['id'], i['title'])
 
     return message
 
-load_library()
+def add(id, title):
+    library.append({'id': id, 'title': title, 'have': 0, 'want': 0})
+    save_library()
 
-if __name__ == "__main__":
-    app.run(debug=True)
+def save_library():
+    json.dump(library, open('./loa/library.json', 'w'))
+    load_library()
+
+def load_library():
+    global library 
+    library = json.load(open('./loa/library.json', 'r'))
+    
+load_library()
