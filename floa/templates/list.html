@@ -11,19 +11,17 @@
             <th scope="col">Volume</th>
             <th scope="col">Title</th>
             <th scope="col">Have</th>
-            <th scope="col">Want</th>            
+            <th scope="col">Want</th>
             </tr>
         </thead>
         <tbody>
-        {% for book in library %}
-            {% if book['have'] == 1 %}
-            <tr>
-                <th scope="row">{{ book['id'] }}</th>
-                <td>{{ book['title'] }}</td>
-                <td>{{ book['have'] }}</td>
-                <td>{{ book['want'] }}</td>
-            </tr>
-            {% endif %}
+        {% for book in list %}
+        <tr>
+            <th scope="row">{{ book['id'] }}</th>
+            <td>{{ book['title'] }}</td>
+            <td>{{ book['have'] }}</td>
+            <td>{{ book['want'] }}</td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
