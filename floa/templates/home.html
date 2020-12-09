@@ -9,19 +9,15 @@
         <thead class="thead-dark">
             <tr>
             <th scope="col">Volume</th>
-            <th scope="col">Title</th>
-            <th scope="col">Have</th>
-            <th scope="col">Want</th>            
+            <th scope="col">Title</th>        
             </tr>
         </thead>
         <tbody>
         {% for book in library %}
             {% if book['have'] == 1 %}
             <tr>
-                <th scope="row">{{ book['id'] }}</th>
-                <td>{{ book['title'] }}</td>
-                <td>{{ book['have'] }}</td>
-                <td>{{ book['want'] }}</td>
+                <td>{{ book['id'] }}</td>
+                <th scope="row">{{ book['title'] }}</th>
             </tr>
             {% endif %}
         {% endfor %}

@@ -4,6 +4,10 @@
 <h1>{% block title %}My Library of America{% endblock %}</h1>
 {% endblock %}
 
+<script>
+
+</script>
+
 {% block content %}
     <table class="table">
         <thead class="thead-dark">
@@ -17,10 +21,11 @@
         <tbody>
         {% for book in list %}
         <tr>
-            <th scope="row">{{ book['id'] }}</th>
-            <td>{{ book['title'] }}</td>
-            <td>{{ book['have'] }}</td>
-            <td>{{ book['want'] }}</td>
+            <td>{{ book['id'] }}</td>
+            <th scope="row">{{ book['title'] }}</th>
+            <!-- checkbox check state controlled by value -->
+            <td><input class="have" type="checkbox" name="have" value={{ book['have'] }}/></td>
+            <td><input class="want" type="checkbox" name="want" value={{ book['want'] }}/></td>
         </tr>
         {% endfor %}
         </tbody>
