@@ -75,13 +75,16 @@ def check_for_update():
     loa_diff = get_list_difference(loa_latest, catalog)
 
     if len(loa_diff) > 0:
-        # loa_latest is authoritative so overwrite 
+        # loa_latest is authoritative so overwrite the catalog
         overwrite_catalog_with(loa_latest)
+        # add new items to library
         for i in loa_diff:
             add_to_library(i['id'], i['title'])
         return render_template('list.html', list=loa_diff)
+
     return render_template('list.html', list=empty_list(0, "No Updates Found"))
 
+# List Helpers
 def get_list_difference(list1, list2):
     diff = [i for i in list1 + list2 if i not in list1 or i not in list2]
     return diff
@@ -95,25 +98,42 @@ def write_list_to_file(lst, fname):
 def read_list_from_file(fname):
     return json.load(open(fname, 'r'))
 
+# Library helpers
 def save_library():
     write_list_to_file(library, app.config['LIBRARY_FILENAME'])
     load_library()
 
 def load_library():
     global library 
-    library = read_list_from_file(app.config['LIBRARY_FILENAME'])
+    try:
+        library = read_list_from_file(app.config['LIBRARY_FILENAME'])
+    except:
+        library = create_library()
+
+def create_library():
+    global library
+    library = []
+    load_catalog()
+    for item in catalog:
+        add_to_library(item['id'], item['title'])
+    return library
 
 def add_to_library(id, title):
     library.append({'id': id, 'title': title, 'have': 0, 'want': 0})
     save_library()
 
+# Catalog helpers
 def save_catalog():
     write_list_to_file(catalog, app.config['CATALOG_FILENAME'])
     load_catalog()
 
 def load_catalog():
     global catalog
-    catalog = read_list_from_file(app.config['CATALOG_FILENAME'])
+    try:
+        catalog = read_list_from_file(app.config['CATALOG_FILENAME'])
+    except:
+        catalog = get_latest_loa_catalog()
+        save_catalog()
 
 def overwrite_catalog_with(lst):
     write_list_to_file(lst, app.config['CATALOG_FILENAME'])
