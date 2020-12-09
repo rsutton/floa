@@ -118,5 +118,3 @@ def load_catalog():
 def overwrite_catalog_with(lst):
     write_list_to_file(lst, app.config['CATALOG_FILENAME'])
     load_catalog()
-
-load_library()
