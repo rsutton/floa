@@ -1,31 +1,33 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}My Library of America{% endblock %}</h1>
+<h1 align="center">{% block title %}My Library of America{% endblock %}</h1>
 {% endblock %}
 
 <script>
-
+// some script to handle checkboxes
 </script>
 
 {% block content %}
     <table class="table">
         <thead class="thead-dark">
             <tr>
-            <th scope="col">Volume</th>
+            <th style="text-align:center" scope="col">Vol</th>
             <th scope="col">Title</th>
-            <th scope="col">Have</th>
-            <th scope="col">Want</th>
+            <th style="text-align:center" scope="col">Have</th>
+            <th style="text-align:center" scope="col">Want</th>
             </tr>
         </thead>
         <tbody>
         {% for book in list %}
         <tr>
-            <td>{{ book['id'] }}</td>
+            <td style="text-align:center">{{ book['id'] }}</td>
             <th scope="row">{{ book['title'] }}</th>
-            <!-- checkbox check state controlled by value -->
-            <td><input class="have" type="checkbox" name="have" value={{ book['have'] }}/></td>
-            <td><input class="want" type="checkbox" name="want" value={{ book['want'] }}/></td>
+            <!-- figure out how to checkbox check state controlled by value -->
+            <td style="text-align:center">{{ book['have'] }}</td>
+            <td style="text-align:center">{{ book['want'] }}</td>
+            <!-- <td style="text-align:center"><input class="have" type="checkbox" name="have" value={{ book['have'] }}/></td>
+            <td style="text-align:center"><input class="want" type="checkbox" name="want" value={{ book['want'] }}/></td> -->
         </tr>
         {% endfor %}
         </tbody>

@@ -11,14 +11,28 @@ bp = Blueprint(
 
 @bp.route("/")
 def home():
-    return render_template('home.html', library=library)
+    return render_template('home.html', list=library)
+
+@bp.route("/wish")
+def wish_list():
+    return render_template('wish_list.html', list=library)
+    
+@bp.route("/catalog")
+def catalog():
+    return render_template('list.html', list=library)
 
 @bp.route("/<id>")
-def find_by_id(id):
-    for i in library:
-        if i['id'] == int(id):
-            return render_template('list.html', list=[i])
+def list_id(id):
+    item = find_by_id(id)
+    if len(item) > 0:
+        return render_template('list.html', list=[item])
     return render_template('list.html', list=empty_list(id, "Item does not exist"))
+
+def find_by_id(id):
+    for item in library:
+        if item['id'] == int(id):
+            return item
+    return {}
 
 @bp.route("/have/<id>")
 def have(id):
@@ -44,10 +58,6 @@ def find_title(query):
         if q in i['title'].lower():
             results.append(i)
     return render_template('list.html', list=results)
-
-@bp.route("/list")
-def list():
-    return render_template('list.html', list=library)
 
 def get_latest_loa_catalog():
     ''' webscrape to create a list of LoA titles '''
