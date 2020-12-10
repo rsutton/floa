@@ -4,11 +4,19 @@
 <h1 align="center">{% block title %}My Library of America{% endblock %}</h1>
 {% endblock %}
 
-<script>
-// some script to handle checkboxes
-</script>
+
 
 {% block content %}
+<script>
+    "use strict";
+    $(document).ready(function() {
+        $('input[type=checkbox]').each(function(){
+            if ( $(this).prop("value") == 1){
+                $(this).prop("checked", true);
+            }
+        })
+    });
+</script>
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -22,12 +30,9 @@
         {% for book in list %}
         <tr>
             <td style="text-align:center">{{ book['id'] }}</td>
-            <th scope="row">{{ book['title'] }}</th>
-            <!-- figure out how to checkbox check state controlled by value -->
-            <td style="text-align:center">{{ book['have'] }}</td>
-            <td style="text-align:center">{{ book['want'] }}</td>
-            <!-- <td style="text-align:center"><input class="have" type="checkbox" name="have" value={{ book['have'] }}/></td>
-            <td style="text-align:center"><input class="want" type="checkbox" name="want" value={{ book['want'] }}/></td> -->
+            <th scope="row"><a href={{ book['link'] }}>{{ book['title'] }}</a></th>
+            <td style="text-align:center"><input id={{ book['id']|string + 'h' }} type="checkbox" name="have" value={{ book['have'] }}></td>
+            <td style="text-align:center"><input id={{ book['id']|string + 'w' }} type="checkbox" name="want" value={{ book['want'] }}></td>
         </tr>
         {% endfor %}
         </tbody>

@@ -9,14 +9,20 @@ bp = Blueprint(
     url_prefix="/"
 )
 
+# home(), wish_list() and catalog() are variations of a theme switched on have/want flags
+# perhaps do the processing here instead of in browser or some js magic to hide/show relevant
+# columns. e.g. only catalog needs to show checkboxes. think filters
+# show books in my library have=1
 @bp.route("/")
 def home():
     return render_template('home.html', list=library)
 
+# show books that I want, want=1
 @bp.route("/wish")
 def wish_list():
     return render_template('wish_list.html', list=library)
-    
+
+# all items
 @bp.route("/catalog")
 def catalog():
     return render_template('list.html', list=library)
@@ -34,22 +40,28 @@ def find_by_id(id):
             return item
     return {}
 
-@bp.route("/have/<id>")
-def have(id):
-    item = find_by_id(id)
-    item['have'] = 1
-    item['want'] = 0
-    save_library()
-    return item
+# these should be handled in catalog view
+# @bp.route("/have/<id>")
+# def have(id):
+#     item = find_by_id(id)
+#     if len(item) > 0:
+#         item['have'] = 1
+#         item['want'] = 0
+#         save_library()
+#         return render_template('list.html', list=[item])
+#     return render_template('list.html', list=empty_list(id, "Item does not exist"))
 
-@bp.route("/want/<id>")
-def want(id):
-    item = find_by_id(id)
-    item['have'] = 0
-    item['want'] = 1
-    save_library()
-    return item
+# @bp.route("/want/<id>")
+# def want(id):
+#     item = find_by_id(id)
+#     if len(item) > 0:
+#         item['have'] = 0
+#         item['want'] = 1
+#         save_library()
+#         return render_template('list.html', list=[item])
+#     return render_template('list.html', list=empty_list(id, "Item does not exist"))
 
+# generic search function to handle id and title search
 @bp.route("/title/<query>")
 def find_title(query):
     results = []
@@ -63,7 +75,7 @@ def get_latest_loa_catalog():
     ''' webscrape to create a list of LoA titles '''
     import requests
     from bs4 import BeautifulSoup  
-    url = app.config['LOA_URL']
+    url = app.config['LOA_COLLECTION_URL']
     page = requests.get(url)
 
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -73,7 +85,8 @@ def get_latest_loa_catalog():
     for book in books:
         id = int(book.find('i', class_='book-listing__number').text)
         title = book.find('b', class_='content-listing__title').text
-        book = {"id": id, "title": title}
+        link = app.config['LOA_BASE_URL'] + book.find('a')['href']
+        book = {"id": id, "title": title, "link": link}
         result.append(book)
     return result
 
@@ -88,8 +101,7 @@ def check_for_update():
         # loa_latest is authoritative so overwrite the catalog
         overwrite_catalog_with(loa_latest)
         # add new items to library
-        for i in loa_diff:
-            add_to_library(i['id'], i['title'])
+        update_library_with(loa_diff)
         return render_template('list.html', list=loa_diff)
 
     return render_template('list.html', list=empty_list(0, "No Updates Found"))
@@ -99,11 +111,11 @@ def get_list_difference(list1, list2):
     diff = [i for i in list1 + list2 if i not in list1 or i not in list2]
     return diff
 
-def empty_list(id=0, title='NA'):
-    return [{'id': id, 'title': title, 'have': 0, 'want': 0}]
+def empty_list(id=0, title='NA', link=''):
+    return [{'id': id, 'title': title, 'link': link, 'have': 0, 'want': 0}]
 
 def write_list_to_file(lst, fname):
-    json.dump(lst, open(fname, 'w+'))
+    json.dump(lst, open(fname, 'w'))
 
 def read_list_from_file(fname):
     return json.load(open(fname, 'r'))
@@ -124,13 +136,21 @@ def create_library():
     global library
     library = []
     load_catalog()
-    for item in catalog:
-        add_to_library(item['id'], item['title'])
+    update_library_with(catalog)
     return library
 
-def add_to_library(id, title):
-    library.append({'id': id, 'title': title, 'have': 0, 'want': 0})
+def update_library_with(items):
+    for item in items:
+        book = find_by_id(item['id'])
+        if len(book) > 0:
+            for key in item.keys():
+                book[key] = item[key]
+        else:
+            item['have'] = 0
+            item['want'] = 0
+            library.append(item)
     save_library()
+
 
 # Catalog helpers
 def save_catalog():
