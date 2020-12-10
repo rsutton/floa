@@ -9,60 +9,75 @@ bp = Blueprint(
     url_prefix="/"
 )
 
-# home(), wish_list() and catalog() are variations of a theme switched on have/want flags
+# home(), wish_list() and catalog() are variations on a theme switched on have/want flags
 # perhaps do the processing here instead of in browser or some js magic to hide/show relevant
 # columns. e.g. only catalog needs to show checkboxes. think filters
 # show books in my library have=1
 @bp.route("/")
 def home():
-    return render_template('home.html', list=library)
+    result = []
+    for item in library:
+        if item['have'] == 1:
+            result.append(item)
+    return render_template('bookshelf.html', list=result)
 
 # show books that I want, want=1
 @bp.route("/wish")
 def wish_list():
-    return render_template('wish_list.html', list=library)
+    result = []
+    for item in library:
+        if item['want'] == 1:
+            result.append(item)
+    return render_template('wishlist.html', list=result)
 
 # all items
-@bp.route("/catalog")
+@bp.route("catalog")
 def catalog():
-    return render_template('list.html', list=library)
+    return render_template('list.html', list=library, view='catalog')
 
-@bp.route("/<id>")
+@bp.route("<id>")
 def list_id(id):
     item = find_by_id(id)
     if len(item) > 0:
-        return render_template('list.html', list=[item])
+        return render_template('list.html', list=[item], view='catalog')
     return render_template('list.html', list=empty_list(id, "Item does not exist"))
 
 def find_by_id(id):
     for item in library:
+        assert(isinstance(id, str))
         if item['id'] == int(id):
             return item
     return {}
 
-# these should be handled in catalog view
-# @bp.route("/have/<id>")
-# def have(id):
-#     item = find_by_id(id)
-#     if len(item) > 0:
-#         item['have'] = 1
-#         item['want'] = 0
-#         save_library()
-#         return render_template('list.html', list=[item])
-#     return render_template('list.html', list=empty_list(id, "Item does not exist"))
+@bp.route("_have/<id>")
+def have(id):
+    item = find_by_id(id)
+    if len(item) > 0:
+        item['have'] = 1
+        item['want'] = 0
+        save_library()
+        return id
 
-# @bp.route("/want/<id>")
-# def want(id):
-#     item = find_by_id(id)
-#     if len(item) > 0:
-#         item['have'] = 0
-#         item['want'] = 1
-#         save_library()
-#         return render_template('list.html', list=[item])
-#     return render_template('list.html', list=empty_list(id, "Item does not exist"))
+@bp.route("_want/<id>")
+def want(id):
+    item = find_by_id(id)
+    if len(item) > 0:
+        item['have'] = 0
+        item['want'] = 1
+        save_library()
+        return id
+
+@bp.route("_reset/<id>")
+def reset(id):
+    item = find_by_id(id)
+    if len(item) > 0:
+        item['have'] = 0
+        item['want'] = 0
+        save_library()
+        return id
 
 # generic search function to handle id and title search
-@bp.route("/title/<query>")
+@bp.route("title/<query>")
 def find_title(query):
     results = []
     q = query.lower()
@@ -90,7 +105,7 @@ def get_latest_loa_catalog():
         result.append(book)
     return result
 
-@bp.route("/update")
+@bp.route("update")
 def check_for_update():
     load_catalog()
 
