@@ -1,9 +1,5 @@
 {% extends 'base.html' %}
 
-{% block header %}
-<h1 align="center">{% block title %}Library of America Catalog{% endblock %}</h1>
-{% endblock %}
-
 {% block content %}
 <script>
     "use strict";
@@ -33,18 +29,17 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-            <th style="text-align:center" scope="col">Vol</th>
+            <th style="text-align:center" scope="col">No.</th>
             <th scope="col">Title</th>
             <th style="text-align:center" scope="col">Have</th>
             <th style="text-align:center" scope="col">Want</th>
-            <th style="text-align:right" scope="col">{{ list|count }} items</th>
             </tr>
         </thead>
         <tbody>
         {% for book in list %}
         <tr>
             <td style="text-align:center">{{ book['id'] }}</td>
-            <th scope="row"><a href={{ book['link'] }}>{{ book['title'] }}</a></th>
+            <td><a href={{ book['link'] }}>{{ book['title'] }}</a></td>
             <td style="text-align:center"><input id={{ book['id'] }} type="checkbox" name="have" value={{ book['have'] }}></td>
             <td style="text-align:center"><input id={{ book['id'] }} type="checkbox" name="want" value={{ book['want'] }}></td>
         </tr>
