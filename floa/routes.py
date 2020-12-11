@@ -22,7 +22,7 @@ def home():
     return render_template('bookshelf.html', list=result)
 
 # show books that I want, want=1
-@bp.route("/wish")
+@bp.route("/_wish")
 def wish_list():
     result = []
     for item in library:
@@ -31,7 +31,7 @@ def wish_list():
     return render_template('wishlist.html', list=result)
 
 # all items
-@bp.route("catalog")
+@bp.route("/_catalog")
 def catalog():
     return render_template('list.html', list=library, view='catalog')
 
@@ -77,8 +77,8 @@ def reset(id):
         return id
 
 # generic search function to handle id and title search
-@bp.route("title/<query>")
-def find_title(query):
+@bp.route("/_search/<query>")
+def search(query):
     results = []
     q = query.lower()
     for i in library:
