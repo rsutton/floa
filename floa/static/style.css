@@ -3,3 +3,7 @@ body{background-color:#FFF;font-family:Arnhem,Times,Courier,serif;}
 a:link,a:visited{color: #000;text-decoration: none;}
 a:hover{color:red;text-decoration: none;}
 a:active{color:#000;text-decoration: none;}
+
+.content-list-count{text-align: right; color: #FFF;}
+.content-list-item-id,.content-list-item-checkbox{text-align: center;}
+.content-list-item-title{text-align: left;}

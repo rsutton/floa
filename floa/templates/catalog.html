@@ -1,0 +1,10 @@
+<tbody>
+    {% for book in list %}
+    <tr>
+        <td class="content-list-item-id">{{ book['id'] }}</td>
+        <td class="content-list-item-title"><a href={{ book['link'] }}>{{ book['title'] }}</a></td>
+        <td class="content-list-item-checkbox"><input id={{ book['id'] }} type="checkbox" name="have" value={{ book['have'] }}> have</td>
+        <td class="content-list-item-checkbox"><input id={{ book['id'] }} type="checkbox" name="want" value={{ book['want'] }}> want</td>
+    </tr>
+    {% endfor %}
+</tbody>

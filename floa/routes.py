@@ -19,7 +19,7 @@ def home():
     for item in library:
         if item['have'] == 1:
             result.append(item)
-    return render_template('bookshelf.html', list=result)
+    return render_template('list.html', list=result)
 
 # show books that I want, want=1
 @bp.route("/_wish")
@@ -28,24 +28,27 @@ def wish_list():
     for item in library:
         if item['want'] == 1:
             result.append(item)
-    return render_template('wishlist.html', list=result)
+    return render_template('list.html', list=result)
 
 # all items
 @bp.route("/_catalog")
 def catalog():
-    return render_template('list.html', list=library, view='catalog')
+    return render_template('list.html', list=library)
+ 
 
-@bp.route("<id>")
+@bp.route("/<id>")
 def list_id(id):
     item = find_by_id(id)
     if len(item) > 0:
-        return render_template('list.html', list=[item], view='catalog')
+        return render_template('list.html', list=[item])
     return render_template('list.html', list=empty_list(id, "Item does not exist"))
 
 def find_by_id(id):
+    if isinstance(id, str):
+        id = int(id)
+
     for item in library:
-        assert(isinstance(id, str))
-        if item['id'] == int(id):
+        if item['id'] == id:
             return item
     return {}
 
@@ -79,12 +82,13 @@ def reset(id):
 # generic search function to handle id and title search
 @bp.route("/_search/<query>")
 def search(query):
+    print("in search")
     results = []
     q = query.lower()
     for i in library:
         if q in i['title'].lower():
             results.append(i)
-    return render_template('list.html', list=results)
+    return render_template('catalog.html', list=results)
 
 def get_latest_loa_catalog():
     ''' webscrape to create a list of LoA titles '''
@@ -105,7 +109,7 @@ def get_latest_loa_catalog():
         result.append(book)
     return result
 
-@bp.route("update")
+@bp.route("/_update")
 def check_for_update():
     load_catalog()
 
