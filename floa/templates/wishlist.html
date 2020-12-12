@@ -1,28 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<script>
-    "use strict";
-    $(document).ready(function() {
-        $('input[type=button]').click(function(e){
-            var checkId = $(this).prop('id')
-            var url = $SCRIPT_ROOT + "/_reset/" + checkId;
-            $.ajax({
-                url: url,
-                success: function(){location.reload()}
-            });
-        });
-    });
-</script>
-    <table class="table table-borderless">
-        <tbody>
-        {% for book in list %}
-            <tr>
-                <td style="text-align:center">{{ book['id'] }}</td>
-                <td><a href={{ book['link'] }}>{{ book['title'] }}</a></td>
-                <td style="text-align:right"><input id={{ book['id'] }} class="btn btn-danger" type="button" value="Remove"></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<table class="table table-borderless">
+    <tbody>
+    {% for book in list %}
+    <tr class="content-list-item">
+        <td class="content-list-item-id">{{ book['id'] }}</td>
+        <td class="content-list-item-title"><a href={{ book['link'] }}>{{ book['title'] }}</a></td>
+        <td style="text-align:right"><input id={{ book['id'] }} class="btn btn-danger" type="button" value="Remove"></td>
+   </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

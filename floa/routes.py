@@ -9,39 +9,32 @@ bp = Blueprint(
     url_prefix="/"
 )
 
-# home(), wish_list() and catalog() are variations on a theme switched on have/want flags
-# perhaps do the processing here instead of in browser or some js magic to hide/show relevant
-# columns. e.g. only catalog needs to show checkboxes. think filters
-# show books in my library have=1
 @bp.route("/")
 def home():
     result = []
     for item in library:
         if item['have'] == 1:
             result.append(item)
-    return render_template('list.html', list=result)
+    return render_template('bookshelf.html', list=result)
 
-# show books that I want, want=1
 @bp.route("/_wish")
 def wish_list():
     result = []
     for item in library:
         if item['want'] == 1:
             result.append(item)
-    return render_template('list.html', list=result)
+    return render_template('wishlist.html', list=result)
 
-# all items
 @bp.route("/_catalog")
 def catalog():
-    return render_template('list.html', list=library)
+    return render_template('catalog.html', list=library)
  
-
 @bp.route("/<id>")
 def list_id(id):
     item = find_by_id(id)
     if len(item) > 0:
-        return render_template('list.html', list=[item])
-    return render_template('list.html', list=empty_list(id, "Item does not exist"))
+        return render_template('catalog.html', list=[item])
+    return render_template('catalog.html', list=empty_list(id, "Item does not exist"))
 
 def find_by_id(id):
     if isinstance(id, str):
@@ -79,16 +72,14 @@ def reset(id):
         save_library()
         return id
 
-# generic search function to handle id and title search
 @bp.route("/_search/<query>")
 def search(query):
-    print("in search")
     results = []
     q = query.lower()
     for i in library:
         if q in i['title'].lower():
             results.append(i)
-    return render_template('catalog.html', list=results)
+    return render_template('search.html', list=results)
 
 def get_latest_loa_catalog():
     ''' webscrape to create a list of LoA titles '''
@@ -121,9 +112,9 @@ def check_for_update():
         overwrite_catalog_with(loa_latest)
         # add new items to library
         update_library_with(loa_diff)
-        return render_template('list.html', list=loa_diff)
+        return render_template('catalog.html', list=loa_diff)
 
-    return render_template('list.html', list=empty_list(0, "No Updates Found"))
+    return render_template('catalog.html', list=empty_list(0, "No Updates Found"))
 
 # List Helpers
 def get_list_difference(list1, list2):

@@ -1,35 +1,80 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-        <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}"/>
 
-        <title>My Library of America</title>
-    </head>
-    <body>
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title>My Library of America</title>
+</head>
+<body>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-        <script>
-            "use strict";
-            var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    <script>
+        "use strict";
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 
-            function search(){
-                debugger;
+
+        $(document).ready(function() {
+            $('input[type="checkbox"]').each(function(){
+                if ($(this).prop("value") == 1){
+                    $(this).prop("checked", true);
+                }
+            });
+            $('input[type="checkbox"]').click(function(e){
+                var checkName = $(this).prop('name')
+                var checkId = $(this).prop('id')
+                var checkValue = $(this).prop('checked')
+                if ( checkValue == true ){
+                    var url = $SCRIPT_ROOT + "/_" + checkName + "/" + checkId;
+                } else {
+                    var url = $SCRIPT_ROOT + "/_reset/" + checkId;
+                }
+                $.ajax({
+                    url: url,
+                    success: function(){location.reload()}
+                });
+            });
+
+            $('button[type=submit]').click(function(){
                 var query = $('input[type="search"]').val();
-                    var url = $SCRIPT_ROOT + "/_search/" + query;
-                    window.open(url);
-            };
-        </script>
+                var url = $SCRIPT_ROOT + "/_search/" + query;
+                $.ajax({
+                    url: url,
+                    success: function(r){
+                        $('div.content').html(r);
+                        var rows = $('tr.content-list-item').length;
+                        $('td.content-list-count').text(rows + " items");
+                    },
+                    error: function(e){alert("error " + e);}
+                });
+                return false;
+            });
+
+            $('input[type=button]').click(function(){
+                var id = $(this).prop('id');
+                var url = $SCRIPT_ROOT + "/_reset/" + id;
+                $.ajax({
+                    url: url,
+                    success: function(){location.reload()},
+                    error: function(e){alert("error " + e);}
+                });
+            });
+            $('.nav-link').click(function(){
+                $('.nav-item').find(".active").removeClass("active");
+                $(this).parent().addClass("active");
+            });
+        });
+    </script>
     <h1 style="text-align: center;">My Library of America</h1>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -55,21 +100,18 @@
                     <td>
                         <form class="form-inline">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="search()">Search</button>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
                     </td>
-                    <td style="text-align: right; color: #FFF">
+                    <td class="content-list-count">
                         {{ list|count }} items
                     </td>
                 </tr>
             </table>
         </div>
     </nav>
-    <section class="content">
-        <header>
-            {% block header %}{% endblock %}
-        </header>
+    <div class="content">
         {% block content %}{% endblock %}
-    </section>
-    </body>
+    </div>
+</body>
 </html>
