@@ -14,40 +14,10 @@
     
     <title>My Library of America</title>
 
-   
-</head>
-<body>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-    <div class="header">
-        <div class="header__branding" style="top: 21px;">
-            <a href="/" title="Home">
-                <span class="icon icon__logo--header" style="background-size: 100%;"></span>
-            </a>
-            <a href="/" title="Home" class="name" style="opacity: 1; display: block;">My Library of America</a>
-        </div>
-        <!-- nav bar -->
-        <div class="top-nav">
-            {% block nav %}{% endblock %}
-            <div class="search-container">
-                <form action="/action_page.php">
-                <input type="text" placeholder="Search.." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
-            <!-- <div class="content-list-count">
-                {{ list|count }} items
-            </div> -->
-        </div>
-    </div>
-
-    <div class="content">
-        {% block content %}{% endblock %}
-    </div>
     <script>
         "use strict";
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
@@ -73,11 +43,40 @@
                     success: function(){location.reload()}
                 });
             });
+            /*
             $('button[type=submit]').click(function(){
                 var query = $('input[name=search]').val();
-
-            });            
+            });
+            */            
         });
     </script>
+</head>
+<body>
+    <div class="header">
+        <div class="header__branding" style="top: 21px;">
+            <a href="/" title="Home">
+                <span class="icon icon__logo--header" style="background-size: 100%;"></span>
+            </a>
+            <a href="/" title="Home" class="name" style="opacity: 1; display: block;">My Library of America</a>
+        </div>
+        <!-- nav bar -->
+        <div class="top-nav">
+            {% block nav %}{% endblock %}
+            <div class="search-container">
+                <form action="/action_page.php">
+                <input type="text" placeholder="Not implemented.." name="search">
+                <button type="submit" disabled=true><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+            <!-- <div class="content-list-count">
+                {{ list|count }} items
+            </div> -->
+        </div>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
 </body>
 </html>

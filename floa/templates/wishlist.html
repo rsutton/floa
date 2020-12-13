@@ -20,15 +20,20 @@
         });
     });
 </script>
-<table class="table table-borderless">
-    <tbody>
+<ul class="content-list">
     {% for book in list %}
-    <tr class="content-list-item">
-        <td class="content-list-item-id">{{ book['id'] }}</td>
-        <td class="content-list-item-title"><a href={{ book['link'] }}>{{ book['title'] }}</a></td>
-        <td style="text-align:right"><input id={{ book['id'] }} class="btn btn-danger" type="button" value="Remove"></td>
-   </tr>
+    <li class="content-list-item">
+        <div class="content-listing__controls">
+            <button id={{ book['id'] }} class="btn-remove">
+                <i class="fa fa-minus-circle"></i>
+            </button>
+        </div>
+        <a href={{ book['link'] }}>
+            <i class="content-listing__number">{{ book['id'] }}.</i>
+            <b class="content-listing__title">{{ book['title'] }}</b>
+        </a>
+
+    </li>
     {% endfor %}
-    </tbody>
-</table>
+</ul>
 {% endblock %}

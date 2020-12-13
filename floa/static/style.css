@@ -1,7 +1,6 @@
 * {
     box-sizing: border-box; 
     font-family: "Arnhem",Times,Courier,serif;
-    font-size: 21px;
 }
 
 body{background-color:#f2f2f2;}
@@ -10,9 +9,52 @@ a:hover{color:red;text-decoration: none;}
 a:active{color:#000;text-decoration: none;}
 
 .content-list-count{text-align: right; color: #fff;}
-.content-list-item-id,.content-list-item-checkbox{text-align: center;}
-.content-list-item-title{text-align: left;}
 
+.content-list {
+    padding-top: 43px;
+    vertical-align: top;
+    list-style-type: none;
+}
+.content-list .content-list-item {
+    width: 100%;
+    padding-bottom: 28px;
+}
+.content-list .content-list-item .content-listing__controls {
+    float: left;
+    width: 10%;
+}
+.content-list .content-list-item .content-listing__controls {
+    padding-right: 10px;
+    padding-left: 5px;
+    font-size: 20px;
+}
+.content-list .content-list-item .content-listing__controls .have {
+    color: green;
+}
+.content-list .content-list-item .content-listing__controls .want {
+    color: yellow;
+}
+.content-list .content-list-item .content-listing__controls .btn-remove {
+        background-color: transparent; 
+        border: none; 
+        color: red;
+}
+.content-list .content-list-item .content-listing__title {
+    float: none;
+    width: 75%;
+    font-size: 18px;
+    font-style: normal;
+    line-height: 25px;
+    font-weight: 500;
+}
+.content-list .content-list-item .content-listing__number {
+    font-family: "Calibre",Helvetica,Arial,sans-serif;
+    font-style: normal;
+    float: none;
+    position: relative;
+    width: 2%;
+    color: red;
+}
 .icon {
     display: inline-block;
     min-width: 16px;
