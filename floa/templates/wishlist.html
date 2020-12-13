@@ -7,26 +7,14 @@
 {% endblock %}
 
 {% block content %}
-<script>
-    $(document).ready(function() {
-        $('input[type=button]').click(function(){
-            var id = $(this).prop('id');
-            var url = $SCRIPT_ROOT + "/_reset/" + id;
-            $.ajax({
-                url: url,
-                success: function(){location.reload()},
-                error: function(e){alert("error " + e);}
-            });
-        });
-    });
-</script>
+
 <ul class="content-list">
     {% for book in list %}
-    <li class="content-list-item">
+    <li class="content-listing">
         <div class="content-listing__controls">
-            <button id={{ book['id'] }} class="btn-remove">
+            <span class="content-listing__button remove" data-id={{ book['id'] }}>
                 <i class="fa fa-minus-circle"></i>
-            </button>
+            </span>
         </div>
         <a href={{ book['link'] }}>
             <i class="content-listing__number">{{ book['id'] }}.</i>

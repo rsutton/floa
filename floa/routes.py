@@ -1,5 +1,5 @@
 
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, render_template, jsonify, request
 from flask import current_app as app
 import json
 
@@ -13,7 +13,7 @@ bp = Blueprint(
 def home():
     result = []
     for item in library:
-        if item['have'] == 1:
+        if item['status'] == 1:
             result.append(item)
     return render_template('bookshelf.html', list=result)
 
@@ -21,7 +21,7 @@ def home():
 def wish_list():
     result = []
     for item in library:
-        if item['want'] == 1:
+        if item['status'] == 2:
             result.append(item)
     return render_template('wishlist.html', list=result)
 
@@ -45,33 +45,19 @@ def find_by_id(id):
             return item
     return {}
 
-@bp.route("_have/<id>")
-def have(id):
-    print("have " + id)
-    item = find_by_id(id)
-    if len(item) > 0:
-        item['have'] = 1
-        item['want'] = 0
-        save_library()
-        return id
+@bp.route("/_update", methods=["POST"])
+def update_book():
+    id = request.json['id']
+    status = request.json['status']
+    if isinstance(status, str):
+        status = int(status)
 
-@bp.route("_want/<id>")
-def want(id):
     item = find_by_id(id)
     if len(item) > 0:
-        item['have'] = 0
-        item['want'] = 1
+        item['status'] = status
         save_library()
         return id
-
-@bp.route("_reset/<id>")
-def reset(id):
-    item = find_by_id(id)
-    if len(item) > 0:
-        item['have'] = 0
-        item['want'] = 0
-        save_library()
-        return id
+    return {}
 
 def get_latest_loa_catalog():
     ''' webscrape to create a list of LoA titles '''
@@ -92,7 +78,7 @@ def get_latest_loa_catalog():
         result.append(book)
     return result
 
-@bp.route("/_update")
+@bp.route("/_check")
 def check_for_update():
     load_catalog()
 
@@ -114,7 +100,7 @@ def get_list_difference(list1, list2):
     return diff
 
 def empty_list(id=0, title='NA', link=''):
-    return [{'id': id, 'title': title, 'link': link, 'have': 0, 'want': 0}]
+    return [{'id': id, 'title': title, 'link': link, 'status': 0}]
 
 def write_list_to_file(lst, fname):
     json.dump(lst, open(fname, 'w'))
@@ -148,8 +134,7 @@ def update_library_with(items):
             for key in item.keys():
                 book[key] = item[key]
         else:
-            item['have'] = 0
-            item['want'] = 0
+            item['status'] = 0
             library.append(item)
     save_library()
 

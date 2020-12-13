@@ -9,15 +9,16 @@
 {% block content %}
 <ul class="content-list">
     {% for book in list %}
-    <li class="content-list-item">
+    <div class="content-listing__controls">
+        <span class="content-listing__checkbox not-have" data-id={{ book['id'] }} data-status={{ book['status'] }}>
+            <i class="fa fa-circle-o"></i>
+        </span>
+    </div> 
+    <li class="content-listing">
         <a href={{ book['link'] }}>
             <i class="content-listing__number">{{ book['id'] }}.</i>
             <b class="content-listing__title">{{ book['title'] }}</b>
         </a>
-        <div class="content-listing__controls">
-            <input id={{ book['id'] }} type="checkbox" name="have" value={{ book['have'] }}><i class="have fa fa-check-circle"></i>
-            <input id={{ book['id'] }} type="checkbox" name="want" value={{ book['want'] }}><i class="want fa fa-star"></i>
-        </div>
     </li>
     {% endfor %}
 </ul>

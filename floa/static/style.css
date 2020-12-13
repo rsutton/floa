@@ -15,44 +15,45 @@ a:active{color:#000;text-decoration: none;}
     vertical-align: top;
     list-style-type: none;
 }
-.content-list .content-list-item {
+.content-listing {
     width: 100%;
     padding-bottom: 28px;
 }
-.content-list .content-list-item .content-listing__controls {
+.content-listing__controls {
     float: left;
     width: 10%;
-}
-.content-list .content-list-item .content-listing__controls {
     padding-right: 10px;
-    padding-left: 5px;
+    padding-left: 10px;
     font-size: 20px;
 }
-.content-list .content-list-item .content-listing__controls .have {
+.content-listing__controls .not-have {
+    color: gray;
+}
+.content-listing__controls .have {
     color: green;
 }
-.content-list .content-list-item .content-listing__controls .want {
-    color: yellow;
+.content-listing__controls .want {
+    color: red;
 }
-.content-list .content-list-item .content-listing__controls .btn-remove {
-        background-color: transparent; 
-        border: none; 
-        color: red;
+.content-listing__controls .remove {
+    background-color: transparent; 
+    border: none; 
+    color: red;
 }
-.content-list .content-list-item .content-listing__title {
+.content-listing__title {
     float: none;
-    width: 75%;
+    width: 90%;
     font-size: 18px;
     font-style: normal;
     line-height: 25px;
     font-weight: 500;
 }
-.content-list .content-list-item .content-listing__number {
+.content-listing__number {
     font-family: "Calibre",Helvetica,Arial,sans-serif;
     font-style: normal;
     float: none;
     position: relative;
-    width: 2%;
+    padding-right: 20px;
     color: red;
 }
 .icon {
