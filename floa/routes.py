@@ -17,7 +17,7 @@ def home():
             result.append(item)
     return render_template('bookshelf.html', list=result)
 
-@bp.route("/_wish")
+@bp.route("/wish")
 def wish_list():
     result = []
     for item in library:
@@ -25,7 +25,7 @@ def wish_list():
             result.append(item)
     return render_template('wishlist.html', list=result)
 
-@bp.route("/_catalog")
+@bp.route("/catalog")
 def catalog():
     return render_template('catalog.html', list=library)
  
@@ -47,6 +47,7 @@ def find_by_id(id):
 
 @bp.route("_have/<id>")
 def have(id):
+    print("have " + id)
     item = find_by_id(id)
     if len(item) > 0:
         item['have'] = 1
@@ -71,15 +72,6 @@ def reset(id):
         item['want'] = 0
         save_library()
         return id
-
-@bp.route("/_search/<query>")
-def search(query):
-    results = []
-    q = query.lower()
-    for i in library:
-        if q in i['title'].lower():
-            results.append(i)
-    return render_template('search.html', list=results)
 
 def get_latest_loa_catalog():
     ''' webscrape to create a list of LoA titles '''

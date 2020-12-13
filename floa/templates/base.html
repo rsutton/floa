@@ -7,11 +7,14 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}"/>
-
+    
     <title>My Library of America</title>
+
+   
 </head>
 <body>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -19,18 +22,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+
+    <div class="header">
+        <div class="header__branding" style="top: 21px;">
+            <a href="/" title="Home">
+                <span class="icon icon__logo--header" style="background-size: 100%;"></span>
+            </a>
+            <a href="/" title="Home" class="name" style="opacity: 1; display: block;">My Library of America</a>
+        </div>
+        <!-- nav bar -->
+        <div class="top-nav">
+            {% block nav %}{% endblock %}
+            <div class="search-container">
+                <form action="/action_page.php">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+            <!-- <div class="content-list-count">
+                {{ list|count }} items
+            </div> -->
+        </div>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
     <script>
         "use strict";
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
-
-        $(document).ready(function() {
-            $('input[type="checkbox"]').each(function(){
+        console.log($SCRIPT_ROOT);
+        $(document).ready(function(){
+            // initialize checkboxes
+            $('input[type=checkbox]').each(function(){
                 if ($(this).prop("value") == 1){
                     $(this).prop("checked", true);
                 }
             });
-            $('input[type="checkbox"]').click(function(e){
+            $('input[type=checkbox]').click(function(e){
                 var checkName = $(this).prop('name')
                 var checkId = $(this).prop('id')
                 var checkValue = $(this).prop('checked')
@@ -44,74 +73,11 @@
                     success: function(){location.reload()}
                 });
             });
-
             $('button[type=submit]').click(function(){
-                var query = $('input[type="search"]').val();
-                var url = $SCRIPT_ROOT + "/_search/" + query;
-                $.ajax({
-                    url: url,
-                    success: function(r){
-                        $('div.content').html(r);
-                        var rows = $('tr.content-list-item').length;
-                        $('td.content-list-count').text(rows + " items");
-                    },
-                    error: function(e){alert("error " + e);}
-                });
-                return false;
-            });
+                var query = $('input[name=search]').val();
 
-            $('input[type=button]').click(function(){
-                var id = $(this).prop('id');
-                var url = $SCRIPT_ROOT + "/_reset/" + id;
-                $.ajax({
-                    url: url,
-                    success: function(){location.reload()},
-                    error: function(e){alert("error " + e);}
-                });
-            });
-            $('.nav-link').click(function(){
-                $('.nav-item').find(".active").removeClass("active");
-                $(this).parent().addClass("active");
-            });
+            });            
         });
     </script>
-    <h1 style="text-align: center;">My Library of America</h1>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <table style="width: 100%;">
-                <tr>
-                    <td>
-                        <ul class="navbar-nav">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/">Bookshelf</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/_wish">Wish List</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/_catalog">Catalog</a>
-                            </li>
-                        </ul>
-                    </td>
-                    <td>
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
-                    </td>
-                    <td class="content-list-count">
-                        {{ list|count }} items
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </nav>
-    <div class="content">
-        {% block content %}{% endblock %}
-    </div>
 </body>
 </html>

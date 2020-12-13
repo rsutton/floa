@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
 
+{% block nav %}
+<a class="nav-link" href="/">Home</a>
+<a class="nav-link active" href="/wish">Wish List</a>
+<a class="nav-link" href="/catalog">Catalog</a>
+{% endblock %}
+
 {% block content %}
+<script>
+    $(document).ready(function() {
+        $('input[type=button]').click(function(){
+            var id = $(this).prop('id');
+            var url = $SCRIPT_ROOT + "/_reset/" + id;
+            $.ajax({
+                url: url,
+                success: function(){location.reload()},
+                error: function(e){alert("error " + e);}
+            });
+        });
+    });
+</script>
 <table class="table table-borderless">
     <tbody>
     {% for book in list %}
