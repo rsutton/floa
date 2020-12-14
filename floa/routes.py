@@ -9,20 +9,9 @@ bp = Blueprint(
     url_prefix="/"
 )
 
-# TODO
-# use a single view containing all items
-# then filter for 'bookshelf' and 'wishlist'
-# on client side
 @bp.route("/")
 def home():
     return render_template('home.html', list=library)
-
-@bp.route("/<id>")
-def list_id(id):
-    item = find_by_id(id)
-    if len(item) > 0:
-        return render_template('catalog.html', list=[item])
-    return render_template('catalog.html', list=empty_list(id, "Item does not exist"))
 
 def find_by_id(id):
     if isinstance(id, str):
@@ -34,7 +23,7 @@ def find_by_id(id):
     return {}
 
 @bp.route("/_update", methods=["POST"])
-def update_book():
+def update_book_status():
     id = request.json['id']
     status = request.json['status']
     if isinstance(status, str):
@@ -46,6 +35,26 @@ def update_book():
         save_library()
         return id
     return {}
+
+@bp.route("/_check")
+def check_for_updates():
+    load_catalog()
+
+    loa_latest = get_latest_loa_catalog()
+    loa_diff = get_list_difference(loa_latest, catalog)
+
+    if len(loa_diff) > 0:
+        # TODO
+        # should return list of updates for user to accept/decline
+        # instead of automerging
+
+        # loa_latest is authoritative so overwrite the catalog
+        overwrite_catalog_with(loa_latest)
+        # add new items to library
+        update_library_with(loa_diff)
+        return render_template('catalog.html', list=loa_diff)
+
+    return render_template('catalog.html', list=empty_list(0, "No Updates Found"))
 
 def get_latest_loa_catalog():
     ''' webscrape to create a list of LoA titles '''
@@ -65,26 +74,6 @@ def get_latest_loa_catalog():
         book = {"id": id, "title": title, "link": link}
         result.append(book)
     return result
-
-@bp.route("/_check")
-def check_for_update():
-    load_catalog()
-
-    loa_latest = get_latest_loa_catalog()
-    loa_diff = get_list_difference(loa_latest, catalog)
-
-    if len(loa_diff) > 0:
-        # TODO
-        # should return list of updates for user to accept/decline
-        # instead of automerging
-
-        # loa_latest is authoritative so overwrite the catalog
-        overwrite_catalog_with(loa_latest)
-        # add new items to library
-        update_library_with(loa_diff)
-        return render_template('catalog.html', list=loa_diff)
-
-    return render_template('catalog.html', list=empty_list(0, "No Updates Found"))
 
 # List Helpers
 def get_list_difference(list1, list2):
