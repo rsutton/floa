@@ -26,13 +26,13 @@ a:active{color:#000;text-decoration: none;}
     padding-left: 10px;
     font-size: 20px;
 }
-.content-listing__controls .not-have {
+.content-listing__checkbox .fa-circle-o {
     color: gray;
 }
-.content-listing__controls .have {
+.content-listing__controls .fa-check {
     color: green;
 }
-.content-listing__controls .want {
+.content-listing__controls .fa-heart {
     color: red;
 }
 .content-listing__controls .remove {

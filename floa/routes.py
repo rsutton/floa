@@ -9,26 +9,14 @@ bp = Blueprint(
     url_prefix="/"
 )
 
+# TODO
+# use a single view containing all items
+# then filter for 'bookshelf' and 'wishlist'
+# on client side
 @bp.route("/")
 def home():
-    result = []
-    for item in library:
-        if item['status'] == 1:
-            result.append(item)
-    return render_template('bookshelf.html', list=result)
+    return render_template('home.html', list=library)
 
-@bp.route("/wish")
-def wish_list():
-    result = []
-    for item in library:
-        if item['status'] == 2:
-            result.append(item)
-    return render_template('wishlist.html', list=result)
-
-@bp.route("/catalog")
-def catalog():
-    return render_template('catalog.html', list=library)
- 
 @bp.route("/<id>")
 def list_id(id):
     item = find_by_id(id)
@@ -86,6 +74,10 @@ def check_for_update():
     loa_diff = get_list_difference(loa_latest, catalog)
 
     if len(loa_diff) > 0:
+        # TODO
+        # should return list of updates for user to accept/decline
+        # instead of automerging
+
         # loa_latest is authoritative so overwrite the catalog
         overwrite_catalog_with(loa_latest)
         # add new items to library

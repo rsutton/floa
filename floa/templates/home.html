@@ -1,26 +1,21 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
-
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}"/>
     
     <title>My Library of America</title>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="static/floa.js"></script>
+    <script src="static/script.js"></script>
 </head>
 <body>
     <div class="header">
@@ -32,7 +27,9 @@
         </div>
         <!-- nav bar -->
         <div class="top-nav">
-            {% block nav %}{% endblock %}
+            <a class="nav-link active" href="#">Bookshelf</a>
+            <a class="nav-link" href="#">Wish List</a>
+            <a class="nav-link" href="#">Catalog</a>
             <div class="search-container">
                 <form action="/action_page.php">
                 <input type="text" placeholder="Not implemented.." name="search">
@@ -46,7 +43,23 @@
     </div>
 
     <div class="content">
-        {% block content %}{% endblock %}
+        <ul class="content-list">
+            {% for book in list %}
+            <li class="content-listing" data-id={{ book['id'] }} data-status={{ book['status'] }}>
+                <div class="content-listing__controls">
+                    <span class="content-listing__checkbox">
+                        <i class="fa fa-circle-o"></i>
+                    </span>
+                </div> 
+                <div class="content-listing__details">
+                    <a href={{ book['link'] }}>
+                        <i class="content-listing__number">{{ book['id'] }}.</i>
+                        <b class="content-listing__title">{{ book['title'] }}</b>
+                    </a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 
 </body>
