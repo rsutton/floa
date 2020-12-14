@@ -4,9 +4,6 @@ $(document).ready(function(){
 
     var activePage = $('.nav-link active').text()
     if ( activePage = "Bookshelf" ){
-        $('.content-listing__controls').each(function(){
-            $(this).hide();
-        });
         $('.content-listing').each(function(){
             if( $(this).attr('data-status') != '1' ){
                 $(this).hide();
@@ -69,10 +66,6 @@ $(document).ready(function(){
         $('a.nav-link').each(function(){ $(this).removeClass("active"); });
         $(this).addClass("active");
         if ( clicked == "Bookshelf" ){
-            console.log("bookshelf");
-            $('.content-listing__controls').each(function(){
-                $(this).hide();
-            });
             $('.content-listing').each(function(){
                 if( $(this).attr('data-status') != '1' ){
                     $(this).hide();
@@ -81,10 +74,6 @@ $(document).ready(function(){
                 }
             });
         } else if ( clicked == "Wish List" ){
-            console.log("wishlist");
-            $('.content-listing__controls').each(function(){
-                $(this).show();
-            });
             $('.content-listing').each(function(){
                 if( $(this).attr('data-status') != '2' ){
                     $(this).hide();
@@ -93,10 +82,6 @@ $(document).ready(function(){
                 }
             });  
         } else {
-            console.log("catalog");
-            $('.content-listing__controls').each(function(){
-                $(this).show();
-            });
             $('.content-listing').each(function(){
                 $(this).show();
             });  
