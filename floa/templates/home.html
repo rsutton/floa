@@ -31,9 +31,9 @@
             <a class="nav-link" href="#">Wish List</a>
             <a class="nav-link" href="#">Catalog</a>
             <div class="search-container">
-                <form action="/action_page.php">
-                <input type="text" placeholder="Not implemented.." name="search">
-                <button type="submit" disabled=true><i class="fa fa-search"></i></button>
+                <form>
+                    <input type="text" placeholder="Not implemented.." name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
             <!-- <div class="content-list-count">
@@ -45,11 +45,7 @@
         <ul class="content-list">
             {% for book in list %}
             <li class="content-listing" data-id={{ book['id'] }} data-status={{ book['status'] }}>
-                <div class="content-listing__controls">
-                    <span class="content-listing__checkbox">
-                        <i class="fa fa-circle-o"></i>
-                    </span>
-                </div> 
+                <div class="content-listing__control fa fa-circle-o"></div>
                 <div class="content-listing__details">
                     <a href={{ book['link'] }}>
                         <i class="content-listing__number">{{ book['id'] }}.</i>

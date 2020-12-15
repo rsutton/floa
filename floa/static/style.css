@@ -19,25 +19,20 @@ a:active{color:#000;text-decoration: none;}
     width: 100%;
     padding-bottom: 28px;
 }
-.content-listing__controls {
+.content-listing__control {
     float: left;
     width: 5%;
     padding-right: 10px;
     padding-left: 10px;
     font-size: 20px;
 }
-.content-listing__checkbox .fa-circle-o {
+.fa-circle-o {
     color: gray;
 }
-.content-listing__controls .fa-check {
+.fa-check {
     color: green;
 }
-.content-listing__controls .fa-heart {
-    color: red;
-}
-.content-listing__controls .remove {
-    background-color: transparent; 
-    border: none; 
+.fa-heart {
     color: red;
 }
 .content-listing__title {
