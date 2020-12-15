@@ -2,12 +2,17 @@
 from flask import Blueprint, render_template, jsonify, request
 from flask import current_app as app
 import json
+import os.path
 
 bp = Blueprint(
     'home',
     'routes',
     url_prefix="/"
 )
+
+# globals
+library_file = os.path.join(os.path.dirname(app.instance_path), app.config['LIBRARY_FILENAME'])
+catalog_file = os.path.join(os.path.dirname(app.instance_path), app.config['CATALOG_FILENAME'])
 
 @bp.route("/")
 def home():
@@ -91,13 +96,13 @@ def read_list_from_file(fname):
 
 # Library helpers
 def save_library():
-    write_list_to_file(library, app.config['LIBRARY_FILENAME'])
+    write_list_to_file(library, library_file)
     load_library()
 
 def load_library():
     global library 
     try:
-        library = read_list_from_file(app.config['LIBRARY_FILENAME'])
+        library = read_list_from_file(library_file)
     except:
         library = create_library()
 
@@ -122,17 +127,17 @@ def update_library_with(items):
 
 # Catalog helpers
 def save_catalog():
-    write_list_to_file(catalog, app.config['CATALOG_FILENAME'])
+    write_list_to_file(catalog, catalog_file)
     load_catalog()
 
 def load_catalog():
     global catalog
     try:
-        catalog = read_list_from_file(app.config['CATALOG_FILENAME'])
+        catalog = read_list_from_file(catalog_file)
     except:
         catalog = get_latest_loa_catalog()
         save_catalog()
 
 def overwrite_catalog_with(lst):
-    write_list_to_file(lst, app.config['CATALOG_FILENAME'])
+    write_list_to_file(lst, catalog_file)
     load_catalog()
