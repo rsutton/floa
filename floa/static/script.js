@@ -6,7 +6,7 @@ $(document).ready(function(){
     var activePage = $('.nav-link active').text()
     if ( activePage = "Bookshelf" ){
         $('.content-listing').each(function(){
-            if( $(this).attr('data-status') = '1' ){
+            if( $(this).attr('data-status') == '1' ){
                 $(this).show();
             } else {
                 $(this).hide();
@@ -54,7 +54,7 @@ $(document).ready(function(){
         $(this).addClass("active");
         if ( clicked == "Bookshelf" ){
             $('.content-listing').each(function(){
-                if( $(this).attr('data-status') = '1' ){
+                if( $(this).attr('data-status') == '1' ){
                     $(this).show();
                 } else {
                     $(this).hide();
@@ -62,7 +62,7 @@ $(document).ready(function(){
             });
         } else if ( clicked == "Wish List" ){
             $('.content-listing').each(function(){
-                if( $(this).attr('data-status') = '2' ){
+                if( $(this).attr('data-status') == '2' ){
                     $(this).show();
                 } else {
                     $(this).hide();
