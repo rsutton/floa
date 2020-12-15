@@ -38,7 +38,8 @@ $(document).ready(function(){
     });
 
     // navigation handler
-    $('a.nav-link').click(function(){ 
+    $('a.nav-link').click(function(){
+        clearSearch();
         let clicked = $(this).text();
         $('a.nav-link').each(function(){ $(this).removeClass("active"); });
         $(this).addClass("active");
@@ -72,6 +73,10 @@ $(document).ready(function(){
         $('.content-listing').each(function(){
             $(this).show();
         });
+    }
+    function clearSearch(){
+        console.log( $('input[name=search]').value );
+        $('input[name=search]').val('');
     }
     // search
     $('button[type=submit]').click(function(){
