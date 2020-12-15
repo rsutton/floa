@@ -27,7 +27,7 @@ $(document).ready(function(){
 
         // save status to library
         let id = $(this).parent().attr('data-id');
-        let url = $SCRIPT_ROOT + "/_update";
+        let url = $SCRIPT_ROOT + "/_update/item";
         $.ajax({
             url: url,
             dataType: "json",
@@ -49,6 +49,18 @@ $(document).ready(function(){
             showWishList();
         } else {
             showCatalog();
+        }
+        if ( clicked == "Update" ){
+            let url = $SCRIPT_ROOT + "/_update/catalog";
+            $.ajax({
+                url: url,
+                contentType: "application/json",
+                method: "GET",
+                success: function(data){
+                    alert(data);
+                    location.reload();
+                }
+            });
         }
     });
     function showBookshelf(){

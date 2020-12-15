@@ -1,8 +1,9 @@
-
+from bs4 import BeautifulSoup 
 from flask import Blueprint, render_template, jsonify, request
 from flask import current_app as app
 import json
 import os.path
+import requests
 
 bp = Blueprint(
     'home',
@@ -16,9 +17,11 @@ catalog_file = os.path.join(os.path.dirname(app.instance_path), app.config['CATA
 
 @bp.route("/")
 def home():
+    global library
     return render_template('home.html', list=library)
 
 def find_by_id(id):
+    global library
     if isinstance(id, str):
         id = int(id)
 
@@ -27,7 +30,7 @@ def find_by_id(id):
             return item
     return {}
 
-@bp.route("/_update", methods=["POST"])
+@bp.route("/_update/item", methods=["POST"])
 def update_book_status():
     id = request.json['id']
     status = request.json['status']
@@ -41,30 +44,22 @@ def update_book_status():
         return id
     return {}
 
-@bp.route("/_check")
-def check_for_updates():
-    load_catalog()
+@bp.route("/_update/catalog")
+def update_catalog():
+    catalog = load_catalog()
+    latest = get_latest_catalog()
+    assert(len(latest) > 0)
+    diff = get_list_diff(latest, catalog)
 
-    loa_latest = get_latest_loa_catalog()
-    loa_diff = get_list_difference(loa_latest, catalog)
-
-    if len(loa_diff) > 0:
-        # TODO
-        # should return list of updates for user to accept/decline
-        # instead of automerging
-
-        # loa_latest is authoritative so overwrite the catalog
-        overwrite_catalog_with(loa_latest)
+    if len(diff) > 0:
+        # latest is authoritative so overwrite the catalog
+        save_catalog(latest)
         # add new items to library
-        update_library_with(loa_diff)
-        return render_template('catalog.html', list=loa_diff)
+        update_library_with(diff)
+    return jsonify(diff)
 
-    return render_template('catalog.html', list=empty_list(0, "No Updates Found"))
-
-def get_latest_loa_catalog():
-    ''' webscrape to create a list of LoA titles '''
-    import requests
-    from bs4 import BeautifulSoup  
+def get_latest_catalog():
+    ''' webscrape to create a list of LoA titles ''' 
     url = app.config['LOA_COLLECTION_URL']
     page = requests.get(url)
 
@@ -81,7 +76,7 @@ def get_latest_loa_catalog():
     return result
 
 # List Helpers
-def get_list_difference(list1, list2):
+def get_list_diff(list1, list2):
     diff = [i for i in list1 + list2 if i not in list1 or i not in list2]
     return diff
 
@@ -109,7 +104,8 @@ def load_library():
 def create_library():
     global library
     library = []
-    load_catalog()
+    catalog = get_latest_catalog()
+    save_catalog(catalog)
     update_library_with(catalog)
     return library
 
@@ -126,18 +122,13 @@ def update_library_with(items):
 
 
 # Catalog helpers
-def save_catalog():
-    write_list_to_file(catalog, catalog_file)
-    load_catalog()
+def save_catalog(obj):
+    write_list_to_file(obj, catalog_file)
 
 def load_catalog():
-    global catalog
     try:
         catalog = read_list_from_file(catalog_file)
     except:
-        catalog = get_latest_loa_catalog()
-        save_catalog()
+        catalog = []
+    return catalog
 
-def overwrite_catalog_with(lst):
-    write_list_to_file(lst, catalog_file)
-    load_catalog()

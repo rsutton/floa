@@ -11,10 +11,6 @@ def create_app():
         from . import routes
         app.register_blueprint(routes.bp)
         routes.load_library()
-        # TODO
-        # consider checking for updates on startup
-        # with message showing updates
-        # and 'accept/merge' changes
 
     return app
 
