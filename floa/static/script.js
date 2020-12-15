@@ -1,7 +1,7 @@
 "use strict";
 $(document).ready(function(){
-    let $SCRIPT_ROOT = location.origin;
-    let status_icons = ['fa-circle-o', 'fa-check', 'fa-heart']
+    var $SCRIPT_ROOT = location.origin;
+    var status_icons = ['fa-circle-o', 'fa-check', 'fa-heart', 'fa-star']
 
     // initialize home view
     let activePage = $('.nav-link active').text()
@@ -20,8 +20,9 @@ $(document).ready(function(){
 
     // tri-state checkbox click handler
     $( '.content-listing__control' ).click(function(){
-        let current_status = $(this).parent().attr('data-status');
+        let current_status = parseInt($(this).parent().attr('data-status'));
         let new_status = (current_status + 1) % status_icons.length;
+        console.log(new_status);
         $(this).parent().attr('data-status', new_status);
         $(this).removeClass(iconClassMatcher).addClass(status_icons[new_status]);
 
@@ -45,22 +46,19 @@ $(document).ready(function(){
         $(this).addClass("active");
         if ( clicked == "Bookshelf" ){
             showBookshelf();
-        } else if ( clicked == "Wish List" ){
+        } 
+        else if ( clicked == "Wish List" ){
             showWishList();
-        } else {
+        } 
+        else if ( clicked == "Catalog" ){
             showCatalog();
         }
-        if ( clicked == "Update" ){
+        else if ( clicked == "Updates" ){
             let url = $SCRIPT_ROOT + "/_update/catalog";
             $.ajax({
-                url: url,
-                contentType: "application/json",
-                method: "GET",
-                success: function(data){
-                    alert(data);
-                    location.reload();
-                }
+                url: url
             });
+            showUpdates();
         }
     });
     function showBookshelf(){
@@ -86,8 +84,16 @@ $(document).ready(function(){
             $(this).show();
         });
     }
+    function showUpdates(){
+        $('.content-listing').each(function(){
+            if( $(this).attr('data-status') == '3' ){
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });          
+    }
     function clearSearch(){
-        console.log( $('input[name=search]').value );
         $('input[name=search]').val('');
     }
     // search

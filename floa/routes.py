@@ -44,6 +44,14 @@ def update_book_status():
         return id
     return {}
 
+# TODO
+# consider removing catalog, 
+# compare length of library to latest catalog
+# need some ui work to inform about updates
+# not liking the use of a nav link for this 
+# maybe use a new icon to show it is new
+# 'sunshine' icon require clicking to 
+# accept into 
 @bp.route("/_update/catalog")
 def update_catalog():
     catalog = load_catalog()
@@ -56,7 +64,7 @@ def update_catalog():
         save_catalog(latest)
         # add new items to library
         update_library_with(diff)
-    return jsonify(diff)
+    return jsonify({"count": len(diff)})
 
 def get_latest_catalog():
     ''' webscrape to create a list of LoA titles ''' 
@@ -71,7 +79,7 @@ def get_latest_catalog():
         id = int(book.find('i', class_='book-listing__number').text)
         title = book.find('b', class_='content-listing__title').text
         link = app.config['LOA_BASE_URL'] + book.find('a')['href']
-        book = {"id": id, "title": title, "link": link}
+        book = {"id": id, "title": title, "link": link, "status": 3}
         result.append(book)
     return result
 
@@ -81,7 +89,7 @@ def get_list_diff(list1, list2):
     return diff
 
 def empty_list(id=0, title='NA', link=''):
-    return [{'id': id, 'title': title, 'link': link, 'status': 0}]
+    return [{'id': id, 'title': title, 'link': link}]
 
 def write_list_to_file(lst, fname):
     json.dump(lst, open(fname, 'w'))
@@ -116,7 +124,7 @@ def update_library_with(items):
             for key in item.keys():
                 book[key] = item[key]
         else:
-            item['status'] = 0
+            item['status'] = 3
             library.append(item)
     save_library()
 
