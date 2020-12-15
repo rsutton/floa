@@ -1,2 +1,4 @@
 # floa
-Simple Flask app to manage my Library of America bookshelf
+A single page application to manage my **Library of America** series collection. 
+
+
