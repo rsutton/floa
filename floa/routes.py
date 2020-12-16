@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, jsonify, request
 from flask import current_app as app
 import json
 import os.path
+import pickle
 import requests
 
 bp = Blueprint(
@@ -17,18 +18,8 @@ catalog_file = os.path.join(os.path.dirname(app.instance_path), app.config['CATA
 
 @bp.route("/")
 def home():
-    global library
+    library = load_library()
     return render_template('home.html', list=library)
-
-def find_by_id(id):
-    global library
-    if isinstance(id, str):
-        id = int(id)
-
-    for item in library:
-        if item['id'] == id:
-            return item
-    return {}
 
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():
@@ -36,35 +27,26 @@ def update_book_status():
     status = request.json['status']
     if isinstance(status, str):
         status = int(status)
-
-    item = find_by_id(id)
+    library = load_library()
+    item = find_by_id(library, id)
     if len(item) > 0:
         item['status'] = status
-        save_library()
+        save_library(library)
         return id
     return {}
 
-# TODO
-# consider removing catalog, 
-# compare length of library to latest catalog
-# need some ui work to inform about updates
-# not liking the use of a nav link for this 
-# maybe use a new icon to show it is new
-# 'sunshine' icon require clicking to 
-# accept into 
 @bp.route("/_update/catalog")
 def update_catalog():
+    library = load_library()
     catalog = load_catalog()
     latest = get_latest_catalog()
-    assert(len(latest) > 0)
     diff = get_list_diff(latest, catalog)
-
     if len(diff) > 0:
         # latest is authoritative so overwrite the catalog
         save_catalog(latest)
         # add new items to library
-        update_library_with(diff)
-    return jsonify({"count": len(diff)})
+        update_library(library, diff)
+    return jsonify(diff)
 
 def get_latest_catalog():
     ''' webscrape to create a list of LoA titles ''' 
@@ -79,7 +61,7 @@ def get_latest_catalog():
         id = int(book.find('i', class_='book-listing__number').text)
         title = book.find('b', class_='content-listing__title').text
         link = app.config['LOA_BASE_URL'] + book.find('a')['href']
-        book = {"id": id, "title": title, "link": link, "status": 3}
+        book = {"id": id, "title": title, "link": link}
         result.append(book)
     return result
 
@@ -88,9 +70,6 @@ def get_list_diff(list1, list2):
     diff = [i for i in list1 + list2 if i not in list1 or i not in list2]
     return diff
 
-def empty_list(id=0, title='NA', link=''):
-    return [{'id': id, 'title': title, 'link': link}]
-
 def write_list_to_file(lst, fname):
     json.dump(lst, open(fname, 'w'))
 
@@ -98,45 +77,53 @@ def read_list_from_file(fname):
     return json.load(open(fname, 'r'))
 
 # Library helpers
-def save_library():
+def find_by_id(library, id):
+    if isinstance(id, str):
+        id = int(id)
+
+    for item in library:
+        if item['id'] == id:
+            return item
+    return {}
+
+def save_library(library):
     write_list_to_file(library, library_file)
-    load_library()
 
 def load_library():
-    global library 
     try:
         library = read_list_from_file(library_file)
     except:
         library = create_library()
+    return library
 
 def create_library():
-    global library
     library = []
     catalog = get_latest_catalog()
     save_catalog(catalog)
-    update_library_with(catalog)
+    update_library(library, catalog)
     return library
 
-def update_library_with(items):
+def update_library(library, items):
     for item in items:
-        book = find_by_id(item['id'])
+        book = find_by_id(library, item['id'])
         if len(book) > 0:
             for key in item.keys():
                 book[key] = item[key]
         else:
             item['status'] = 3
             library.append(item)
-    save_library()
+    save_library(library)
 
 
 # Catalog helpers
 def save_catalog(obj):
-    write_list_to_file(obj, catalog_file)
+    with open(catalog_file, 'wb') as f:
+        pickle.dump(obj, f)
 
 def load_catalog():
     try:
-        catalog = read_list_from_file(catalog_file)
+        with open(catalog_file, 'rb') as f:
+            catalog = pickle.load(f)
     except:
         catalog = []
     return catalog
-
