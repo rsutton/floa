@@ -1,11 +1,11 @@
 "use strict";
 $(document).ready(function(){
-    var $SCRIPT_ROOT = location.origin;
-    var status_icons = ['fa-circle-o', 'fa-check', 'fa-heart', 'fa-star']
+    const $SCRIPT_ROOT = location.origin;
+    const view_labels = ["Catalog", "Bookshelf", "Wish List", "Updates"];
+    const status_icons = ["fa-circle-o", "fa-check", "fa-heart", "fa-star"];
 
     // initialize home view
-    let activePage = $('.nav-link active').text()
-    showBookshelf();
+    filterList("Bookshelf");
 
     // handle checkbox status
     function iconClassMatcher(index, className){
@@ -18,11 +18,10 @@ $(document).ready(function(){
         $(this).children('.content-listing__control').removeClass(iconClassMatcher).addClass(status_icons[status]);
     });
 
-    // tri-state checkbox click handler
+    // multi-state checkbox click handler
     $( '.content-listing__control' ).click(function(){
         let current_status = parseInt($(this).parent().attr('data-status'));
         let new_status = (current_status + 1) % status_icons.length;
-        console.log(new_status);
         $(this).parent().attr('data-status', new_status);
         $(this).removeClass(iconClassMatcher).addClass(status_icons[new_status]);
 
@@ -44,59 +43,36 @@ $(document).ready(function(){
         let clicked = $(this).text();
         $('a.nav-link').each(function(){ $(this).removeClass("active"); });
         $(this).addClass("active");
-        if ( clicked == "Bookshelf" ){
-            showBookshelf();
-        } 
-        else if ( clicked == "Wish List" ){
-            showWishList();
-        } 
-        else if ( clicked == "Catalog" ){
-            showCatalog();
-        }
-        else if ( clicked == "Updates" ){
+        filterList(clicked);
+    });
+
+    function filterList(clicked){
+        if ( clicked == "Updates" ){
             let url = $SCRIPT_ROOT + "/_update/catalog";
             $.ajax({
-                url: url
+                url: url,
+                // TODO new updates are not populating until after a page reload...
+                success: function(){
+                    $('a.nav-link').each(function(){ $(this).removeClass("active"); });
+                    $("a.nav-link:contains('Updates')").addClass("active");
+                }
             });
-            showUpdates();
         }
-    });
-    function showBookshelf(){
+        let status = $.inArray(clicked, view_labels);
         $('.content-listing').each(function(){
-            if( $(this).attr('data-status') == '1' ){
+            if( clicked == "Catalog" || $(this).attr('data-status') == status ){
                 $(this).show();
             } else {
                 $(this).hide();
             }
         });
     }
-    function showWishList(){
-        $('.content-listing').each(function(){
-            if( $(this).attr('data-status') == '2' ){
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });  
-    }
-    function showCatalog(){
-        $('.content-listing').each(function(){
-            $(this).show();
-        });
-    }
-    function showUpdates(){
-        $('.content-listing').each(function(){
-            if( $(this).attr('data-status') == '3' ){
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });          
-    }
+
+    // searchbox
     function clearSearch(){
         $('input[name=search]').val('');
     }
-    // search
+
     $('button[type=submit]').click(function(){
         let query = $('input[name=search]').val().toUpperCase();
         showCatalog();
