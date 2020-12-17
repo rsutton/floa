@@ -47,23 +47,6 @@ $(document).ready(function(){
     });
 
     function filterList(clicked){
-        if ( clicked == "Updates" ){
-            let url = $SCRIPT_ROOT + "/_update/catalog";
-            $.ajax({
-                url: url,
-                // TODO new updates are not populating until after a page reload...
-                success: function(result){
-                    if ( result.length > 0 ){
-                        console.log(result);
-                        $(result).each(function(){
-                            addToList($(this));
-                        });
-                    }
-                    $('a.nav-link').each(function(){ $(this).removeClass("active"); });
-                    $("a.nav-link:contains('Updates')").addClass("active");
-                }
-            });
-        }
         let status = $.inArray(clicked, view_labels);
         $('.content-listing').each(function(){
             if( clicked == "Catalog" || $(this).attr('data-status') == status ){
@@ -72,25 +55,6 @@ $(document).ready(function(){
                 $(this).hide();
             }
         });
-    }
-    function addToList(item){
-        console.log(item);
-        item.each(function(){
-            console.log($(this));
-        });
-
-        
-        // let entry = '\
-        // <li class="content-listing" data-id=' + item.id + ' data-status=' + item.status + '> \
-        //     <div class="content-listing__control fa fa-circle-o"></div> \
-        //     <div class="content-listing__details"> \
-        //         <a href=' + item.id + '> \
-        //             <i class="content-listing__number">' + item.id + '.</i> \
-        //             <b class="content-listing__title">' + item.title + '</b> \
-        //         </a> \
-        //     </div> \
-        // </li>'
-        // $('.content-list').append(entry);
     }
 
     // searchbox
