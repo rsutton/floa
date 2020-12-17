@@ -1,25 +1,34 @@
 from flask import Flask
-
+import json
 import unittest
 
 class TestCatalog(unittest.TestCase):
 
-    def setUp(self) -> None:
+    def setUp(self):
         self.app = Flask(__name__)
         self.app.config.from_pyfile('config.py')
         self.app.config['TESTING'] = True
+        with self.app.app_context():
+            from floa.models.catalog import Catalog
+        self.catalog = Catalog(fname='./tests/data/loa_catalog.json')
 
-    def tearDown(self) -> None:
+    def tearDown(self):
         return super().tearDown()
 
-    def test_get_list_diff(self):
-        with self.app.app_context():
-            import floa.routes as fr
-            catalog_4 = fr.load_catalog(filename='./tests/data/loa_catalog_4_items.data')
-            catalog_8 = fr.load_catalog(filename='./tests/data/loa_catalog_8_items.data')
-            diff = fr.get_list_diff(catalog_4, catalog_8)
-            self.assertEqual(len(diff), 4)
-            diff = fr.get_list_diff(catalog_4, catalog_4)
-            self.assertEqual(len(diff), 0)
+    def test_catalog_is_valid_json(self):
+        self.catalog.load()
+        assert(isinstance(self.catalog.catalog, list))
 
+    def test_catalog_diff(self):
+        self.catalog.load()
+        diff = self.catalog.compare(self.catalog.catalog, self.catalog.catalog)
+        self.assertTrue(isinstance(diff, list))
+        self.assertEqual(len(diff), 0)
 
+    # def test_get_latest_catalog(self):
+    #     ''' this is expensive and should be an integration test'''
+    #     url=self.app.config['LOA_COLLECTION_URL']
+    #     result = self.catalog.get_latest(url)
+    #     assert(isinstance(result, list))
+    #     id = result[0].get('id')
+    #     self.assertTrue(id == 1)
