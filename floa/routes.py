@@ -71,10 +71,12 @@ def get_list_diff(list1, list2):
     return diff
 
 def write_list_to_file(lst, fname):
-    json.dump(lst, open(fname, 'w'))
+    with open(fname, 'w') as f:
+        json.dump(lst, f)
 
 def read_list_from_file(fname):
-    return json.load(open(fname, 'r'))
+    with open(fname, 'r') as f:
+        return json.load(f)
 
 # Library helpers
 def find_by_id(library, id):
@@ -86,24 +88,23 @@ def find_by_id(library, id):
             return item
     return {}
 
-def save_library(library):
-    write_list_to_file(library, library_file)
+def save_library(library, filename=library_file):
+    write_list_to_file(library, filename)
 
-def load_library():
+def load_library(filename=library_file):   
     try:
-        library = read_list_from_file(library_file)
+        library = read_list_from_file(filename)
     except:
-        library = create_library()
+        library = create_library_from_catalog()
     return library
 
-def create_library():
+def create_library_from_catalog(filename=catalog_file):
     library = []
-    catalog = get_latest_catalog()
-    save_catalog(catalog)
+    catalog = load_catalog(filename)
     update_library(library, catalog)
     return library
 
-def update_library(library, items):
+def update_library(library, items, filename=library_file):   
     for item in items:
         book = find_by_id(library, item['id'])
         if len(book) > 0:
@@ -112,18 +113,21 @@ def update_library(library, items):
         else:
             item['status'] = 3
             library.append(item)
-    save_library(library)
+    save_library(library, filename)
 
 
 # Catalog helpers
-def save_catalog(obj):
-    with open(catalog_file, 'wb') as f:
-        pickle.dump(obj, f)
+def save_catalog(catalog, filename=catalog_file):
+    with open(filename, 'wb') as f:
+        pickle.dump(catalog, f)
 
-def load_catalog():
+def load_catalog(filename=catalog_file):
     try:
-        with open(catalog_file, 'rb') as f:
+        print("file: " + filename)
+        with open(filename, 'rb') as f:
             catalog = pickle.load(f)
     except:
-        catalog = []
+        print("creating new file")
+        catalog = get_latest_catalog()
+        save_catalog(catalog, filename)
     return catalog
