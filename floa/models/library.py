@@ -1,3 +1,4 @@
+from flask import current_app, g
 import json
 import os.path
 
@@ -5,6 +6,10 @@ class Library(object):
     def __init__(self, **kwargs):
         self._library = None
         self._filename = kwargs.get('fname') or None
+
+    def init_app(self, app):
+        # library_file = os.path.join(os.path.dirname(app.instance_path), app.config['LIBRARY_FILENAME'])
+        # library = Library(fname=library_file)
 
     @property
     def library(self):
@@ -51,6 +56,7 @@ class Library(object):
         item = self.find_by_id(id)
         if len(item) > 0:
             item['status'] = status
+            self.save()
             return id
         return 0
 
