@@ -53,6 +53,8 @@ class Catalog(object):
 
     @staticmethod
     def compare(list1, list2):
+        assert(isinstance(list1, list))
+        assert(isinstance(list2, list))
         diff = [i for i in list1 + list2 if i not in list1 or i not in list2]
         return diff
 
