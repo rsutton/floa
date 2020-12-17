@@ -1,3 +1,5 @@
 graft loa/templates
 graft loa/static
 global-exclue *.pyc *.json
+include LICENSE.txt
+include *.modify
