@@ -2,6 +2,7 @@
 from flask import Flask
 from floa.models.catalog import Catalog
 from floa.models.library import Library
+import os.path
 
 def create_app():
     app = Flask(
@@ -18,10 +19,14 @@ def create_app():
 
 def init_app(app):
     library = Library(app=app)
-    catalog = Catalog(app=app)
+    if os.path.exists(library.filename):
+        library.load()
 
-    library.load()
-    current = catalog.load().catalog
+    catalog = Catalog(app=app)
+    if os.path.exists(catalog.filename):
+        catalog.load()
+    current = catalog.catalog
+
     latest = catalog.get_latest()
     diff = catalog.compare(latest, current)
     if len(diff) > 0:

@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 
 class Catalog(object):
     def __init__(self, *args, **kwargs):
-        self._catalog = None
+        self._catalog = []
         self._filename = kwargs.get('fname') or None
         self._url = kwargs.get('url') or None
         self._app = kwargs.get('app') or None
@@ -56,6 +56,8 @@ class Catalog(object):
     def save(self, fname=None):
         if fname is None:
             fname = self._filename
+        if not os.path.exists(os.path.dirname(fname)):
+            os.makedirs(os.path.dirname(fname))
         with open(fname, 'w') as f:
             json.dump(self._catalog, f)
         return len(self._catalog)

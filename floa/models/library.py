@@ -3,7 +3,7 @@ import os.path
 
 class Library(object):
     def __init__(self, **kwargs):
-        self._library = None
+        self._library = []
         self._filename = kwargs.get('fname') or None
         self._app = kwargs.get('app') or None
 
@@ -42,7 +42,9 @@ class Library(object):
 
     def save(self, fname=None):
         if fname is None:
-            fname = self._filename        
+            fname = self._filename
+        if not os.path.exists(os.path.dirname(fname)):
+            os.makedirs(os.path.dirname(fname))            
         with open(fname, 'w') as f:
             json.dump(self._library, f)
         return len(self._library)

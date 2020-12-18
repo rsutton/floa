@@ -1,7 +1,7 @@
-
-- initialize new library
-  - folder creation
-  - get latest
+# TODO
+- ~~initialize new library~~
+  - ~~folder creation~~
+  - ~~get latest~~
 - message bar for 
   - item counts
   - last update time
