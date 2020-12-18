@@ -31,13 +31,13 @@ The icons to the left of each volume's entry are what make the views possible.
 These are a multi-state variation of a *checkbox* control. Each click on
 the control cycles its state through the four possible values.
 
-**Check mark** => Bookshelf
+**Check mark** => show in Bookshelf
 
-**Heart** => Wish List
+**Heart** => show in Wish List
 
-**Star** => Updates
+**Star** => show in Updates
 
-**Circle** => only shown in Catalog view
+**Circle** => the default and only shown in the Catalog view
 
 ![icons](docs/img/icons.png)
 
