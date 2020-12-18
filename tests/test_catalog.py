@@ -10,7 +10,7 @@ class TestCatalog(unittest.TestCase):
         self.app.config['TESTING'] = True
         with self.app.app_context():
             from floa.models.catalog import Catalog
-        self.catalog = Catalog(fname='./tests/data/loa_catalog.json')
+        self.catalog = Catalog(fname=self.app.config['CATALOG_FILENAME'])
 
     def tearDown(self):
         return super().tearDown()

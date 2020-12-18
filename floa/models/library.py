@@ -1,4 +1,3 @@
-from flask import current_app, g
 import json
 import os.path
 
@@ -6,10 +5,12 @@ class Library(object):
     def __init__(self, **kwargs):
         self._library = None
         self._filename = kwargs.get('fname') or None
+        self._app = kwargs.get('app') or None
 
-    def init_app(self, app):
-        # library_file = os.path.join(os.path.dirname(app.instance_path), app.config['LIBRARY_FILENAME'])
-        # library = Library(fname=library_file)
+        if self._app is not None:
+            self._filename = os.path.join(
+                    os.path.dirname(self._app.instance_path), 
+                    self._app.config['LIBRARY_FILENAME'])
 
     @property
     def library(self):

@@ -1,7 +1,7 @@
-from flask import current_app, g
 
 from bs4 import BeautifulSoup 
 import json
+import os.path
 import requests
 from urllib.parse import urlparse
 
@@ -10,11 +10,13 @@ class Catalog(object):
         self._catalog = None
         self._filename = kwargs.get('fname') or None
         self._url = kwargs.get('url') or None
+        self._app = kwargs.get('app') or None
 
-    def init_app(app):
-        # catalog_file = os.path.join(os.path.dirname(app.instance_path), app.config['CATALOG_FILENAME'])
-        # loa_url = app.config['LOA_COLLECTION_URL']
-        # catalog = Catalog(fname=catalog_file, url=loa_url)
+        if self._app is not None:
+            self._filename = os.path.join(
+                        os.path.dirname(self._app.instance_path), 
+                        self._app.config['CATALOG_FILENAME'])
+            self._url = self._app.config['LOA_COLLECTION_URL']
 
     @property
     def catalog(self):

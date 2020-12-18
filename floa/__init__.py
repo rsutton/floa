@@ -1,11 +1,7 @@
 
 from flask import Flask
-import os.path
-from .models.library import Library
-from .models.catalog import Catalog
-
-library = Library()
-catalog = Catalog()
+from floa.models.catalog import Catalog
+from floa.models.library import Library
 
 def create_app():
     app = Flask(
@@ -14,17 +10,16 @@ def create_app():
     )
     app.config.from_pyfile('config.py')
 
-    library.init_app(app)
-    catalog.init_app(app)
-
     with app.app_context():
         from . import routes
         app.register_blueprint(routes.bp)
-
-        init_library(app)
+        init_app(app)
     return app
 
-def init_library(app):
+def init_app(app):
+    library = Library(app=app)
+    catalog = Catalog(app=app)
+
     library.load()
     catalog.load()
     latest = catalog.get_latest()
@@ -35,5 +30,3 @@ def init_library(app):
         catalog.save()
         # add new items to library
         library.add(diff)
-    
-

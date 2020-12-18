@@ -13,7 +13,7 @@ class TestLibrary(unittest.TestCase):
         self.app.config['TESTING'] = True
         with self.app.app_context():
             from floa.models.library import Library
-        self.library = Library(fname='./tests/data/library.json')
+        self.library = Library(fname=self.app.config['LIBRARY_FILENAME'])
 
     def tearDown(self):
         return super().tearDown()
