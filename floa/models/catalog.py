@@ -51,7 +51,7 @@ class Catalog(object):
             fname = self._filename
         with open(fname, 'r') as f:
             self._catalog = json.load(f)
-        return len(self._catalog)
+        return self
 
     def save(self, fname=None):
         if fname is None:

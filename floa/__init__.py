@@ -21,12 +21,13 @@ def init_app(app):
     catalog = Catalog(app=app)
 
     library.load()
-    catalog.load()
+    current = catalog.load().catalog
     latest = catalog.get_latest()
-    diff = catalog.compare(latest, catalog.catalog)
+    diff = catalog.compare(latest, current)
     if len(diff) > 0:
         # latest is authoritative so overwrite the catalog
         catalog.catalog = latest
         catalog.save()
         # add new items to library
-        library.add(diff)
+        library.add(latest)
+    library.load()

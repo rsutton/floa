@@ -64,7 +64,7 @@ $(document).ready(function(){
 
     $('button[type=submit]').click(function(){
         let query = $('input[name=search]').val().toUpperCase();
-        showCatalog();
+        filterList('Catalog');
         $('.content-listing').each(function(){
             if ( $(this).find('.content-listing__title').text().toUpperCase().indexOf(query) == -1 ){
                 $(this).hide();
