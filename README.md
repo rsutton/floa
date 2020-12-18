@@ -1,5 +1,5 @@
 # floa
-A single page application to manage my **Library of America** series collection.
+A single page Flask application to manage my **Library of America** series collection.
 
 The [Library of America](https://log.org) is a non-profit organization which publishes America's greatest writing. They currently have 337 volumes in their series. This application is a personal project to help me manage my bookshelf of these fine volumes.
 
