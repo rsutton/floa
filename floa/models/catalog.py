@@ -1,5 +1,6 @@
 
 from bs4 import BeautifulSoup 
+import datetime as dt
 import json
 import os.path
 import requests
@@ -10,6 +11,7 @@ class Catalog(object):
         self._catalog = []
         self._filename = kwargs.get('fname') or None
         self._url = kwargs.get('url') or None
+        self._last_update = None
         self._app = kwargs.get('app') or None
 
         if self._app is not None:
@@ -46,6 +48,15 @@ class Catalog(object):
         self._url = val
         return self._url
 
+    @property
+    def last_update(self):
+        return self._last_update
+
+    @last_update.setter
+    def last_update(self, val):
+        assert(isinstance(val, dt.datetime))
+        self._last_update = val
+        
     def load(self, fname=None):
         if fname is None:
             fname = self._filename

@@ -1,4 +1,4 @@
-
+import datetime as dt
 from flask import Flask
 from floa.models.catalog import Catalog
 from floa.models.library import Library
@@ -33,6 +33,7 @@ def init_app(app):
         # latest is authoritative so overwrite the catalog
         catalog.catalog = latest
         catalog.save()
+        catalog.last_update = dt.datetime.now()
         # add new items to library
         library.add(latest)
     library.load()
