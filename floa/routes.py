@@ -18,14 +18,14 @@ def context_process():
 @bp.route("/")
 def home():
     library.load()
-    return render_template('home.html', list=library.library)
+    return render_template('home.html', data=dict(library = library.library, catalog = library.catalog))
 
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():
-    result = library.set_book_status(
-                id=request.json['id'], 
-                status=request.json['status']
-            )
-    return result
+    library.set_status(
+        id=request.json['id'], 
+        status=request.json['status']
+    )
+    return "OK"
 
 

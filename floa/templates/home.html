@@ -39,13 +39,13 @@
         </div>
     </div>
     <div class="message">
-        <div>{{ list | length }} Volumes in Catalog</div>
+        <div>{{ data.catalog | length }} Volumes in Catalog</div>
         <div>Last updated: {{ last_update }}</div>
     </div>
     <div class="content">
         <ul class="content-list">
-            {% for book in list %}
-            <li class="content-listing" data-id={{ book['id'] }} data-status={{ book['status'] }}>
+            {% for book in data.catalog %}
+            <li class="content-listing" data-id={{ book['id'] }} data-status={{ data.library[ book['id'] ] }}>
                 <div class="content-listing__control fa fa-circle-o"></div>
                 <div class="content-listing__details">
                     <a href={{ book['link'] }}>

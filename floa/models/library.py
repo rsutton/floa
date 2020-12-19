@@ -1,10 +1,17 @@
 
 from bs4 import BeautifulSoup 
 import datetime as dt
+import enum
 import os.path
 import pickle
 import requests
 from urllib.parse import urlparse
+
+class Status(enum.Enum):
+    NOT_HAVE = 0
+    HAVE = 1
+    WISH = 2
+    NEW  = 3
 
 class Library(object):
     def __init__(self, app, *args, **kwargs):
@@ -112,10 +119,6 @@ class Library(object):
             result.append(book)
         return result
 
-
-# from library class
-# library list is where index = volume_id
-# and value = status (0,1,2,3)
     def find_by_id(self, id):
         if isinstance(id, str):
             id = int(id)
@@ -124,12 +127,14 @@ class Library(object):
                 return item
         return {}
 
-    def set_book_status(self, id, status):
+    def set_status(self, id, status):
+        if isinstance(id, str):
+            id = int(id)
         self.library[id] = status
         self.save()
 
     def add(self, items):   
         for item in items:
             id = item.get('id')
-            self._library.insert(id, 3)
+            self._library.insert(id, Status.NEW.value)
         self.save()

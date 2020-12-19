@@ -1,5 +1,5 @@
 from flask import Flask
-from floa.models.library import Library
+from floa.models.library import Library, Status
 import unittest
 
 class TestCatalog(unittest.TestCase):
@@ -43,6 +43,7 @@ class TestCatalog(unittest.TestCase):
         self.library.load()
         self.library.catalog = self.generate_list(4)
         result = self.library.find_by_id(1)
+        assert(isinstance(result, dict))
         self.assertEqual(1, result.get('id'))
 
     def test_find_by_id_not_found_returns_empty(self):
@@ -50,20 +51,38 @@ class TestCatalog(unittest.TestCase):
         self.library.catalog = self.generate_list(4)
         id = self.library.catalog[-1].get('id') + 1
         result = self.library.find_by_id(id)
+        assert(isinstance(result, dict))
         self.assertEqual(len(result), 0)
 
-    def test_set_book_status(self):
+    def test_set_status(self):
+        self.library.load()
+        list10 = self.generate_list(10)
+        self.library.library = list10
+        for item in list10:
+            i = item['id']
+            s = i % len(Status)
+            self.library.set_status(i, s)
+        self.assertEqual(Status(self.library.library[0]), Status['NOT_HAVE'])
+        self.assertEqual(Status(self.library.library[3]), Status['NEW'])
+        self.assertEqual(Status(self.library.library[6]), Status['WISH'])
+        self.assertEqual(Status(self.library.library[9]), Status['HAVE'])
+
+    def test_add_book_status_value_is_new(self):
         self.library.load()
         list1 = self.generate_list(4)
         self.library.catalog = list1 
+        # add some items
         self.library.add(self.library.catalog)
-        self.assertEqual(self.library.library[0], 3)
+        # status of all is New
+        for i in self.library.library:
+            self.assertEqual(Status(self.library.library[i]), Status['NEW'])
+        # and we have the whole list
         self.assertEqual(len(self.library.library), 4)
+        # add another item
         list2 = self.generate_list(5)
         diff = self.library.compare(list1, list2)
         self.library.add(diff)
         self.assertEqual(len(self.library.library), 5)
-        self.assertEqual(self.library.library[4], 3)
-        print(self.library.library)
+        self.assertEqual(Status(self.library.library[4]), Status['NEW'])
 
 # need to test gaps in id numbers
