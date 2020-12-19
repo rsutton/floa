@@ -21,7 +21,6 @@ def init_app(app):
         library.load()
 
     current = library.catalog
-
     latest = library.get_latest()
 
     diff = library.compare(latest, current)
@@ -30,4 +29,5 @@ def init_app(app):
         library.catalog = latest
         # add new items to library
         library.add(latest)
+
     library.save().load()
