@@ -12,8 +12,9 @@ library = Library(app)
 
 @app.context_processor
 def context_process():
-    last_update = Library(app).load().last_update
-    return dict(last_update=last_update)
+    last_update = library.load().last_update
+    catalog_count = len(library.catalog)
+    return dict(last_update=last_update, catalog_count=catalog_count)
 
 @bp.route("/")
 def home():

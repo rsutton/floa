@@ -8,6 +8,10 @@ a:link,a:visited{color: #000;text-decoration: none;}
 a:hover{color:red;text-decoration: none;}
 a:active{color:#000;text-decoration: none;}
 
+i.counter{
+    font-style: normal;
+}
+
 .content-list-count{text-align: right; color: #fff;}
 
 .content-list {

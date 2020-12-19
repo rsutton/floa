@@ -5,7 +5,7 @@ $(document).ready(function(){
     const status_icons = ["fa-circle-o", "fa-check", "fa-heart", "fa-star"];
 
     // initialize home view
-    filterList("Bookshelf");
+    showView("Bookshelf");
 
     // handle checkbox status
     function iconClassMatcher(index, className){
@@ -35,41 +35,59 @@ $(document).ready(function(){
             method: "POST",
             data: JSON.stringify({"id": id, "status": new_status})
         });
+        update_bookshelf_counter();
     });
 
     // navigation handler
     $('a.nav-link').click(function(){
         clearSearch();
         let clicked = $(this).text();
-        $('a.nav-link').each(function(){ $(this).removeClass("active"); });
-        $(this).addClass("active");
-        filterList(clicked);
+        showView(clicked)
     });
-
-    function filterList(clicked){
-        let status = $.inArray(clicked, view_labels);
-        $('.content-listing').each(function(){
-            if( clicked == "Catalog" || $(this).attr('data-status') == status ){
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    }
 
     // searchbox
     function clearSearch(){
         $('input[name=search]').val('');
     }
 
-    $('button[type=submit]').click(function(){
+    $('button[type=submit]').click(function(e){
+        e.preventDefault();
         let query = $('input[name=search]').val().toUpperCase();
-        filterList('Catalog');
+        showView('Catalog');
         $('.content-listing').each(function(){
             if ( $(this).find('.content-listing__title').text().toUpperCase().indexOf(query) == -1 ){
                 $(this).hide();
             }
         });
     });
+
+    // view controllers
+    function showView(view){
+        $('a.nav-link').each(function(){ $(this).removeClass("active"); });
+        $('a.nav-link:contains("' + view + '")').addClass("active");
+        filterList(view);
+        if ( view === "Bookshelf" ){
+            update_bookshelf_counter();
+        }
+    }
+    function filterList(clicked){
+        let status = $.inArray(clicked, view_labels);
+        $('.content-listing').each(function(){
+            if( clicked === "Catalog" || $(this).attr('data-status') == status ){
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+    function update_bookshelf_counter(){
+        let counter = 0;
+        $( '.content-listing' ).each(function(){
+            if ( $(this).attr('data-status') == '1' ){
+                counter = counter + 1;
+            }
+        });
+        $( '.counter' ).text(counter);
+    }
 
 });
