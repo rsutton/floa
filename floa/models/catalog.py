@@ -7,14 +7,13 @@ import requests
 from urllib.parse import urlparse
 
 class Catalog(object):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, app, *args, **kwargs):
         self._catalog = []
         self._filename = kwargs.get('fname') or None
         self._url = kwargs.get('url') or None
         self._last_update = None
 
-        if 'app' in kwargs:
-            app = kwargs.get('app')
+        if app:
             self._filename = os.path.join(
                         os.path.dirname(app.instance_path), 
                         app.config['CATALOG_FILENAME'])
@@ -73,6 +72,7 @@ class Catalog(object):
         if not os.path.exists(os.path.dirname(fname)):
             os.makedirs(os.path.dirname(fname))
         with open(fname, 'wb') as f:
+            self._last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
             pickle.dump(self, f)
         return self
 

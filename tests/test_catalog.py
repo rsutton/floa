@@ -1,6 +1,5 @@
 from flask import Flask
-import json
-import pickle
+from floa.models.catalog import Catalog
 import unittest
 
 class TestCatalog(unittest.TestCase):
@@ -16,9 +15,7 @@ class TestCatalog(unittest.TestCase):
         self.app = Flask(__name__)
         self.app.config.from_pyfile('config.py')
         self.app.config['TESTING'] = True
-        with self.app.app_context():
-            from floa.models.catalog import Catalog
-        self.catalog = Catalog(fname=self.app.config['CATALOG_FILENAME']).save()
+        self.catalog = Catalog(self.app).save()
 
     def tearDown(self):
         return super().tearDown()

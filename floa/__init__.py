@@ -1,4 +1,3 @@
-import datetime as dt
 from flask import Flask
 from floa.models.catalog import Catalog
 from floa.models.library import Library
@@ -18,15 +17,14 @@ def create_app():
     return app
 
 def init_app(app):
-    library = Library(app=app)
+    library = Library(app)
     if os.path.exists(library.filename):
         library.load()
 
-    catalog = Catalog(app=app).load()
+    catalog = Catalog(app).load()
     current = catalog.catalog
 
     latest = catalog.get_latest()
-    catalog.last_update = dt.datetime.now()
 
     diff = catalog.compare(latest, current)
     if len(diff) > 0:

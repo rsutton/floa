@@ -2,12 +2,11 @@ import json
 import os.path
 
 class Library(object):
-    def __init__(self, **kwargs):
+    def __init__(self, app, *args, **kwargs):
         self._library = []
         self._filename = kwargs.get('fname') or None
 
-        if 'app' in kwargs:
-            app = kwargs.get('app')
+        if app:
             self._filename = os.path.join(
                     os.path.dirname(app.instance_path), 
                     app.config['LIBRARY_FILENAME'])
