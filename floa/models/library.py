@@ -5,12 +5,12 @@ class Library(object):
     def __init__(self, **kwargs):
         self._library = []
         self._filename = kwargs.get('fname') or None
-        self._app = kwargs.get('app') or None
 
-        if self._app is not None:
+        if 'app' in kwargs:
+            app = kwargs.get('app')
             self._filename = os.path.join(
-                    os.path.dirname(self._app.instance_path), 
-                    self._app.config['LIBRARY_FILENAME'])
+                    os.path.dirname(app.instance_path), 
+                    app.config['LIBRARY_FILENAME'])
 
     @property
     def library(self):
@@ -38,7 +38,7 @@ class Library(object):
             fname = self._filename
         with open(fname, 'r') as f:
             self._library = json.load(f)
-        return len(self._library)
+        return self
 
     def save(self, fname=None):
         if fname is None:
@@ -47,7 +47,7 @@ class Library(object):
             os.makedirs(os.path.dirname(fname))            
         with open(fname, 'w') as f:
             json.dump(self._library, f)
-        return len(self._library)
+        return self
 
     def book_status(self, id):
         item = self.find_by_id(id)
@@ -81,4 +81,3 @@ class Library(object):
             else:
                 item['status'] = 3
                 self.library.append(item)
-        self.save()

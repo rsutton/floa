@@ -1,8 +1,16 @@
 from flask import Flask
 import json
+import pickle
 import unittest
 
 class TestCatalog(unittest.TestCase):
+
+    @staticmethod
+    def generate_list(count):
+        result = []
+        for i in range(count):
+            result.append({'id': i, 'title': f'Title {i}'})
+        return result
 
     def setUp(self):
         self.app = Flask(__name__)
@@ -10,18 +18,14 @@ class TestCatalog(unittest.TestCase):
         self.app.config['TESTING'] = True
         with self.app.app_context():
             from floa.models.catalog import Catalog
-        self.catalog = Catalog(fname=self.app.config['CATALOG_FILENAME'])
+        self.catalog = Catalog(fname=self.app.config['CATALOG_FILENAME']).save()
 
     def tearDown(self):
         return super().tearDown()
 
-    def test_catalog_is_valid_json(self):
-        self.catalog.load()
-        assert(isinstance(self.catalog.catalog, list))
-
-    def test_catalog_no_diff(self):
-        self.catalog.load()
-        diff = self.catalog.compare(self.catalog.catalog, self.catalog.catalog)
+    def test_catalog_compare_no_diff(self):
+        list1 = self.generate_list(3)
+        diff = self.catalog.compare(list1, list1)
         self.assertTrue(isinstance(diff, list))
         self.assertEqual(len(diff), 0)
 
@@ -33,8 +37,6 @@ class TestCatalog(unittest.TestCase):
     #     id = result[0].get('id')
     #     self.assertTrue(id == 1)
 
-    def test_catalog_with_one_diff(self):
-        catold = self.catalog.load(fname='./tests/data/catalog-old.json').catalog
-        catnew = self.catalog.load(fname='./tests/data/catalog-new.json').catalog
-        diff = self.catalog.compare(catold, catnew)
-        self.assertEqual(len(diff), 2)
+    def test_catalog_compare_with_one_diff(self):
+        diff = self.catalog.compare(self.generate_list(2), self.generate_list(3))
+        self.assertEqual(len(diff), 1)

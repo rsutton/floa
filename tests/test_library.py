@@ -1,8 +1,6 @@
 from flask import Flask
 import json
-import os
 import os.path
-import pickle
 import unittest
 
 class TestLibrary(unittest.TestCase):
@@ -31,7 +29,7 @@ class TestLibrary(unittest.TestCase):
 
     def test_find_by_id_not_found_returns_empty(self):
         self.library.load()
-        id = len(self.library.library) + 1
+        id = self.library.library[-1].get('id') + 1
         result = self.library.find_by_id(id)
         self.assertEqual(len(result), 0)
 
@@ -43,7 +41,7 @@ class TestLibrary(unittest.TestCase):
 
     def test_set_book_status_fail(self):
         self.library.load()
-        id = len(self.library.library) + 1
+        id = self.library.library[-1].get('id') + 1
 
         status = self.library.book_status(id)
         assert(isinstance(status, int))

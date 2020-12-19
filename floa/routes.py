@@ -12,9 +12,9 @@ bp = Blueprint(
 library = Library(app=app)
 
 @app.context_processor
-def last_update():
-    val = Catalog().last_update or dt.datetime.now()
-    return dict(last_update=val)
+def context_process():
+    last_update = Catalog().last_update or dt.datetime.now()
+    return dict(last_update=last_update)
 
 @bp.route("/")
 def home():

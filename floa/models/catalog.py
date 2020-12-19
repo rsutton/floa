@@ -1,8 +1,8 @@
 
 from bs4 import BeautifulSoup 
 import datetime as dt
-import json
 import os.path
+import pickle
 import requests
 from urllib.parse import urlparse
 
@@ -12,13 +12,13 @@ class Catalog(object):
         self._filename = kwargs.get('fname') or None
         self._url = kwargs.get('url') or None
         self._last_update = None
-        self._app = kwargs.get('app') or None
 
-        if self._app is not None:
+        if 'app' in kwargs:
+            app = kwargs.get('app')
             self._filename = os.path.join(
-                        os.path.dirname(self._app.instance_path), 
-                        self._app.config['CATALOG_FILENAME'])
-            self._url = self._app.config['LOA_COLLECTION_URL']
+                        os.path.dirname(app.instance_path), 
+                        app.config['CATALOG_FILENAME'])
+            self._url = app.config['LOA_COLLECTION_URL']
 
     @property
     def catalog(self):
@@ -56,22 +56,25 @@ class Catalog(object):
     def last_update(self, val):
         assert(isinstance(val, dt.datetime))
         self._last_update = val
-        
+    
     def load(self, fname=None):
         if fname is None:
             fname = self._filename
-        with open(fname, 'r') as f:
-            self._catalog = json.load(f)
+        if os.path.exists(fname):
+            with open(fname, 'rb') as f:
+                p = pickle.load(f)
+                self.__dict__.clear()
+                self.__dict__.update(p.__dict__) 
         return self
-
+         
     def save(self, fname=None):
         if fname is None:
             fname = self._filename
         if not os.path.exists(os.path.dirname(fname)):
             os.makedirs(os.path.dirname(fname))
-        with open(fname, 'w') as f:
-            json.dump(self._catalog, f)
-        return len(self._catalog)
+        with open(fname, 'wb') as f:
+            pickle.dump(self, f)
+        return self
 
     @staticmethod
     def compare(list1, list2):
