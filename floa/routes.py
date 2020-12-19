@@ -1,6 +1,5 @@
 import datetime as dt
 from flask import Blueprint, render_template, request, current_app as app
-from floa.models.catalog import Catalog
 from floa.models.library import Library
 
 bp = Blueprint(
@@ -13,7 +12,7 @@ library = Library(app)
 
 @app.context_processor
 def context_process():
-    last_update = Catalog(app).load().last_update
+    last_update = Library(app).load().last_update
     return dict(last_update=last_update)
 
 @bp.route("/")

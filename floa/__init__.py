@@ -1,5 +1,4 @@
 from flask import Flask
-from floa.models.catalog import Catalog
 from floa.models.library import Library
 import os.path
 
@@ -21,16 +20,14 @@ def init_app(app):
     if os.path.exists(library.filename):
         library.load()
 
-    catalog = Catalog(app).load()
-    current = catalog.catalog
+    current = library.catalog
 
-    latest = catalog.get_latest()
+    latest = library.get_latest()
 
-    diff = catalog.compare(latest, current)
+    diff = library.compare(latest, current)
     if len(diff) > 0:
         # latest is authoritative so overwrite the catalog
-        catalog.catalog = latest
+        library.catalog = latest
         # add new items to library
         library.add(latest)
-    catalog.save()
     library.save().load()
