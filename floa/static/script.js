@@ -70,10 +70,12 @@ $(document).ready(function(){
         if ( view === "Help" || ( view === "Bookshelf" && counter == 0 )){
                 $('.help').show();
                 $('.content-list').hide();
+                $('.message').hide();
         }
         else {
             $('.help').hide();
             $('.content-list').show();
+            $('.message').show();
         }
     }
     function filterList(clicked){
