@@ -8,6 +8,7 @@ import requests
 from urllib.parse import urlparse
 
 class Status(enum.Enum):
+    MISSING = -1
     NOT_HAVE = 0
     HAVE = 1
     WISH = 2
@@ -16,7 +17,7 @@ class Status(enum.Enum):
 class Library(object):
     def __init__(self, app, *args, **kwargs):
         self._catalog = []
-        self._library = []
+        self._library = [-1]
         self._filename = kwargs.get('fname') or None
         self._url = kwargs.get('url') or None
         self._last_update = None
@@ -117,6 +118,7 @@ class Library(object):
             link =  urlroot + book.find('a')['href']
             book = {"id": id, "title": title, "link": link}
             result.append(book)
+        # return self.sort(result)
         return result
 
     def find_by_id(self, id):
@@ -133,8 +135,20 @@ class Library(object):
         self.library[id] = status
         self.save()
 
-    def add(self, items):   
+    def add(self, items):
         for item in items:
+            nl = len(self.library)
             id = item.get('id')
-            self._library.insert(id, Status.NEW.value)
+            while (id > nl):
+                self._library.append(-1)
+                nl = len(self.library)
+            if (id < nl):
+                if self.library[id] == Status.MISSING.value:
+                    self.library[id] = Status.NEW.value
+            else:
+                self._library.append(Status.NEW.value)
         self.save()
+
+    def sort(self, lst):
+        assert(isinstance(lst, list))
+        return sorted(lst, key = lambda i: i['id'])

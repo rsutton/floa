@@ -1,7 +1,7 @@
 "use strict";
 $(document).ready(function(){
     const $SCRIPT_ROOT = location.origin;
-    const view_labels = ["Catalog", "Bookshelf", "Wish List", "Updates"];
+    const view_labels = ["Catalog", "Bookshelf", "Wish List", "New"];
     const status_icons = ["fa-circle-o", "fa-check", "fa-heart", "fa-star"];
 
     // initialize home view
@@ -66,8 +66,14 @@ $(document).ready(function(){
         $('a.nav-link').each(function(){ $(this).removeClass("active"); });
         $('a.nav-link:contains("' + view + '")').addClass("active");
         filterList(view);
-        if ( view === "Bookshelf" ){
-            update_bookshelf_counter();
+        let counter = update_bookshelf_counter();
+        if ( view === "Help" || ( view === "Bookshelf" && counter == 0 )){
+                $('.help').show();
+                $('.content-list').hide();
+        }
+        else {
+            $('.help').hide();
+            $('.content-list').show();
         }
     }
     function filterList(clicked){
@@ -88,6 +94,7 @@ $(document).ready(function(){
             }
         });
         $( '.counter' ).text(counter);
+        return counter;
     }
 
 });

@@ -19,8 +19,23 @@ i.counter{
     vertical-align: top;
     list-style-type: none;
 }
-.content-listing {
+
+.message {
+    float: right;
+    padding: 10px;
+    font-size: 12px;
+}
+.content {
     width: 100%;
+}
+.content .help {
+    font-size: 28px;
+    padding: 10px;
+}
+.content .help .title {
+    font-size: 36px;
+}
+.content-listing {
     padding-bottom: 28px;
 }
 .content-listing__control {
@@ -97,12 +112,6 @@ i.counter{
     line-height: 38px;
     font-weight: 500;
     letter-spacing: -0.04em;
-}
-
-.message {
-    float: right;
-    padding: 10px;
-    font-size: 12px;
 }
 
 /* Add a black background color to the top top-navigation */
