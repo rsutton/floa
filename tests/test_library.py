@@ -31,7 +31,7 @@ class TestCatalog(unittest.TestCase):
         self.app = Flask(__name__)
         self.app.config.from_pyfile('config.py')
         self.app.config['TESTING'] = True
-        self.library = Library(self.app).save()
+        self.library = Library(ctx=self.app).save()
 
     def tearDown(self):
         return super().tearDown()

@@ -17,7 +17,7 @@ def create_app():
     return app
 
 def init_app(app):
-    library = Library(app)
+    library = Library(ctx=app)
     if os.path.exists(library.filename):
         library.load()
 

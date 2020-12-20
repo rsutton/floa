@@ -17,7 +17,7 @@ def handle_404(err):
 def handle_500(err):
     return render_template('500.html'), 500
 
-library = Library(app)
+library = Library(ctx=app)
 
 @app.context_processor
 def context_process():

@@ -15,18 +15,19 @@ class Status(enum.Enum):
     NEW  = 3
 
 class Library(object):
-    def __init__(self, app, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self._catalog = []
         self._library = [-1]
         self._filename = kwargs.get('fname') or None
         self._url = kwargs.get('url') or None
         self._last_update = None
 
-        if app:
+        if 'ctx' in kwargs:
+            ctx = kwargs.get('ctx')
             self._filename = os.path.join(
-                        os.path.dirname(app.instance_path), 
-                        app.config['LIBRARY_FILENAME'])
-            self._url = app.config['LOA_COLLECTION_URL']
+                        os.path.dirname(ctx.instance_path), 
+                        ctx.config['LIBRARY_FILENAME'])
+            self._url = ctx.config['LOA_COLLECTION_URL']
 
     @property
     def library(self):
