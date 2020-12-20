@@ -1,6 +1,7 @@
 import datetime as dt
 from flask import Blueprint, render_template, request, current_app as app
 from floa.models.library import Library
+from floa.models.loa import LoA
 
 bp = Blueprint(
     'home',
@@ -21,7 +22,7 @@ library = Library(ctx=app)
 
 @app.context_processor
 def context_process():
-    last_update = library.load().last_update
+    last_update = library.last_update
     catalog_count = len(library.catalog)
     return dict(last_update=last_update, catalog_count=catalog_count)
 

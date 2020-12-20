@@ -1,11 +1,8 @@
-
-from bs4 import BeautifulSoup 
 import datetime as dt
+
 import enum
 import os.path
 import pickle
-import requests
-from urllib.parse import urlparse
 
 class Status(enum.Enum):
     MISSING = -1
@@ -19,7 +16,6 @@ class Library(object):
         self._catalog = []
         self._library = [-1]
         self._filename = kwargs.get('fname') or None
-        self._url = kwargs.get('url') or None
         self._last_update = None
 
         if 'ctx' in kwargs:
@@ -27,7 +23,6 @@ class Library(object):
             self._filename = os.path.join(
                         os.path.dirname(ctx.instance_path), 
                         ctx.config['LIBRARY_FILENAME'])
-            self._url = ctx.config['LOA_COLLECTION_URL']
 
     @property
     def library(self):
@@ -57,27 +52,17 @@ class Library(object):
         self._filename = val
 
     @property
-    def url(self):
-        return self._url
-
-    @url.setter
-    def url(self, val):
-        assert(isinstance(val, str))
-        self._url = val
-        return self._url
-
-    @property
     def last_update(self):
         return self._last_update
 
     @last_update.setter
     def last_update(self, val):
-        assert(isinstance(val, dt.datetime))
+        assert(isinstance(val, str))
         self._last_update = val
     
     def load(self, fname=None):
         if fname is None:
-            fname = self._filename
+            fname = self.filename
         if os.path.exists(fname):
             with open(fname, 'rb') as f:
                 p = pickle.load(f)
@@ -87,11 +72,10 @@ class Library(object):
          
     def save(self, fname=None):
         if fname is None:
-            fname = self._filename
+            fname = self.filename
         if not os.path.exists(os.path.dirname(fname)):
             os.makedirs(os.path.dirname(fname))
         with open(fname, 'wb') as f:
-            self._last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
             pickle.dump(self, f)
         return self
 
@@ -102,36 +86,8 @@ class Library(object):
         diff = [i for i in list1 + list2 if i not in list1 or i not in list2]
         return diff
 
-    def get_latest(self, url=None):
-        if url is None:
-            url = self._url
-        ''' webscrape to create a list of LoA titles ''' 
-        urlroot = "{}://{}".format(urlparse(url).scheme, urlparse(url).hostname)
-        page = requests.get(url)
-
-        soup = BeautifulSoup(page.content, 'html.parser')
-        books = soup.find_all('li', class_='content-listing--book')
-        result = []
-
-        for book in books:
-            id = int(book.find('i', class_='book-listing__number').text)
-            title = book.find('b', class_='content-listing__title').text
-            link =  urlroot + book.find('a')['href']
-            book = {"id": id, "title": title, "link": link}
-            result.append(book)
-        # return self.sort(result)
-        return result
-
-    def find_by_id(self, id):
-        if isinstance(id, str):
-            id = int(id)
-        for item in self.catalog:
-            if item['id'] == id:
-                return item
-        return {}
-
     def set_status(self, id, status):
-        if isinstance(id, str):
+        if not isinstance(id, int):
             id = int(id)
         self.library[id] = status
         self.save()
@@ -141,15 +97,13 @@ class Library(object):
             nl = len(self.library)
             id = item.get('id')
             while (id > nl):
-                self._library.append(-1)
+                self.library.append(-1)
                 nl = len(self.library)
             if (id < nl):
                 if self.library[id] == Status.MISSING.value:
                     self.library[id] = Status.NEW.value
             else:
-                self._library.append(Status.NEW.value)
+                self.library.append(Status.NEW.value)
         self.save()
 
-    def sort(self, lst):
-        assert(isinstance(lst, list))
-        return sorted(lst, key = lambda i: i['id'])
+ 

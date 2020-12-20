@@ -1,5 +1,7 @@
 from flask import Flask
 from floa.models.library import Library
+from floa.models.loa import LoA
+import datetime as dt
 import os.path
 
 def create_app():
@@ -22,7 +24,8 @@ def init_app(app):
         library.load()
 
     current = library.catalog
-    latest = library.get_latest()
+    latest = LoA().get_latest()
+    library.last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
 
     diff = library.compare(latest, current)
     if len(diff) > 0:
