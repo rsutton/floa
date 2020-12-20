@@ -4,9 +4,18 @@ from floa.models.library import Library
 
 bp = Blueprint(
     'home',
+    'errors',
     'routes',
     url_prefix="/"
 )
+
+@app.errorhandler(404)
+def handle_404(err):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def handle_500(err):
+    return render_template('500.html'), 500
 
 library = Library(app)
 
@@ -28,5 +37,3 @@ def update_book_status():
         status=request.json['status']
     )
     return "OK"
-
-

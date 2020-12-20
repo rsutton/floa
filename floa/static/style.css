@@ -8,22 +8,20 @@ a:link,a:visited{color: #000;text-decoration: none;}
 a:hover{color:red;text-decoration: none;}
 a:active{color:#000;text-decoration: none;}
 
+
 i.counter{
     font-style: normal;
 }
-
-.content-list-count{text-align: right; color: #fff;}
-
-.content-list {
-    padding-top: 43px;
-    vertical-align: top;
-    list-style-type: none;
-}
-
 .message {
     float: right;
     padding: 10px;
     font-size: 12px;
+}
+.error-page {
+    text-align: center; 
+    padding-top: 48px; 
+    display:block; 
+    margin: 0;
 }
 .content {
     width: 100%;
@@ -34,6 +32,15 @@ i.counter{
 }
 .content .help .title {
     font-size: 36px;
+}
+.content-list {
+    padding-top: 43px;
+    vertical-align: top;
+    list-style-type: none;
+}
+.content-list-count{
+    text-align: right; 
+    color: #fff;
 }
 .content-listing {
     padding-bottom: 28px;

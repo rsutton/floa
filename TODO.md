@@ -10,3 +10,7 @@ appended.~~
 - ~~figure out why search button sometimes reloads page~~
   - ~~needs e.preventDefault()~~
 - maybe move init_app to Library from __init__.py
+- ~~friendly error pages for 404 and 500~~
+- refactor init_app to use ctx
+- multiple user/libraries?
+- remote connection error handling

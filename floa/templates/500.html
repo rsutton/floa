@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="error-page">
+    <h1>Oops!</h1>
+    <p>Well that is embarassing! An uexpected error has occured.<br>
+    Let's get you back to your <a href="{{ url_for('home.home') }}"><b>bookshelf</b>.</a></p>
+</div>
+{% endblock %}

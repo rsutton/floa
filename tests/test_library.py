@@ -101,7 +101,7 @@ class TestCatalog(unittest.TestCase):
         for i in range(len(sorted_list) - 1):
             self.assertTrue(sorted_list[i]['id'] <= sorted_list[i+1]['id'])
 
-    def test_add_with_non_consecutive_id(self):
+    def test_add_with_insertion_of_missing_volume(self):
         list1 = self.generate_library_list(10, val=3)
         list1[8] = -1
         list1[9] = 2
