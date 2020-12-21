@@ -1,23 +1,27 @@
 "use strict";
+var counter = 0;
+const $SCRIPT_ROOT = location.origin;
+const view_labels = ["Catalog", "Bookshelf", "Wish List", "New"];
+const status_icons = ["fa-circle-o", "fa-check", "fa-heart", "fa-star"];
+
 $(document).ready(function(){
-    const $SCRIPT_ROOT = location.origin;
-    const view_labels = ["Catalog", "Bookshelf", "Wish List", "New"];
-    const status_icons = ["fa-circle-o", "fa-check", "fa-heart", "fa-star"];
 
-    // initialize home view
-    showView("Bookshelf");
+    // init_page()
 
+    // // initialize home view
+    // function init_page(){
+        $( '.content-listing' ).each(function(){
+            let status = $(this).attr('data-status')
+            $(this).children('.content-listing__control').removeClass(iconClassMatcher).addClass(status_icons[status]);
+        });
+        update_bookshelf_counter();
+        showView("Bookshelf");
+    // }
     // handle checkbox status
     function iconClassMatcher(index, className){
         let matchedClasses = className.match(/(^|\s)fa-\S+/g)
         return (matchedClasses || []).join('')
     }
-    // initialize status
-    $( '.content-listing' ).each(function(){
-        let status = $(this).attr('data-status')
-        $(this).children('.content-listing__control').removeClass(iconClassMatcher).addClass(status_icons[status]);
-    });
-
     // multi-state checkbox click handler
     $( '.content-listing__control' ).click(function(){
         let current_status = parseInt($(this).parent().attr('data-status'));
@@ -63,10 +67,10 @@ $(document).ready(function(){
 
     // view controllers
     function showView(view){
+        // let counter = update_bookshelf_counter();
         $('a.nav-link').each(function(){ $(this).removeClass("active"); });
         $('a.nav-link:contains("' + view + '")').addClass("active");
         filterList(view);
-        let counter = update_bookshelf_counter();
         if ( view === "Help" || ( view === "Bookshelf" && counter == 0 )){
                 $('.help').show();
                 $('.content-list').hide();
@@ -89,14 +93,13 @@ $(document).ready(function(){
         });
     }
     function update_bookshelf_counter(){
-        let counter = 0;
+        counter = 0;
         $( '.content-listing' ).each(function(){
             if ( $(this).attr('data-status') == '1' ){
                 counter = counter + 1;
             }
         });
         $( '.counter' ).text(counter);
-        return counter;
     }
 
 });
