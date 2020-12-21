@@ -1,6 +1,6 @@
 import datetime as dt
-
 import enum
+import json
 import os.path
 import pickle
 
@@ -16,7 +16,6 @@ class Library(object):
     def __init__(self, *args, **kwargs):
         self._library = [-1]
         self._filename = kwargs.get('fname') or None
-
         if 'ctx' in kwargs:
             ctx = kwargs.get('ctx')
             self._filename = os.path.join(
@@ -55,7 +54,8 @@ class Library(object):
         if fname is None:
             fname = self.filename
         if not os.path.exists(os.path.dirname(fname)):
-            os.makedirs(os.path.dirname(fname))
+            if os.path.dirname(fname):
+                os.makedirs(os.path.dirname(fname))
         with open(fname, 'wb') as f:
             pickle.dump(self, f)
         return self
@@ -71,6 +71,7 @@ class Library(object):
             nl = len(self.library)
             id = item.get('id')
             while (id > nl):
+                print('new item ' + str(id))
                 self.library.append(-1)
                 nl = len(self.library)
             if (id < nl):
@@ -78,6 +79,13 @@ class Library(object):
                     self.library[id] = Status.NEW.value
             else:
                 self.library.append(Status.NEW.value)
-        self.save().load()
+        self.save()
 
- 
+    def import_json(self, fname):
+        with open(fname, 'r') as f:
+            self.library = json.load(f)
+        self.save()
+
+    def export_json(self, fname):
+        with open(fname, 'w') as f:
+            json.dump(self.library, f)

@@ -6,7 +6,7 @@
 - maybe move init_app to Library from __init__.py or an App object
 
 - multiple user/libraries?
-  - library.catalog belongs in LoA - only need 1 instance
+  - ~~library.catalog belongs in LoA - only need 1 instance~~
   - library.library is associated with a user
   - LoA checks for updates from website on startup (and daily?)
   - when user logon, check catalog and apply updates to library.library
@@ -16,3 +16,4 @@
   - user db as simply hash table
 
 - rebuild my library list from json
+- ~~fix page loading delay on counter update~~
