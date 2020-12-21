@@ -22,14 +22,14 @@ library = Library(ctx=app)
 
 @app.context_processor
 def context_process():
-    last_update = library.last_update
-    catalog_count = len(library.catalog)
+    last_update = LoA.last_update
+    catalog_count = len(LoA.catalog)
     return dict(last_update=last_update, catalog_count=catalog_count)
 
 @bp.route("/")
 def home():
     library.load()
-    return render_template('home.html', data=dict(library = library.library, catalog = library.catalog))
+    return render_template('home.html', data=dict(library = library.library, catalog = LoA.catalog))
 
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():

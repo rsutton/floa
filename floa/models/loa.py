@@ -1,5 +1,6 @@
 from tests.config import LOA_COLLECTION_URL
-from bs4 import BeautifulSoup 
+from bs4 import BeautifulSoup, ResultSet
+import datetime as dt
 import requests
 from urllib.parse import urlparse
 
@@ -8,7 +9,31 @@ class LoA(object):
     loa_url=LOA_COLLECTION_URL
     
     def __init__(self, *args, **kwargs):
+        self._catalog = []
         self._url = kwargs.get('url') or self.loa_url
+        self._last_update = None
+
+    def init_catalog(self):
+        self.catalog = self.get_latest()
+        self.last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
+
+    @property
+    def catalog(self):
+        return self._catalog
+
+    @catalog.setter
+    def catalog(self, val):
+        assert(isinstance(val, list))
+        self._catalog = val
+
+    @property
+    def last_update(self):
+        return self._last_update
+    
+    @last_update.setter
+    def last_update(self, val):
+        assert(isinstance(dt.datetime.strptime(val), dt.datetime))
+        self._last_update = val
 
     @property
     def url(self):
@@ -23,8 +48,9 @@ class LoA(object):
     def get_latest(cls, url=loa_url):
         content = cls.loa_request(url)
         books = cls.scrape(content)
-        catalog = cls.build_catalog(books, url)
-        return catalog
+        cls.catalog = cls.build_catalog(books, url)
+        cls.last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
+        return cls.catalog
 
     @staticmethod
     def loa_request(url=loa_url):
@@ -42,6 +68,7 @@ class LoA(object):
 
     @classmethod
     def build_catalog(cls, books, url=loa_url):
+        assert(isinstance(books, ResultSet))
         url_root = "{}://{}".format(urlparse(url).scheme, urlparse(url).hostname)
         result = []
         for book in books:

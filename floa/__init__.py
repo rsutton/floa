@@ -22,16 +22,5 @@ def init_app(app):
     library = Library(ctx=app)
     if os.path.exists(library.filename):
         library.load()
-
-    current = library.catalog
-    latest = LoA().get_latest()
-    library.last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
-
-    diff = library.compare(latest, current)
-    if len(diff) > 0:
-        # latest is authoritative so overwrite the catalog
-        library.catalog = latest
-        # add new items to library
-        library.add(latest)
-
-    library.save().load()
+    latest = LoA.get_latest()
+    library.update(latest)

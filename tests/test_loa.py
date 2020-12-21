@@ -9,23 +9,34 @@ from requests.exceptions import HTTPError
 class TestLoA(unittest.TestCase):
 
     @staticmethod
-    def generate_catalog_list(count, start=1, rand=False):
+    def _generate_list(count, start=1, rand=False):
         result = []
-        for i in range(start, start + count):
-            id = i
+        for id in range(start, start + count):
             if rand:
                 id = random.randrange(400)
-            result.append({'id': id, 'title': f'Title {i}'})
+            result.append({'id': id, 'title': f'Title {id}'})
         return result
-    
+
+    @staticmethod
+    def _generate_loa_html(count):
+        result = ""
+        for i in range(count):
+            result += f'<li class="content-listing content-listing--book"> \
+                        <a href="/books/Link-{i}"> \
+                        <i class="book-listing__number">{i}</i> \
+                        <b class="content-listing__title">Title-{i}</b> \
+                        </a> \
+                    </li>'
+        return result
+
     def setUp(self):
         self.catalog = LoA()
 
     def tearDown(self):
         return super().tearDown()
 
+    @staticmethod
     def _mock_response(
-            self,
             status=200,
             content="CONTENT",
             json_data=None,
@@ -71,20 +82,10 @@ class TestLoA(unittest.TestCase):
         self.assertRaises(ValueError, LoA.scrape, '<html></html>')
 
     def test_scrape_success(self):
-        content = '<li class="content-listing content-listing--book"> \
-                        <a href="/books/101-typee-omoo-mardi"> \
-                        <i class="book-listing__number">1</i> \
-                        <b class="content-listing__title">Herman Melville: Typee, Omoo, Mardi</b> \
-                        </a> \
-                    </li> \
-                    <li class="content-listing content-listing--book"> \
-	                    <a href="/books/47-tales-sketches"> \
-				        <i class="book-listing__number">2</i> \
-	      	            <b class="content-listing__title">Nathaniel Hawthorne: Tales &amp; Sketches</b> \
-		                </a> \
-                    </li>'
+        number_of_entries = 3
+        content = self._generate_loa_html(number_of_entries)
         results = LoA.scrape(content)
-        self.assertEqual(len(results), 2)
+        self.assertEqual(len(results), number_of_entries)
 
     def test_build_catalog(self):
         raise NotImplementedError
@@ -93,7 +94,7 @@ class TestLoA(unittest.TestCase):
         raise NotImplementedError
 
     def test_sort_catalog(self):
-        list1 = self.generate_catalog_list(100, rand=True)
+        list1 = self._generate_list(100, rand=True)
         sorted_list = self.catalog.sort(list1)
         for i in range(len(sorted_list) - 1):
             self.assertTrue(sorted_list[i]['id'] <= sorted_list[i+1]['id'])

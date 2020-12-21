@@ -12,17 +12,16 @@ class Status(enum.Enum):
     NEW  = 3
 
 class Library(object):
+
     def __init__(self, *args, **kwargs):
-        self._catalog = []
         self._library = [-1]
         self._filename = kwargs.get('fname') or None
-        self._last_update = None
 
         if 'ctx' in kwargs:
             ctx = kwargs.get('ctx')
             self._filename = os.path.join(
-                        os.path.dirname(ctx.instance_path), 
-                        ctx.config['LIBRARY_FILENAME'])
+                os.path.dirname(ctx.instance_path), 
+                ctx.config['LIBRARY_FILENAME'])
 
     @property
     def library(self):
@@ -34,15 +33,6 @@ class Library(object):
         self._library = val
 
     @property
-    def catalog(self):
-        return self._catalog
-
-    @catalog.setter
-    def catalog(self, val):
-        assert(isinstance(val, list))
-        self._catalog = val
-
-    @property
     def filename(self):
         return self._filename
 
@@ -50,15 +40,6 @@ class Library(object):
     def filename(self, val):
         assert(isinstance(val, str))
         self._filename = val
-
-    @property
-    def last_update(self):
-        return self._last_update
-
-    @last_update.setter
-    def last_update(self, val):
-        assert(isinstance(val, str))
-        self._last_update = val
     
     def load(self, fname=None):
         if fname is None:
@@ -79,20 +60,13 @@ class Library(object):
             pickle.dump(self, f)
         return self
 
-    @staticmethod
-    def compare(list1, list2):
-        assert(isinstance(list1, list))
-        assert(isinstance(list2, list))
-        diff = [i for i in list1 + list2 if i not in list1 or i not in list2]
-        return diff
-
     def set_status(self, id, status):
         if not isinstance(id, int):
             id = int(id)
         self.library[id] = status
         self.save()
 
-    def add(self, items):
+    def update(self, items):
         for item in items:
             nl = len(self.library)
             id = item.get('id')
@@ -104,6 +78,6 @@ class Library(object):
                     self.library[id] = Status.NEW.value
             else:
                 self.library.append(Status.NEW.value)
-        self.save()
+        self.save().load()
 
  
