@@ -86,13 +86,11 @@ class TestLoA(unittest.TestCase):
         results = LoA.scrape(content)
         self.assertEqual(len(results), 2)
 
-    # def test_get_latest_catalog(self):
-    #     ''' this is expensive and should be an integration test'''
-    #     url=self.app.config['LOA_COLLECTION_URL']
-    #     result = self.library.get_latest(url)
-    #     assert(isinstance(result, list))
-    #     id = result[0].get('id')
-    #     self.assertTrue(id == 1)
+    def test_build_catalog(self):
+        raise NotImplementedError
+
+    def test_get_latest(self):
+        raise NotImplementedError
 
     def test_sort_catalog(self):
         list1 = self.generate_catalog_list(100, rand=True)
