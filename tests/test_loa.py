@@ -1,3 +1,4 @@
+import datetime as dt
 from floa.models.loa import LoA
 import random
 import unittest
@@ -88,13 +89,41 @@ class TestLoA(unittest.TestCase):
         self.assertEqual(len(results), number_of_entries)
 
     def test_build_catalog(self):
-        raise NotImplementedError
-
-    def test_get_latest(self):
-        raise NotImplementedError
+        number_of_entries = 5
+        content = self._generate_loa_html(number_of_entries)
+        books = LoA.scrape(content)
+        results = LoA.build_catalog(books, url='https://foo.bar')
+        assert(isinstance(results, list))
+        for i in range(len(results)):
+            self.assertEqual(results[i]['id'], i)
+            self.assertEqual(results[i]['title'], f'Title-{i}')
+            self.assertEqual(results[i]['link'], f'https://foo.bar/books/Link-{i}')
+    
+    @patch('floa.models.loa.requests.get')
+    def test_get_latest(self, mock_get):
+        number_of_entries = 3
+        content = self._generate_loa_html(number_of_entries)
+        mock_get.return_value = self._mock_response(content=content)
+        results = LoA.get_latest()
+        self.assertEqual(len(results), number_of_entries)
 
     def test_sort_catalog(self):
         list1 = self._generate_list(100, rand=True)
         sorted_list = self.catalog.sort(list1)
         for i in range(len(sorted_list) - 1):
             self.assertTrue(sorted_list[i]['id'] <= sorted_list[i+1]['id'])
+
+    def test_getters_and_setters(self):
+        loa = LoA()
+        loa.url = LoA.loa_url
+        self.assertEqual(loa.url, LoA.loa_url)
+
+        with self.assertRaises(AssertionError):
+            loa.url = "foo"
+
+        dtnow = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
+        loa.last_update = dtnow
+        self.assertEqual(loa.last_update, dtnow)
+
+        # with self.assertRaises(Exception):
+        #     loa.last_update = "foo"

@@ -39,6 +39,11 @@ class LoA(object):
     def url(self):
         return self._url
 
+    @url.setter
+    def url(self, val):
+        assert(urlparse(val).scheme == "https")
+        self._url = val
+
     @staticmethod
     def sort(lst):
         assert(isinstance(lst, list))
