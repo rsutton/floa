@@ -12,6 +12,7 @@ class LoA(object):
         self._catalog = []
         self._url = kwargs.get('url') or self.loa_url
         self._last_update = None
+        self._date_format = '%d-%b-%Y %H:%M:%S'
 
     # def init_catalog(self):
     #     self.catalog = self.get_latest()
@@ -32,7 +33,8 @@ class LoA(object):
     
     @last_update.setter
     def last_update(self, val):
-        assert(isinstance(dt.datetime.strptime(val), dt.datetime))
+        foo = dt.datetime.strptime(val, self.date_format)
+        assert(isinstance(foo, dt.datetime))
         self._last_update = val
 
     @property
@@ -44,18 +46,21 @@ class LoA(object):
         assert(urlparse(val).scheme == "https")
         self._url = val
 
+    @property
+    def date_format(self):
+        return self._date_format
+
     @staticmethod
     def sort(lst):
         assert(isinstance(lst, list))
         return sorted(lst, key = lambda i: i['id'])
 
-    @classmethod
-    def get_latest(cls, url=loa_url):
-        content = cls.loa_request(url)
-        books = cls.scrape(content)
-        cls.catalog = cls.build_catalog(books, url)
-        cls.last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
-        return cls.catalog
+    def get_latest(self, url=loa_url):
+        content = self.loa_request(url)
+        books = self.scrape(content)
+        self.catalog = self.build_catalog(books, url)
+        self.last_update = dt.datetime.now().strftime(self.date_format)
+        return self.catalog
 
     @staticmethod
     def loa_request(url=loa_url):

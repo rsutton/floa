@@ -104,7 +104,7 @@ class TestLoA(unittest.TestCase):
         number_of_entries = 3
         content = self._generate_loa_html(number_of_entries)
         mock_get.return_value = self._mock_response(content=content)
-        results = LoA.get_latest()
+        results = LoA().get_latest()
         self.assertEqual(len(results), number_of_entries)
 
     def test_sort_catalog(self):
@@ -121,9 +121,13 @@ class TestLoA(unittest.TestCase):
         with self.assertRaises(AssertionError):
             loa.url = "foo"
 
-        dtnow = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
+        dtnow = dt.datetime.now().strftime(loa.date_format)
         loa.last_update = dtnow
         self.assertEqual(loa.last_update, dtnow)
 
-        # with self.assertRaises(Exception):
-        #     loa.last_update = "foo"
+        with self.assertRaises(ValueError):
+            loa.last_update = dt.datetime.strptime("foo", loa.date_format)
+
+
+if __name__ == '__main__':
+    unittest.main()
