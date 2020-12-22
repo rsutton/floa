@@ -71,7 +71,6 @@ class Library(object):
             nl = len(self.library)
             id = item.get('id')
             while (id > nl):
-                print('new item ' + str(id))
                 self.library.append(-1)
                 nl = len(self.library)
             if (id < nl):

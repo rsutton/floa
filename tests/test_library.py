@@ -39,14 +39,17 @@ class TestLibrary(unittest.TestCase):
         self.library.save().load()
         self.assertEqual(list10, self.library.library)
 
-# this is a bad test
     def test_set_status(self):
-        self.library.load()
-        self.library.library = [-1,0,1,2,3]
+        self.library.library = [-1,-1]
+        self.assertEqual(Status(self.library.library[1]), Status['MISSING'])
+        self.library.set_status('1', 0)
         self.assertEqual(Status(self.library.library[1]), Status['NOT_HAVE'])
-        self.assertEqual(Status(self.library.library[2]), Status['HAVE'])
-        self.assertEqual(Status(self.library.library[3]), Status['WISH'])
-        self.assertEqual(Status(self.library.library[4]), Status['NEW'])
+        self.library.set_status(1, 1)
+        self.assertEqual(Status(self.library.library[1]), Status['HAVE'])
+        self.library.set_status(1, 2)
+        self.assertEqual(Status(self.library.library[1]), Status['WISH'])
+        self.library.set_status(1, 3)
+        self.assertEqual(Status(self.library.library[1]), Status['NEW'])
 
     def test_add_book_status_value_is_new(self):
         list1 = self._generate_catalog_list(4)
@@ -67,14 +70,18 @@ class TestLibrary(unittest.TestCase):
 
     def test_add_with_insertion_of_missing_volume(self):
         list1 = self._generate_library_list(10, val=3)
-        list1[8] = -1
-        list1[9] = 2
+        list1[8] = -1 # missing item
+        list1[9] = 2 # not new so it should not change
         self.library.library = list1
-        list2 = self._generate_catalog_list(4, start=8)
+
+        list2 = self._generate_catalog_list(5, start=8)
+        list2.pop(3) # create gap at id=11
         self.library.update(list2)
-        self.assertEqual(self.library.library[8], 3)
-        self.assertEqual(self.library.library[9], 2)
-        self.assertEqual(len(self.library.library), 12)
+        self.assertEqual(self.library.library[8], Status.NEW.value)
+        self.assertEqual(self.library.library[9], Status.WISH.value)
+        self.assertEqual(self.library.library[11], Status.MISSING.value)
+        self.assertEqual(self.library.library[12], Status.NEW.value)
+        self.assertEqual(len(self.library.library), 13)
 
     def test_save_creates_folder(self):
         fname = './tests/tmp/file.tmp'

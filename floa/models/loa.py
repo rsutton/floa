@@ -13,9 +13,9 @@ class LoA(object):
         self._url = kwargs.get('url') or self.loa_url
         self._last_update = None
 
-    def init_catalog(self):
-        self.catalog = self.get_latest()
-        self.last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
+    # def init_catalog(self):
+    #     self.catalog = self.get_latest()
+    #     self.last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
 
     @property
     def catalog(self):
