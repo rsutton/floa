@@ -1,4 +1,4 @@
-from tests.config import LOA_COLLECTION_URL
+from floa.config import LOA_COLLECTION_URL
 from bs4 import BeautifulSoup, ResultSet
 import datetime as dt
 import requests
