@@ -1,10 +1,7 @@
 from flask import current_app as app, g
-import os
-import os.path
 import pickle
 
-empty_db = [{'library': []}]
-
+empty_database = [{'id': 0, 'name': None, 'email': None, 'library': None}]
 
 def get_db():
     database = app.config['DATABASE']
@@ -12,8 +9,9 @@ def get_db():
         try:
             with open(database, 'rb+') as f:
                 g.db = pickle.load(f)
-        except EOFError as e:
-            g.db = empty_db
+        except:
+            commit(empty_database)
+            g.db = empty_database
     return g.db
 
 

@@ -1,7 +1,5 @@
-import datetime as dt
-from flask import Blueprint, render_template, request, current_app as app, g
+from flask import Blueprint, render_template, request, current_app as app
 from floa.extensions import loa
-from floa.models.db import get_db
 from floa.models.library import Library
 from floa.models.user import User
 
@@ -14,8 +12,12 @@ bp = Blueprint(
 )
 
 catalog = loa.get_loa()
-library = User.get(1).library
 
+try: 
+    library = User.get(1).library
+except AttributeError as ae:
+    print(f'User does not exist: {ae}')
+    library = Library()
 
 @app.errorhandler(404)
 def handle_404(err):
