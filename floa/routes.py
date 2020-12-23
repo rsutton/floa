@@ -3,6 +3,8 @@ from flask import Blueprint, render_template, request, current_app as app, g
 from floa.extensions import loa
 from floa.models.db import get_db
 from floa.models.library import Library
+from floa.models.user import User
+
 
 bp = Blueprint(
     'home',
@@ -12,8 +14,7 @@ bp = Blueprint(
 )
 
 catalog = loa.get_loa()
-library = get_db()[0]['library']
-print(library)
+library = User.get(1).library
 
 
 @app.errorhandler(404)
@@ -37,7 +38,7 @@ def context_process():
 def home():
     return render_template(
             'home.html',
-            data=dict(library=library, catalog=catalog)
+            data=dict(library=library.library, catalog=catalog)
         )
 
 
