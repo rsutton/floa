@@ -89,10 +89,11 @@ class TestLoA(unittest.TestCase):
         self.assertEqual(len(results), number_of_entries)
 
     def test_build_catalog(self):
+        loa = LoA()
         number_of_entries = 5
         content = self._generate_loa_html(number_of_entries)
-        books = LoA.scrape(content)
-        results = LoA.build_catalog(books, url='https://foo.bar')
+        books = loa.scrape(content)
+        results = loa.build_catalog(books, url='https://foo.bar')
         assert(isinstance(results, list))
         for i in range(len(results)):
             self.assertEqual(results[i]['id'], i)

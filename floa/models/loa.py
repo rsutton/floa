@@ -1,3 +1,4 @@
+from flask import g
 from floa.config import LOA_COLLECTION_URL
 from bs4 import BeautifulSoup, ResultSet
 import datetime as dt
@@ -6,17 +7,18 @@ from urllib.parse import urlparse
 
 class LoA(object):
     
-    loa_url=LOA_COLLECTION_URL
-    
-    def __init__(self, *args, **kwargs):
-        self._catalog = []
-        self._url = kwargs.get('url') or self.loa_url
-        self._last_update = None
-        self._date_format = '%d-%b-%Y %H:%M:%S'
+    loa_url = LOA_COLLECTION_URL
+    date_format = '%d-%b-%Y %H:%M:%S'
 
-    # def init_catalog(self):
-    #     self.catalog = self.get_latest()
-    #     self.last_update = dt.datetime.now().strftime('%d-%b-%Y %H:%M:%S')
+    def __init__(self, catalog=[], url=loa_url):
+        self._catalog = catalog
+        self._url = url
+        self._last_update = None
+
+    def get_loa(self):
+        if 'loa' not in g:
+            g.loa = self.get_latest()
+        return g.loa
 
     @property
     def catalog(self):
@@ -46,10 +48,6 @@ class LoA(object):
         assert(urlparse(val).scheme == "https")
         self._url = val
 
-    @property
-    def date_format(self):
-        return self._date_format
-
     @staticmethod
     def sort(lst):
         assert(isinstance(lst, list))
@@ -76,8 +74,7 @@ class LoA(object):
             raise ValueError("Empty results: expected list of books but received none.")
         return books
 
-    @classmethod
-    def build_catalog(cls, books, url=loa_url):
+    def build_catalog(self, books, url=loa_url):
         assert(isinstance(books, ResultSet))
         url_root = "{}://{}".format(urlparse(url).scheme, urlparse(url).hostname)
         result = []
@@ -87,4 +84,4 @@ class LoA(object):
             link =  url_root + book.find('a')['href']
             book = {"id": id, "title": title, "link": link}
             result.append(book)
-        return cls.sort(result)
+        return self.sort(result)

@@ -1,7 +1,7 @@
 import datetime as dt
 from flask import Blueprint, render_template, request, current_app as app
+from floa.extensions import loa
 from floa.models.library import Library
-from floa.models.loa import LoA
 
 bp = Blueprint(
     'home',
@@ -9,6 +9,9 @@ bp = Blueprint(
     'routes',
     url_prefix="/"
 )
+
+catalog = loa.get_loa()
+library = Library(ctx=app)
 
 @app.errorhandler(404)
 def handle_404(err):
@@ -18,18 +21,17 @@ def handle_404(err):
 def handle_500(err):
     return render_template('500.html'), 500
 
-library = Library(ctx=app)
-
 @app.context_processor
 def context_process():
-    last_update = LoA.last_update
-    catalog_count = len(LoA.catalog)
+    last_update = loa.last_update
+    catalog_count = len(catalog)
     return dict(last_update=last_update, catalog_count=catalog_count)
 
 @bp.route("/")
 def home():
     library.load()
-    return render_template('home.html', data=dict(library = library.library, catalog = LoA.catalog))
+    print(catalog)
+    return render_template('home.html', data=dict(library = library.library, catalog = catalog))
 
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():

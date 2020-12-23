@@ -13,11 +13,10 @@ class Status(enum.Enum):
 
 class Library(object):
 
-    def __init__(self, *args, **kwargs):
-        self._library = [-1]
-        self._filename = kwargs.get('fname') or None
-        if 'ctx' in kwargs:
-            ctx = kwargs.get('ctx')
+    def __init__(self, ctx=None, filename=None, library=[-1]):
+        self._library = library
+        self._filename = filename
+        if ctx:
             self._filename = os.path.join(
                 os.path.dirname(ctx.instance_path), 
                 ctx.config['LIBRARY_FILENAME'])
@@ -29,6 +28,7 @@ class Library(object):
     @library.setter
     def library(self, val):
         assert(isinstance(val, list))
+        assert(val[0] == -1)
         self._library = val
 
     @property

@@ -104,3 +104,6 @@ class TestLibrary(unittest.TestCase):
         self.assertTrue(filecmp.cmp(src,dst))
         os.remove(src)
         os.remove(dst)
+
+if __name__ == '__main__':
+    unittest.main()
