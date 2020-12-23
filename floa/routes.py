@@ -1,6 +1,7 @@
 import datetime as dt
-from flask import Blueprint, render_template, request, current_app as app
+from flask import Blueprint, render_template, request, current_app as app, g
 from floa.extensions import loa
+from floa.models.db import get_db
 from floa.models.library import Library
 
 bp = Blueprint(
@@ -11,7 +12,8 @@ bp = Blueprint(
 )
 
 catalog = loa.get_loa()
-library = Library(ctx=app)
+library = get_db()[0]['library']
+print(library)
 
 
 @app.errorhandler(404)
@@ -33,10 +35,9 @@ def context_process():
 
 @bp.route("/")
 def home():
-    library.load()
     return render_template(
             'home.html',
-            data=dict(library=library.library, catalog=catalog)
+            data=dict(library=library, catalog=catalog)
         )
 
 
