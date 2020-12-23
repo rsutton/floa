@@ -15,13 +15,8 @@ class Status(enum.Enum):
 
 class Library(object):
 
-    def __init__(self, ctx=None, filename=None, library=[-1]):
+    def __init__(self, library=[-1]):
         self._library = library
-        self._filename = filename
-        if ctx:
-            self._filename = os.path.join(
-                os.path.dirname(ctx.instance_path),
-                ctx.config['LIBRARY_FILENAME'])
 
     @property
     def library(self):
@@ -33,40 +28,10 @@ class Library(object):
         assert(val[0] == -1)
         self._library = val
 
-    @property
-    def filename(self):
-        return self._filename
-
-    @filename.setter
-    def filename(self, val):
-        assert(isinstance(val, str))
-        self._filename = val
-
-    def load(self, fname=None):
-        if fname is None:
-            fname = self.filename
-        if os.path.exists(fname):
-            with open(fname, 'rb') as f:
-                p = pickle.load(f)
-                self.__dict__.clear()
-                self.__dict__.update(p.__dict__)
-        return self
-
-    def save(self, fname=None):
-        if fname is None:
-            fname = self.filename
-        if not os.path.exists(os.path.dirname(fname)):
-            if os.path.dirname(fname):
-                os.makedirs(os.path.dirname(fname))
-        with open(fname, 'wb') as f:
-            pickle.dump(self, f)
-        return self
-
     def set_status(self, id, status):
         if not isinstance(id, int):
             id = int(id)
         self.library[id] = status
-        self.save()
 
     def update(self, items):
         for item in items:
@@ -80,12 +45,10 @@ class Library(object):
                     self.library[id] = Status.NEW.value
             else:
                 self.library.append(Status.NEW.value)
-        self.save()
 
     def import_json(self, fname):
         with open(fname, 'r') as f:
             self.library = json.load(f)
-        self.save()
 
     def export_json(self, fname):
         with open(fname, 'w') as f:
