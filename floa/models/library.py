@@ -4,12 +4,14 @@ import json
 import os.path
 import pickle
 
+
 class Status(enum.Enum):
     MISSING = -1
     NOT_HAVE = 0
     HAVE = 1
     WISH = 2
     NEW  = 3
+
 
 class Library(object):
 
@@ -18,7 +20,7 @@ class Library(object):
         self._filename = filename
         if ctx:
             self._filename = os.path.join(
-                os.path.dirname(ctx.instance_path), 
+                os.path.dirname(ctx.instance_path),
                 ctx.config['LIBRARY_FILENAME'])
 
     @property
@@ -39,7 +41,7 @@ class Library(object):
     def filename(self, val):
         assert(isinstance(val, str))
         self._filename = val
-    
+
     def load(self, fname=None):
         if fname is None:
             fname = self.filename
@@ -47,9 +49,9 @@ class Library(object):
             with open(fname, 'rb') as f:
                 p = pickle.load(f)
                 self.__dict__.clear()
-                self.__dict__.update(p.__dict__) 
+                self.__dict__.update(p.__dict__)
         return self
-         
+
     def save(self, fname=None):
         if fname is None:
             fname = self.filename

@@ -1,12 +1,13 @@
-from flask import g
-from floa.config import LOA_COLLECTION_URL
 from bs4 import BeautifulSoup, ResultSet
 import datetime as dt
+from flask import g
+from floa.config import LOA_COLLECTION_URL
 import requests
 from urllib.parse import urlparse
 
+
 class LoA(object):
-    
+
     loa_url = LOA_COLLECTION_URL
     date_format = '%d-%b-%Y %H:%M:%S'
 
@@ -32,7 +33,7 @@ class LoA(object):
     @property
     def last_update(self):
         return self._last_update
-    
+
     @last_update.setter
     def last_update(self, val):
         foo = dt.datetime.strptime(val, self.date_format)
@@ -51,7 +52,7 @@ class LoA(object):
     @staticmethod
     def sort(lst):
         assert(isinstance(lst, list))
-        return sorted(lst, key = lambda i: i['id'])
+        return sorted(lst, key=lambda i: i['id'])
 
     def get_latest(self, url=loa_url):
         content = self.loa_request(url)
@@ -71,17 +72,20 @@ class LoA(object):
         soup = BeautifulSoup(content, 'html.parser')
         books = soup.find_all('li', class_='content-listing--book')
         if len(books) == 0:
-            raise ValueError("Empty results: expected list of books but received none.")
+            raise ValueError(
+                "Empty results: expected list of books but received none.")
         return books
 
     def build_catalog(self, books, url=loa_url):
         assert(isinstance(books, ResultSet))
-        url_root = "{}://{}".format(urlparse(url).scheme, urlparse(url).hostname)
+        url_root = "{}://{}".format(
+                urlparse(url).scheme, urlparse(url).hostname
+            )
         result = []
         for book in books:
             id = int(book.find('i', class_='book-listing__number').text)
             title = book.find('b', class_='content-listing__title').text
-            link =  url_root + book.find('a')['href']
+            link = url_root + book.find('a')['href']
             book = {"id": id, "title": title, "link": link}
             result.append(book)
         return self.sort(result)
