@@ -1,6 +1,6 @@
+from instance.config import SECRET_KEY
 from flask import Flask
-import os
-
+from floa.extensions import db
 
 def create_app():
     app = Flask(
@@ -8,22 +8,15 @@ def create_app():
         instance_relative_config=True,
         template_folder="templates"
     )
-    app.config.from_mapping(
-        SECRET_KEY='dev'
-    )
-    app.config.from_object('config.default')
+    app.config.from_object('config')
     app.config.from_pyfile('config.py')
-    app.config.from_envvar('APP_CONFIG_FILE')
 
     with app.app_context():
+        # must put extensions before register_blueprint
+        # because it doesn't return here
+        db.init_db(app)
+
         from . import routes
         app.register_blueprint(routes.bp)
 
-    from floa.extensions import db
-    db.init_db(app)
-
     return app
-
-
-if __name__ == "__main__":
-    create_app().run()

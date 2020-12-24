@@ -21,6 +21,8 @@ class User(object):
                 library=Library(library=record.get('library')),
                 created_date=record.get('created_date')
             )
+        else:
+            User.create()
         return None
 
     @staticmethod

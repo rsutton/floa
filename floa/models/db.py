@@ -29,9 +29,8 @@ class Database(object):
             self.init_db(app)
 
     def init_db(self, app):
-        print("Initializing database...")
-        self.filename = current_app.config['DATABASE']
-        print(self.filename)
+        self.filename = os.path.join(app.instance_path, app.config['DATABASE'])
+        print(f"Initializing database...{self.filename}")
         if not os.path.exists(self.filename):
             with open(self.filename, 'a'):
                 try:
@@ -46,7 +45,11 @@ class Database(object):
 
     def load(self):
         with open(self.filename, 'rb+') as f:
-            data = pickle.load(f)
+            try:
+                data = pickle.load(f)
+            except EOFError:
+                print("Empty database")
+                data = self.empty_database
         return data
 
     def commit(self, data):
