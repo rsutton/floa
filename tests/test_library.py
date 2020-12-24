@@ -76,8 +76,8 @@ class TestLibrary(unittest.TestCase):
         self.assertEqual(len(self.library.library), 13)
 
     def test_import_export_my_library(self):
-        src = './tests/data/import.txt'
-        dst = './tests/data/export.txt'
+        src = './tests/instance/import.txt'
+        dst = './tests/instance/export.txt'
         list10 = self._generate_library_list(10, rand=True)
         with open(src, 'w') as f:
             json.dump(list10, f)

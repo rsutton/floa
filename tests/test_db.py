@@ -45,7 +45,7 @@ class TestDatabase(unittest.TestCase):
 
         # load the data
         with self.app.app_context():
-            records = self.db.open()
+            records = self.db.load()
         id = randrange(len(records))
         self.assertEqual(records[id].get('id'), id)
         self.assertEqual(len(records), num_records)
@@ -59,12 +59,12 @@ class TestDatabase(unittest.TestCase):
 
         with self.app.app_context():
             # load the data
-            records = self.db.open()
+            records = self.db.load()
             # add another record
             records.append(self._generate_database(1, start=num_records))
             # commit it
             count = self.db.commit(records)
             self.assertEqual(count, num_records + 1)
             # reload and check
-            records = self.db.open()
+            records = self.db.load()
             self.assertEqual(len(records), count)

@@ -1,14 +1,13 @@
 from bs4 import BeautifulSoup, ResultSet
 import datetime as dt
 from flask import g
-from floa.config import LOA_COLLECTION_URL
 import requests
 from urllib.parse import urlparse
 
 
 class LoA(object):
 
-    loa_url = LOA_COLLECTION_URL
+    loa_url = 'https://loa.org/books/loa_collection'
     date_format = '%d-%b-%Y %H:%M:%S'
 
     def __init__(self, catalog=[], url=loa_url):

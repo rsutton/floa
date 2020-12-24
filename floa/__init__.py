@@ -5,12 +5,15 @@ import os
 def create_app():
     app = Flask(
         __name__,
+        instance_relative_config=True,
         template_folder="templates"
     )
     app.config.from_mapping(
         SECRET_KEY='dev'
     )
+    app.config.from_object('config.default')
     app.config.from_pyfile('config.py')
+    app.config.from_envvar('APP_CONFIG_FILE')
 
     with app.app_context():
         from . import routes
