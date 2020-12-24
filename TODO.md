@@ -7,8 +7,7 @@
 
 - multiple user/libraries?
   - ~~library.catalog belongs in LoA - only need 1 instance~~
-  - Library needs to be refactored so that User has their own
+  - ~~Library needs to be refactored so that User has their own~~
   - at user logon, check catalog and apply updates to their library
   - oauth
-  - move library persistence to User object 
-
+  - refactor to use instance-relative paths

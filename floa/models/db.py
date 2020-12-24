@@ -1,26 +1,65 @@
-from flask import current_app as app, g
+from flask import current_app, g
+import os
 import pickle
 
-empty_database = [{'id': 0, 'name': None, 'email': None, 'library': None}]
 
-def get_db():
-    database = app.config['DATABASE']
-    if 'db' not in g:
-        try:
-            with open(database, 'rb+') as f:
-                g.db = pickle.load(f)
-        except:
-            commit(empty_database)
-            g.db = empty_database
-    return g.db
+class Database(object):
 
+    empty_database = [{
+        'id': 0,
+        'name': None,
+        'email': None,
+        'library': None,
+        'created_date': None
+        }]
 
-def commit(data):
-    database = app.config['DATABASE']
-    with open(database, 'wb') as f:
-        pickle.dump(data, f)
-    return len(data)
+    fields = [
+        'id',
+        'name',
+        'email',
+        'library',
+        'created_date'
+        ]
 
+    def __init__(self, filename=None, app=None):
+        self.filename = filename
+        self.app = app
+        self._instance = None
+        if app is not None:
+            self.init_db(app)
 
-def close_db():
-    g.pop('db', None)
+    def init_db(self, app):
+        print("Initializing database...")
+        self.filename = current_app.config['DATABASE']
+        print(self.filename)
+        if not os.path.exists(self.filename):
+            with open(self.filename, 'a'):
+                try:
+                    os.utime(self.filename, None)
+                except OSError:
+                    pass
+
+    def get_db(self):
+        if 'db' not in g:
+            g.db = self
+        return g.db
+
+    def load(self):
+        with open(self.filename, 'rb+') as f:
+            data = pickle.load(f)
+        return data
+
+    def commit(self, data):
+        with open(self.filename, 'wb') as f:
+            pickle.dump(data, f)
+        return len(data)
+
+    @staticmethod
+    def close_db():
+        g.pop('db', None)
+
+    def get_user_by_id(self, id):
+        data = self.load()
+        for u in data:
+            if u.get('id') == id:
+                return u

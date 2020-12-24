@@ -30,21 +30,22 @@ class TestDatabase(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
         self.app.config.from_pyfile('config.py')
-        self.database = self.app.config['DATABASE']
+        self.filename = self.app.config['DATABASE']
+        self.db = db.Database(filename=self.filename)
 
     def tearDown(self):
         pass
 
-    def test_get_db(self):
+    def test_open(self):
         # manually create a database file
         num_records = 10
         records = self._generate_database(num_records)
-        with open(self.database, 'wb') as f:
+        with open(self.filename, 'wb') as f:
             pickle.dump(records, f)
 
         # load the data
         with self.app.app_context():
-            records = db.get_db()
+            records = self.db.open()
         id = randrange(len(records))
         self.assertEqual(records[id].get('id'), id)
         self.assertEqual(len(records), num_records)
@@ -53,17 +54,17 @@ class TestDatabase(unittest.TestCase):
         # manually create database
         num_records = 2
         records = self._generate_database(num_records)
-        with open(self.database, 'wb') as f:
+        with open(self.filename, 'wb') as f:
             pickle.dump(records, f)
 
         with self.app.app_context():
             # load the data
-            records = db.get_db()
+            records = self.db.open()
             # add another record
             records.append(self._generate_database(1, start=num_records))
             # commit it
-            count = db.commit(records)
+            count = self.db.commit(records)
             self.assertEqual(count, num_records + 1)
             # reload and check
-            records = db.get_db()
+            records = self.db.open()
             self.assertEqual(len(records), count)

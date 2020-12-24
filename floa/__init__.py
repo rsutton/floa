@@ -15,4 +15,12 @@ def create_app():
     with app.app_context():
         from . import routes
         app.register_blueprint(routes.bp)
+
+    from floa.extensions import db
+    db.init_db(app)
+
     return app
+
+
+if __name__ == "__main__":
+    create_app().run()

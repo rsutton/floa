@@ -14,7 +14,7 @@ bp = Blueprint(
 catalog = loa.get_loa()
 
 try: 
-    library = User.get(1).library
+    library = User.get(0).library
 except AttributeError as ae:
     print(f'User does not exist: {ae}')
     library = Library()

@@ -1,4 +1,4 @@
-from floa.models.db import get_db
+from floa.extensions import db
 from floa.models.library import Library
 
 
@@ -12,18 +12,16 @@ class User(object):
 
     @staticmethod
     def get(user_id):
-        user = None
-        db = get_db()
-        for u in db:
-            if u.get('id') == user_id:
-                user = User(
-                    id=u.get('id'),
-                    name=u.get('name'),
-                    email=u.get('email'),
-                    library=Library(library=u.get('library')),
-                    created_date=u.get('created_date')
-                )
-        return user
+        record = db.get_user_by_id(user_id)
+        if record:
+            user = User(
+                id=record.get('id'),
+                name=record.get('name'),
+                email=record.get('email'),
+                library=Library(library=record.get('library')),
+                created_date=record.get('created_date')
+            )
+        return None
 
     @staticmethod
     def create(id, name, email, library, created_date):
