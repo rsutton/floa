@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup, ResultSet
-import datetime as dt
+from datetime import datetime as dt
 from flask import g
 import requests
 from urllib.parse import urlparse
@@ -35,8 +35,8 @@ class LoA(object):
 
     @last_update.setter
     def last_update(self, val):
-        foo = dt.datetime.strptime(val, self.date_format)
-        assert(isinstance(foo, dt.datetime))
+        foo = dt.strptime(val, self.date_format)
+        assert(isinstance(foo, dt))
         self._last_update = val
 
     @property
@@ -57,7 +57,7 @@ class LoA(object):
         content = self.loa_request(url)
         books = self.scrape(content)
         self.catalog = self.build_catalog(books, url)
-        self.last_update = dt.datetime.now().strftime(self.date_format)
+        self.last_update = dt.now().strftime(self.date_format)
         return self.catalog
 
     @staticmethod

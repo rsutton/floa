@@ -1,7 +1,9 @@
-from flask import current_app, g
+from datetime import datetime as dt
+from filelock import FileLock
+from flask import g
 import os
 import pickle
-
+from uuid import uuid4
 
 class Database(object):
 
@@ -10,7 +12,8 @@ class Database(object):
         'name': None,
         'email': None,
         'library': None,
-        'created_date': None
+        'created_date': None,
+        'uid': None
         }]
 
     fields = [
@@ -18,13 +21,15 @@ class Database(object):
         'name',
         'email',
         'library',
-        'created_date'
+        'created_date',
+        'uid'
         ]
 
     def __init__(self, filename=None, app=None):
         self.filename = filename
+        self._db_len = None
         self.app = app
-        self._instance = None
+
         if app is not None:
             self.init_db(app)
 
@@ -47,6 +52,7 @@ class Database(object):
         with open(self.filename, 'rb+') as f:
             try:
                 data = pickle.load(f)
+                self._db_len = len(data)
             except EOFError:
                 print("Empty database")
                 data = self.empty_database
@@ -61,9 +67,24 @@ class Database(object):
     def close_db():
         g.pop('db', None)
 
-    def get_user_by_id(self, id):
+    def get_user_by_uid(self, id):
         data = self.load()
-        assert(isinstance(id, int))
         for u in data:
-            if u.get('id') == id:
+            if u.get('uid') == id:
                 return u
+
+    def create(self, name, email):
+        lock = FileLock(".".join(self.filename, 'lock'))
+        with lock:
+            data = self.load()
+            record = {
+                'id': len(data),
+                'name': name,
+                'email': email,
+                'library': [-1],
+                'created_date': dt.now(),
+                'uid': uuid4()
+                }
+            data.append(record)
+            self.commit(data)
+        return record
