@@ -33,7 +33,7 @@ def home():
     if current_user.is_authenticated:
         return render_template(
                 'home.html',
-                data=dict(library=current_user.library, catalog=catalog)
+                data=dict(catalog=catalog)
             )
     else:
         return '<a class="button" href="/login">Google Login</a>'
@@ -41,7 +41,7 @@ def home():
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():
     if current_user.is_authenticated:
-        current_user.library.set_status(
+        current_user.library.library.set_status(
             id=request.json['id'],
             status=request.json['status']
         )

@@ -63,6 +63,7 @@ class Database(object):
 
     def get_user_by_id(self, id):
         data = self.load()
+        assert(isinstance(id, int))
         for u in data:
             if u.get('id') == id:
                 return u

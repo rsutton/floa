@@ -24,7 +24,7 @@
         </div>
         <ul class="content-list">
             {% for book in data.catalog %}
-            <li class="content-listing" data-id={{ book['id'] }} data-status={{ data.library[ book['id'] ] }}>
+            <li class="content-listing" data-id={{ book['id'] }} data-status={{ current_user.library.library[ book['id'] ] }}>
                 <div class="content-listing__control fa fa-circle-o"></div>
                 <div class="content-listing__details">
                     <a href={{ book['link'] }}>

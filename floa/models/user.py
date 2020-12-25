@@ -14,6 +14,10 @@ class User(UserMixin):
 
     @staticmethod
     def get(user_id):
+        try:
+            assert(isinstance(user_id, int))
+        except AssertionError:
+            user_id = int(user_id)
         record = db.get_user_by_id(user_id)
         if record:
             user = User(
