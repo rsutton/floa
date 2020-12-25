@@ -9,31 +9,33 @@ class User(UserMixin):
         uid: UUID for use in browser cookie and session to allow session 
              invalidation
     '''
-    def __init__(self, id, name, email, library, created_date, alt_id=None):
-        self._id = id
+    def __init__(self, key, name, email, library, created_date, uid=None):
+        self._key = key
         self.name = name
         self.email = email
         self.library = library
         self.created_date = created_date
-        self.uid = None
+        # flask_login UserMixin id attribute is our uid
+        self.id = uid
 
     @staticmethod
     def init(record):
         user = User(
-            id=record.get('id'),
+            key=record.get('key'),
             name=record.get('name'),
             email=record.get('email'),
             library=Library(library=record.get('library')),
             created_date=record.get('created_date'),
-            alt_id=record.get('alt_id')
+            uid=record.get('uid')
         )  
+        print(user.id)
         return user
 
     @staticmethod
     def get(user_id):
         ''' user_id == uid '''
         user = None
-        record = db.get_user_by_alt_id(user_id)
+        record = db.query('uid', user_id)
         if record:
             user = User.init(record)
         return user
@@ -42,3 +44,11 @@ class User(UserMixin):
     def new(name, email):
         record = db.create(name, email)
         return User.init(record)
+
+    @staticmethod
+    def get_by_email(email):
+        user = None
+        record = db.query('email', email)
+        if record:
+            user = User.init(record)
+        return user

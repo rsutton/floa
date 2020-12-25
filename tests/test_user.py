@@ -10,3 +10,16 @@ class TestUser(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def test_new(self):
+        raise NotImplementedError
+
+    def test_init(self):
+        raise NotImplementedError
+
+    def test_get_found(self):
+        raise NotImplementedError
+
+    def test_get_not_found(self):
+        raise NotImplementedError
+    

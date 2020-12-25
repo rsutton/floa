@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_user
 from flask_login.utils import login_required, logout_user
 from floa.models.user import User
@@ -16,7 +16,11 @@ def login():
 
 @bp.route('/login_post', methods=['POST'])
 def login_post():
-    user = User.get(1)
+    # replace with lookup from Google oauth response
+    user = User.get_by_email(request.form.get('email'))
+    if not user:
+        #flash something here
+        return redirect(url_for('auth.login'))
     login_user(user, remember=True)
     return redirect(url_for('home.home'))
 

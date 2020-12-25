@@ -8,7 +8,7 @@ from uuid import uuid4
 class Database(object):
 
     empty_database = [{
-        'id': 0,
+        'key': 0,
         'name': None,
         'email': None,
         'library': None,
@@ -17,7 +17,7 @@ class Database(object):
         }]
 
     fields = [
-        'id',
+        'key',
         'name',
         'email',
         'library',
@@ -67,10 +67,10 @@ class Database(object):
     def close_db():
         g.pop('db', None)
 
-    def get_user_by_uid(self, id):
+    def query(self, field, value):
         data = self.load()
         for u in data:
-            if u.get('uid') == id:
+            if u.get(field) == value:
                 return u
 
     def create(self, name, email):
@@ -78,12 +78,12 @@ class Database(object):
         with lock:
             data = self.load()
             record = {
-                'id': len(data),
+                'key': len(data),
                 'name': name,
                 'email': email,
                 'library': [-1],
                 'created_date': dt.now(),
-                'uid': uuid4()
+                'uid': str(uuid4())
                 }
             data.append(record)
             self.commit(data)

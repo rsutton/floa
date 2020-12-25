@@ -1,9 +1,10 @@
-from flask import Flask, current_app as app, g
+from datetime import datetime as dt
+from flask import Flask
 import floa.models.db as db
 import pickle
 from random import randrange
 import unittest
-
+from uuid import uuid4
 
 class TestDatabase(unittest.TestCase):
 
@@ -17,7 +18,9 @@ class TestDatabase(unittest.TestCase):
                     'id': i,
                     'name': f'user-{i}',
                     'email': f'user-{i}@foo.com',
-                    'library': lib
+                    'library': lib,
+                    'created_date': dt.now(),
+                    'uid': uuid4()
                 })
         return result
 
@@ -36,7 +39,13 @@ class TestDatabase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_open(self):
+    def test_init_db(self):
+        raise NotImplementedError
+
+    def test_create(self):
+        raise NotImplementedError
+
+    def test_load(self):
         # manually create a database file
         num_records = 10
         records = self._generate_database(num_records)
@@ -50,7 +59,7 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(records[id].get('id'), id)
         self.assertEqual(len(records), num_records)
 
-    def test_commit_db(self):
+    def test_commit(self):
         # manually create database
         num_records = 2
         records = self._generate_database(num_records)
@@ -68,3 +77,7 @@ class TestDatabase(unittest.TestCase):
             # reload and check
             records = self.db.load()
             self.assertEqual(len(records), count)
+
+    def test_get_user_by_uid(self):
+        raise NotImplementedError
+
