@@ -1,23 +1,15 @@
 from flask import Blueprint, render_template, request, current_app as app
+from flask_login import current_user
 from floa.extensions import loa
-from floa.models.library import Library
-from floa.models.user import User
 
 
 bp = Blueprint(
-    'home',
-    'errors',
-    'routes',
+    name='home',
+    import_name=__name__,
     url_prefix="/"
 )
 
 catalog = loa.get_loa()
-
-try: 
-    library = User.get(0).library
-except AttributeError as ae:
-    print(f'User does not exist: {ae}')
-    library = Library()
 
 @app.errorhandler(404)
 def handle_404(err):
@@ -38,16 +30,21 @@ def context_process():
 
 @bp.route("/")
 def home():
-    return render_template(
-            'home.html',
-            data=dict(library=library.library, catalog=catalog)
-        )
-
+    if current_user.is_authenticated:
+        return render_template(
+                'home.html',
+                data=dict(library=current_user.library, catalog=catalog)
+            )
+    else:
+        return '<a class="button" href="/login">Google Login</a>'
 
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():
-    library.set_status(
-        id=request.json['id'],
-        status=request.json['status']
-    )
-    return "OK"
+    if current_user.is_authenticated:
+        current_user.library.set_status(
+            id=request.json['id'],
+            status=request.json['status']
+        )
+        return "OK"
+    else:
+        return '<a class="button" href="/login">Google Login</a>'

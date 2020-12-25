@@ -1,8 +1,10 @@
 from floa.extensions import db
 from floa.models.library import Library
+from flask_login import UserMixin
+import datetime as dt 
 
 
-class User(object):
+class User(UserMixin):
     def __init__(self, id, name, email, library, created_date):
         self.id = id
         self.name = name
@@ -22,9 +24,9 @@ class User(object):
                 created_date=record.get('created_date')
             )
         else:
-            User.create()
-        return None
+            user = User.create()
+        return user
 
     @staticmethod
-    def create(id, name, email, library, created_date):
-        pass
+    def create():
+        return User(1, 'me', 'me@here', [-1, 0,1,2,3], dt.datetime.now())

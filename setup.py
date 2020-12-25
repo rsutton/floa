@@ -16,7 +16,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'flask', 'bs4', 'requests'
+        'bs4', 'flask', 'flask-login', 'requests', 'requests_oauthlib'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
