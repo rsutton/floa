@@ -2,11 +2,12 @@ from floa.extensions import db
 from floa.models.library import Library
 from flask_login import UserMixin
 
+
 class User(UserMixin):
     ''' User object
 
         id: private member for database record key
-        uid: UUID for use in browser cookie and session to allow session 
+        uid: UUID for use in browser cookie and session to allow session
              invalidation
     '''
     def __init__(self, key, name, email, library, created_date, uid=None):
@@ -27,7 +28,7 @@ class User(UserMixin):
             library=Library(library=record.get('library')),
             created_date=record.get('created_date'),
             uid=record.get('uid')
-        )  
+        )
         print(user.id)
         return user
 

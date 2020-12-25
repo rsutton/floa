@@ -6,6 +6,7 @@ from random import randrange
 import unittest
 from uuid import uuid4
 
+
 class TestDatabase(unittest.TestCase):
 
     def _generate_database(self, count, start=0):
@@ -80,4 +81,3 @@ class TestDatabase(unittest.TestCase):
 
     def test_get_user_by_uid(self):
         raise NotImplementedError
-

@@ -5,6 +5,7 @@ import os
 import pickle
 from uuid import uuid4
 
+
 class Database(object):
 
     empty_database = [{

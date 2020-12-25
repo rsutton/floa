@@ -10,27 +10,30 @@ bp = Blueprint(
     url_prefix="/"
 )
 
+
 @bp.route('/login')
 def login():
     return render_template('login.html')
+
 
 @bp.route('/login_post', methods=['POST'])
 def login_post():
     # replace with lookup from Google oauth response
     user = User.get_by_email(request.form.get('email'))
     if not user:
-        #flash something here
+        # flash something here
         return redirect(url_for('auth.login'))
     login_user(user, remember=True)
     return redirect(url_for('home.home'))
 
+
 @bp.route('/login/callback')
 def login_callback():
     return 'Callback'
+
 
 @bp.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('home.home'))
-

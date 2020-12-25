@@ -22,4 +22,3 @@ class TestUser(unittest.TestCase):
 
     def test_get_not_found(self):
         raise NotImplementedError
-    
