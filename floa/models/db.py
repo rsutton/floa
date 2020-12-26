@@ -1,30 +1,10 @@
-from datetime import datetime as dt
 from filelock import FileLock
 from flask import g
 import os
 import pickle
-from uuid import uuid4
 
 
 class Database(object):
-
-    empty_database = [{
-        'key': 0,
-        'name': None,
-        'email': None,
-        'library': None,
-        'created_date': None,
-        'uid': None
-        }]
-
-    fields = [
-        'key',
-        'name',
-        'email',
-        'library',
-        'created_date',
-        'uid'
-        ]
 
     def __init__(self, filename=None, app=None):
         self.filename = filename
@@ -76,6 +56,9 @@ class Database(object):
         with self.lock.acquire():
             f = open(self.filename, 'r+b')
             data = Database.get_pickle_data(f)
+            if record.get('key') == -1:
+                key = len(data)
+                record['key'] = key
             data.append(record)
             # return to beginning of file since
             # we are overwriting all of the data
@@ -83,34 +66,13 @@ class Database(object):
             pickle.dump(data, f)
             f.close()
         self.lock.release()
-        return len(data)
+        return record.get('key')
 
     def query(self, field, value):
-        if field not in self.fields:
-            raise ValueError(f'Invalid field: {field}')
         data = self.load()
         for u in data:
             if u.get(field) == value:
                 return u
-
-    def create(self, name, email):
-        with self.lock.acquire():
-            f = open(self.filename, 'r+b')
-            data = Database.get_pickle_data(f)
-            record = {
-                'key': len(data),
-                'name': name,
-                'email': email,
-                'library': [-1],
-                'created_date': dt.now(),
-                'uid': str(uuid4())
-                }
-            data.append(record)
-            f.seek(0)
-            pickle.dump(data, f)
-            f.close()
-        self.lock.release()
-        return record
 
     @staticmethod
     def get_pickle_data(filehandle):
@@ -118,4 +80,7 @@ class Database(object):
             data = pickle.load(filehandle)
         except EOFError:
             data = []
+        except OSError as e:
+            print(f'Error during data load: {e}')
+            raise
         return data

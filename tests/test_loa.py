@@ -3,7 +3,6 @@ from floa.models.loa import LoA
 import random
 import unittest
 from unittest.mock import Mock, patch
-from requests.models import Response
 from requests.exceptions import HTTPError
 
 
@@ -64,20 +63,24 @@ class TestLoA(unittest.TestCase):
         return mock_resp
 
     @patch('floa.models.loa.requests.get')
-    def test_loa_request_return_200(self, mock_get): 
+    def test_loa_request_return_200(self, mock_get):
         mock_get.return_value = self._mock_response(content="something")
         response = LoA.loa_request()
         self.assertEqual(response, 'something')
 
     @patch('floa.models.loa.requests.get')
-    def test_loa_request_return_404(self, mock_get): 
-        mock_get.return_value = self._mock_response(status=404, raise_for_status=HTTPError("page not found"))
+    def test_loa_request_return_404(self, mock_get):
+        mock_get.return_value = self._mock_response(status=404,
+                                                    raise_for_status=HTTPError(
+                                                        "page not found"))
         self.assertRaises(HTTPError, LoA.loa_request)
 
     @patch('floa.models.loa.requests.get')
-    def test_loa_request_return_500(self, mock_get): 
-        mock_get.return_value = self._mock_response(status=500, raise_for_status=HTTPError("site down"))
-        self.assertRaises(HTTPError, LoA.loa_request)       
+    def test_loa_request_return_500(self, mock_get):
+        mock_get.return_value = self._mock_response(status=500,
+                                                    raise_for_status=HTTPError(
+                                                        "site down"))
+        self.assertRaises(HTTPError, LoA.loa_request)
 
     def test_scrape_no_results_raises_error(self):
         self.assertRaises(ValueError, LoA.scrape, '<html></html>')
@@ -98,8 +101,9 @@ class TestLoA(unittest.TestCase):
         for i in range(len(results)):
             self.assertEqual(results[i]['id'], i)
             self.assertEqual(results[i]['title'], f'Title-{i}')
-            self.assertEqual(results[i]['link'], f'https://foo.bar/books/Link-{i}')
-    
+            self.assertEqual(results[i]['link'],
+                             f'https://foo.bar/books/Link-{i}')
+
     @patch('floa.models.loa.requests.get')
     def test_get_latest(self, mock_get):
         number_of_entries = 3

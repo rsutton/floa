@@ -24,22 +24,24 @@ class TestDatabase(unittest.TestCase):
     def test_init_db(self):
         self.assertTrue(os.path.exists(self.db.filename))
 
-    def test_create(self):
-        self.db.create(name="test_create", email="foo")
-        result = self.db.query(field='name', value='test_create')
-        key1 = result.get('key')
-        self.assertIsNotNone(result)
-        result = self.db.query(field='email', value='foo')
-        key2 = result.get('key')
-        self.assertIsNotNone(result)        
-        self.assertEqual(key1, key2)
-
     def test_commit(self):
         records = utils.generate_database(self.num_of_records)
         for r in records:
             self.db.commit(r)
         result = self.db.query(field='key', value=2)
         self.assertEqual(result.get('key'), 2)
+
+    def test_commit_with_unset_key(self):
+        records = utils.generate_database(1)
+        for r in records:
+            # -1 means key is not set
+            r['key'] = -1
+            result = self.db.commit(r)
+            self.assertTrue(result != -1)
+            # key should be set to next number, which should
+            # be 1 since this is the first record
+        result = self.db.query(field='key', value=1)
+        self.assertEqual(result.get('key'), 1)
 
     def test_load(self):
         with self.app.app_context():
@@ -55,6 +57,3 @@ class TestDatabase(unittest.TestCase):
     def test_query_returns_none(self):
         result = self.db.query('key', self.num_of_records + 1)
         self.assertIsNone(result)
-
-    def test_query_with_invalid_field_raises_value_error(self):
-        self.assertRaises(ValueError, self.db.query, 'foo', 'bar')

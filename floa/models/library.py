@@ -12,8 +12,8 @@ class Status(enum.Enum):
 
 class Library(object):
 
-    def __init__(self, library=[-1]):
-        self._library = library
+    def __init__(self, library=None):
+        self._library = library or [-1]
 
     @property
     def library(self):
