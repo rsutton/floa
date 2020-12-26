@@ -1,6 +1,5 @@
 from floa.models.user import User
 import unittest
-import pickle
 
 
 class TestUser(unittest.TestCase):
@@ -9,6 +8,9 @@ class TestUser(unittest.TestCase):
         pass
 
     def tearDown(self):
+        pass
+
+    def test_init(self):
         pass
 
     def test_new(self):

@@ -1,1 +1,1 @@
-DATABASE = './tests/instance/database.data'
+DATABASE = '../tests/instance/database.data'

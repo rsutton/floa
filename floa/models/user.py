@@ -29,7 +29,6 @@ class User(UserMixin):
             created_date=record.get('created_date'),
             uid=record.get('uid')
         )
-        print(user.id)
         return user
 
     @staticmethod

@@ -28,6 +28,7 @@ class Database(object):
 
     def __init__(self, filename=None, app=None):
         self.filename = filename
+        self._lock = None
         self._db_len = None
         self.app = app
 
@@ -35,8 +36,10 @@ class Database(object):
             self.init_db(app)
 
     def init_db(self, app):
-        self.filename = os.path.join(app.instance_path, app.config['DATABASE'])
-        print(f"Initializing database...{self.filename}")
+        if not self.filename:
+            self.filename = os.path.join(
+                app.instance_path,
+                app.config['DATABASE'])
         if not os.path.exists(self.filename):
             with open(self.filename, 'a'):
                 try:
@@ -44,40 +47,56 @@ class Database(object):
                 except OSError:
                     pass
 
+    @property
+    def lock(self):
+        if self._lock is None:
+            lockfile = ".".join([self.filename, "lock"])
+            timeout = -1
+            self._lock = FileLock(lockfile, timeout)
+        return self._lock
+
     def get_db(self):
         if 'db' not in g:
             g.db = self
         return g.db
 
     def load(self):
-        with open(self.filename, 'rb+') as f:
-            try:
-                data = pickle.load(f)
-                self._db_len = len(data)
-            except EOFError:
-                print("Empty database")
-                data = self.empty_database
+        with self.lock.acquire():
+            with open(self.filename, 'rb+') as f:
+                data = Database.get_pickle_data(f)
+        self.lock.release()
         return data
-
-    def commit(self, data):
-        with open(self.filename, 'wb') as f:
-            pickle.dump(data, f)
-        return len(data)
 
     @staticmethod
     def close_db():
         g.pop('db', None)
 
+    def commit(self, record):
+        data = None
+        with self.lock.acquire():
+            f = open(self.filename, 'rb')
+            data = Database.get_pickle_data(f)
+            f.close()
+            data.append(record)
+            f = open(self.filename, 'wb')
+            pickle.dump(data, f)
+            f.close()
+        self.lock.release()
+        return len(data)
+
     def query(self, field, value):
+        if field not in self.fields:
+            raise ValueError(f'Invalid field: {field}')
         data = self.load()
         for u in data:
             if u.get(field) == value:
                 return u
 
     def create(self, name, email):
-        lock = FileLock(".".join(self.filename, 'lock'))
-        with lock:
-            data = self.load()
+        with self.lock.acquire():
+            f = open(self.filename, 'rb')
+            data = Database.get_pickle_data(f)
+            f.close()
             record = {
                 'key': len(data),
                 'name': name,
@@ -87,5 +106,16 @@ class Database(object):
                 'uid': str(uuid4())
                 }
             data.append(record)
-            self.commit(data)
+            f = open(self.filename, 'wb')
+            pickle.dump(data, f)
+            f.close()
+        self.lock.release()
         return record
+
+    @staticmethod
+    def get_pickle_data(filehandle):
+        try:
+            data = pickle.load(filehandle)
+        except EOFError:
+            data = []
+        return data
