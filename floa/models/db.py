@@ -62,7 +62,7 @@ class Database(object):
 
     def load(self):
         with self.lock.acquire():
-            with open(self.filename, 'rb+') as f:
+            with open(self.filename, 'rb') as f:
                 data = Database.get_pickle_data(f)
         self.lock.release()
         return data
@@ -74,11 +74,12 @@ class Database(object):
     def commit(self, record):
         data = None
         with self.lock.acquire():
-            f = open(self.filename, 'rb')
+            f = open(self.filename, 'r+b')
             data = Database.get_pickle_data(f)
-            f.close()
             data.append(record)
-            f = open(self.filename, 'wb')
+            # return to beginning of file since
+            # we are overwriting all of the data
+            f.seek(0)
             pickle.dump(data, f)
             f.close()
         self.lock.release()
@@ -94,9 +95,8 @@ class Database(object):
 
     def create(self, name, email):
         with self.lock.acquire():
-            f = open(self.filename, 'rb')
+            f = open(self.filename, 'r+b')
             data = Database.get_pickle_data(f)
-            f.close()
             record = {
                 'key': len(data),
                 'name': name,
@@ -106,7 +106,7 @@ class Database(object):
                 'uid': str(uuid4())
                 }
             data.append(record)
-            f = open(self.filename, 'wb')
+            f.seek(0)
             pickle.dump(data, f)
             f.close()
         self.lock.release()
