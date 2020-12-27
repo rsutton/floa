@@ -30,13 +30,11 @@ def context_process():
 
 @bp.route("/")
 def home():
-    if current_user.is_authenticated:
-        return render_template(
-                'home.html',
-                data=dict(catalog=catalog)
-            )
-    else:
-        return '<a class="button" href="/login">Google Login</a>'
+    return render_template(
+            'home.html',
+            data=dict(catalog=catalog)
+        )
+
 
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():

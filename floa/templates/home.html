@@ -24,7 +24,12 @@
         </div>
         <ul class="content-list">
             {% for book in data.catalog %}
-            <li class="content-listing" data-id={{ book['id'] }} data-status={{ current_user.library.library[ book['id'] ] }}>
+            {% if current_user.is_anonymous %}
+            {% set status = 0 %}
+            {% else %}
+            {% set status = current_user.library.library[ book['id'] ]  %}
+            {% endif %}
+            <li class="content-listing" data-id={{ book['id'] }} data-status={{ status }} >
                 <div class="content-listing__control fa fa-circle-o"></div>
                 <div class="content-listing__details">
                     <a href={{ book['link'] }}>
