@@ -41,7 +41,7 @@ def home():
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():
     if current_user.is_authenticated:
-        current_user.library.library.set_status(
+        current_user.library.set_status(
             id=request.json['id'],
             status=request.json['status']
         )
