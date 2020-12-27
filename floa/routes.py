@@ -35,7 +35,6 @@ def home():
             data=dict(catalog=catalog)
         )
 
-
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():
     if current_user.is_authenticated:

@@ -19,14 +19,12 @@
     <div class="header">
         <div class="header__top">
             <div class="left"></div>
-            <div class="center">
                 <div class="header__branding">
                     <a href="/" title="Home">
                         <span class="icon icon__logo--header"></span>
                     </a>
                     <a href="/" title="Home" class="name">My Library of America</a>
                 </div>
-            </div>
                 <div class="user-profile">
                     {% if current_user.is_anonymous %}
                         <a href="/login"><i class="profile fa fa-user"></i>Login</a>

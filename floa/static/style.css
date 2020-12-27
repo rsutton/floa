@@ -35,6 +35,8 @@ body{
 }
 .header .header__branding {
     text-align: center;
+    justify-content: center;
+    padding-left: 100px; /* compensate for empty 'left' */
 }
 .header .header__branding .name {
     display: block;
