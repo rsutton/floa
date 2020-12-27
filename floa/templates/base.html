@@ -19,20 +19,28 @@
 </head>
 <body>
     <div class="header">
-        <div class="header__branding" style="top: 21px;">
-            <a href="/" title="Home">
-                <span class="icon icon__logo--header" style="background-size: 100%;"></span>
-            </a>
-            <a href="/" title="Home" class="name" style="opacity: 1; display: block;">My Library of America</a>
+        <div class="header__top">
+            <div class="left"></div>
+            <div class="center">
+                <div class="header__branding">
+                    <a href="/" title="Home">
+                        <span class="icon icon__logo--header"></span>
+                    </a>
+                    <a href="/" title="Home" class="name">My Library of America</a>
+                </div>
+            </div>
+            <div class="right"></div>
         </div>
-        <div class="top-nav">
-            <a class="nav-link active" href="#">Bookshelf</a>
-            <a class="nav-link" href="#">Wish List</a>
-            <a class="nav-link" href="#">Catalog</a>
-            <a class="nav-link" href="#">New</a>
-            <a class="nav-link" href="#">Help</a>
-            <div class="search-container">
-                <form>
+        <div class="header__bottom">
+            <div class="header__nav">
+                <a class="nav__link active" href="#">Bookshelf</a>
+                <a class="nav__link" href="#">Wish List</a>
+                <a class="nav__link" href="#">Catalog</a>
+                <a class="nav__link" href="#">New</a>
+            </div>
+            <div class="header__tools">
+                <a class="nav__link" href="#">Help</a>
+                <form class="search-container">
                     <input type="text" placeholder="Search" name="search">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>

@@ -43,7 +43,7 @@ $(document).ready(function(){
     });
 
     // navigation handler
-    $('a.nav-link').click(function(){
+    $('a.nav__link').click(function(){
         clearSearch();
         let clicked = $(this).text();
         showView(clicked)
@@ -68,8 +68,8 @@ $(document).ready(function(){
     // view controllers
     function showView(view){
         // let counter = update_bookshelf_counter();
-        $('a.nav-link').each(function(){ $(this).removeClass("active"); });
-        $('a.nav-link:contains("' + view + '")').addClass("active");
+        $('a.nav__link').each(function(){ $(this).removeClass("active"); });
+        $('a.nav__link:contains("' + view + '")').addClass("active");
         filterList(view);
         if ( view === "Help" || ( view === "Bookshelf" && counter == 0 )){
                 $('.help').show();
