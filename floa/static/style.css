@@ -187,3 +187,11 @@ i.counter{
     padding-right: 20px;
     color: red;
 }
+/* Profile page */
+.logout {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}

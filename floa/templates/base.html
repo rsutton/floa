@@ -27,7 +27,7 @@
                 </div>
                 <div class="user-profile">
                     {% if current_user.is_anonymous %}
-                        <a href="/login"><i class="profile fa fa-user"></i>Login</a>
+                        <a href="/login"><i class="profile fa fa-user-o"></i>Login</a>
                     {% else %}
                         <a href="/profile"><i class="profile fa fa-user"></i>{{ current_user.name }}</a>
                     {% endif %}

@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h3 style="display: flex; justify-content: center">Future User Profile Page </h3>
+<div class="logout">
+    <p>Future User Profile Page </p>
+    <form action="/logout">
+        <input type="submit" value="Logout" />
+    </form>
+</div>
 
 {% endblock %}

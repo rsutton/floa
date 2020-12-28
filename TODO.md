@@ -12,7 +12,7 @@
   - new user signup
   - ~~anonymous can view catalog and 'create' bookshelf but it doesn't
   save the session~~
-  - logout link
+  - ~~logout link~~
 
 - ~~save user updates~~
 - update help page with Login/Signup 
