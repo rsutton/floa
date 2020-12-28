@@ -28,34 +28,39 @@ class TestDatabase(unittest.TestCase):
         records = utils.generate_database(self.num_of_records)
         for r in records:
             key = self.db.commit(r)
-        result = self.db.query(field='key', value=2)
-        self.assertEqual(result.get('key'), 2)
+        result = self.db.query(field='name', value=f'user-{self.num_of_records - 1}')
+        self.assertEqual(result.get('name'), f'user-{self.num_of_records - 1}')
 
-    def test_commit_with_unset_key(self):
-        records = utils.generate_database(1)
+    def test_commit_new_record(self):
+        records = utils.generate_database(1, start=self.num_of_records)
+        self.num_of_records += 1
         for r in records:
-            # -1 means key is not set
-            r['key'] = -1
             result = self.db.commit(r)
-            self.assertTrue(result != -1)
-            # key should be set to next number, which should
-            # be 1 since this is the first record
-        result = self.db.query(field='key', value=1)
-        self.assertEqual(result.get('key'), 1)
+        # result is index of record. index starts at 0
+        # so len -1 is correct value
+        last_idx = len(self.db._data) - 1
+        self.assertTrue(result == last_idx)
+        username = f'user-{last_idx}'
+        result = self.db.query(field='name', value=username)
+        self.assertEqual(result.get('name'), username)
 
-    def test_load(self):
-        with self.app.app_context():
-            records = self.db.load()
-        key = len(records)
-        # keys start at 1, so subtract 1 when using
-        # 'key' as index  
-        self.assertEqual(records[key-1].get('key'), key)
+    def test_commit_update_record(self):
+        username = f'user-{self.num_of_records - 2}'
+        record = self.db.query(field='name', value=username)
+        record['name'] = 'update'
+        idx = self.db.commit(record)
+        self.assertTrue(self.db._data[idx]['name'] == 'update')
 
     def test_query_returns_results(self):
-        result = self.db.query('key', self.num_of_records)
+        username = f'user-{self.num_of_records - 1}'
+        result = self.db.query('name', username)
         self.assertIsNotNone(result)
-        self.assertEqual(result.get('key'), self.num_of_records)
 
     def test_query_returns_none(self):
-        result = self.db.query('key', self.num_of_records + 2)
+        result = self.db.query('foo', 'bar')
         self.assertIsNone(result)
+
+    def test_rebuild_index(self):
+        index = self.db.rebuild_index()
+        result = self.db.query('name', f'user-{self.num_of_records - 1}')
+        self.assertEqual(index[result['id']], self.db._data.index(result))

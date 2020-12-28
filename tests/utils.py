@@ -5,17 +5,17 @@ from uuid import uuid4
 
 def generate_database(count, start=0):
     result = []
-    for i in range(start, count):
+    for i in range(start, count+start):
         lib_len = randrange(10)
         lib = generate_library(lib_len)
         result.append(
             {
-                'key': -1,
+                'id': str(uuid4()),
                 'name': f'user-{i}',
                 'email': f'user-{i}@foo.com',
                 'library': lib,
                 'created_date': dt.now(),
-                'uid': str(uuid4())
+                'deleted_date': None,
             })
     return result
 

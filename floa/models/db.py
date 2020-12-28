@@ -8,8 +8,9 @@ class Database(object):
 
     def __init__(self, filename=None, app=None):
         self.filename = filename
+        self._data = []
+        self._index = None
         self._lock = None
-        self._db_len = None
         self.app = app
 
         if app is not None:
@@ -26,6 +27,7 @@ class Database(object):
                     os.utime(self.filename, None)
                 except OSError:
                     pass
+        self.load()
 
     @property
     def lock(self):
@@ -38,44 +40,16 @@ class Database(object):
     def load(self):
         with self.lock.acquire():
             with open(self.filename, 'rb') as f:
-                data = Database.get_pickle_data(f)
+                self._data = Database.get_pickle_data(f)
         self.lock.release()
-        return data
+        self.rebuild_index()
 
-    @staticmethod
-    def close_db():
-        g.pop('db', None)
-
-    def commit(self, record):
-        data = None
-        with self.lock.acquire():
-            f = open(self.filename, 'r+b')
-            data = Database.get_pickle_data(f)
-            if record.get('key') == -1:
-                # add new record
-                key = len(data) + 1
-                record['key'] = key
-                data.append(record)
-            else:
-                # update existing record
-                for i in data:
-                    if i.get('key') == record.get('key'):
-                        for k in record.keys():
-                            i[k] = record[k]
-                        break
-            # return to beginning of file since
-            # we are overwriting all of the data
-            f.seek(0)
-            pickle.dump(data, f)
-            f.close()
-        self.lock.release()
-        return record.get('key')
-
-    def query(self, field, value):
-        data = self.load()
-        for u in data:
-            if u.get(field) == value:
-                return u
+    def rebuild_index(self):
+        self._index = {}
+        for r in self._data:
+            self._index[r['id']] = self._data.index(r)
+            self._index[r['email']] = self._data.index(r)
+        return self._index
 
     @staticmethod
     def get_pickle_data(filehandle):
@@ -87,3 +61,29 @@ class Database(object):
             print(f'Error during data load: {e}')
             raise
         return data
+
+    def commit(self, record):
+        with self.lock.acquire():
+            idx = None
+            if record.get('id') not in self._index:
+                # add new record
+                # next index
+                idx = len(self._data)
+                self._data.append(record)
+                self.rebuild_index()
+            else:
+                # update existing item
+                idx = self._index[record.get('id')]
+                item = self._data[idx]
+                for k in record.keys():
+                    item[k] = record[k]
+
+                with open(self.filename, 'wb') as f:
+                    pickle.dump(self._data, f)
+        self.lock.release()
+        return idx
+
+    def query(self, field, value):
+        for u in self._data:
+            if u.get(field) == value:
+                return u

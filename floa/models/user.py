@@ -13,44 +13,45 @@ class User(UserMixin):
     '''
 
     fields = {
-        'key': -1,
         'id': None,
         'name': None,
         'email': None,
         'library': None,
         'created_date': dt.now(),
+        'deleted_date': None,
         }
 
     def __init__(self, name, email, **kwargs):
         self.name = name
         self.email = email
-        self._key = kwargs.get('key') or -1
         self.id = kwargs.get('id') or None
         self.library = kwargs.get('library') or Library()
         self.created_date = kwargs.get('created_data') or dt.now()
+        self.deleted_date = None
 
     def __repr__(self):
         return {
-                'key': self._key,
                 'id': self.id,
                 'name': self.name,
                 'email': self.email,
                 'library': self.library.library,
-                'created_date': self.created_date
+                'created_date': self.created_date,
+                'deleted_date': self.deleted_date,
             }
 
     def save(self):
-        self._key = db.commit(self.__repr__())
+        idx = db.commit(self.__repr__())
+        return idx
 
     @staticmethod
     def user_from_record(record):
         user = User(
-            key=record.get('key'),
             id=record.get('id'),
             name=record.get('name'),
             email=record.get('email'),
             library=Library(library=record.get('library')),
-            created_date=record.get('created_date')
+            created_date=record.get('created_date'),
+            deleted_date=record.get('deleted_date')
         )
         return user
 

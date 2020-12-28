@@ -20,10 +20,10 @@ class TestUser(unittest.TestCase):
         user = User('foo', 'foo@bar.com')
         self.assertEqual(user.name, 'foo')
         self.assertEqual(user.email, 'foo@bar.com')
-        self.assertEqual(user._key, -1)
         self.assertIsNone(user.id)
         self.assertEqual(user.library.library, [-1])
         self.assertTrue(isinstance(user.created_date, dt))
+        self.assertIsNone(user.deleted_date)
 
     def test_repr_returns_dict(self):
         user = User('foo', 'foo@bar.com')
@@ -32,17 +32,10 @@ class TestUser(unittest.TestCase):
         for f in User.fields:
             self.assertTrue(f in repr)
 
-    @patch('floa.models.db.Database.commit')
-    def test_add_sets_key(self, mock_commit):
-        mock_commit.return_value = 23
-        user = User('foo', 'foo@bar.com')
-        user.save()
-        self.assertEqual(user._key, 23)
 
     @patch('floa.models.db.Database.query')
     def test_get_found(self, mock_query):
-        mock_query.return_value = {'key': 1,
-                                   'id': '0000',
+        mock_query.return_value = {'id': '0000',
                                    'name': 'foo',
                                    'email': 'foo@bar.com'
                                    }
