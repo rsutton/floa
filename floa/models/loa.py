@@ -63,7 +63,7 @@ class LoA(object):
         books = self.scrape(content)
         self.catalog = self.build_catalog(books, url)
         self.last_update = dt.now().strftime(self.date_format)
-        return self.catalog
+        return len(self.catalog)
 
     @staticmethod
     def loa_request(url=loa_url):

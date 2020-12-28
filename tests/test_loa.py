@@ -110,7 +110,7 @@ class TestLoA(unittest.TestCase):
         content = self._generate_loa_html(number_of_entries)
         mock_get.return_value = self._mock_response(content=content)
         results = LoA().get_latest()
-        self.assertEqual(len(results), number_of_entries)
+        self.assertEqual(results, number_of_entries)
 
     def test_sort_catalog(self):
         list1 = self._generate_list(100, rand=True)
