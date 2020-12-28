@@ -15,11 +15,6 @@ class LoA(object):
         self._url = url
         self._last_update = None
 
-    def get_loa(self):
-        if 'loa' not in g:
-            g.loa = self.get_latest()
-        return g.loa
-
     @property
     def catalog(self):
         return self._catalog

@@ -27,7 +27,7 @@ class TestDatabase(unittest.TestCase):
     def test_commit(self):
         records = utils.generate_database(self.num_of_records)
         for r in records:
-            self.db.commit(r)
+            key = self.db.commit(r)
         result = self.db.query(field='key', value=2)
         self.assertEqual(result.get('key'), 2)
 
@@ -46,14 +46,16 @@ class TestDatabase(unittest.TestCase):
     def test_load(self):
         with self.app.app_context():
             records = self.db.load()
-        key = len(records)-1
-        self.assertEqual(records[key].get('key'), key)
+        key = len(records)
+        # keys start at 1, so subtract 1 when using
+        # 'key' as index  
+        self.assertEqual(records[key-1].get('key'), key)
 
     def test_query_returns_results(self):
-        result = self.db.query('key', self.num_of_records - 1)
+        result = self.db.query('key', self.num_of_records)
         self.assertIsNotNone(result)
-        self.assertEqual(result.get('key'), self.num_of_records - 1)
+        self.assertEqual(result.get('key'), self.num_of_records)
 
     def test_query_returns_none(self):
-        result = self.db.query('key', self.num_of_records + 1)
+        result = self.db.query('key', self.num_of_records + 2)
         self.assertIsNone(result)

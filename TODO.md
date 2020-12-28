@@ -6,8 +6,12 @@
     needs to be at least daily.
 
 - multiple user/libraries?
-  - ~~library.catalog belongs in LoA - only need 1 instance~~
-  - ~~Library needs to be refactored so that User has their own~~
   - at user logon, check catalog and apply updates to their library
-  - oauth
-  - refactor to use instance-relative paths
+  - oauth - make Google connection
+  - new user signup
+  - ~~anonymous can view catalog and 'create' bookshelf but it doesn't
+  save the session~~
+  - logout link
+
+- save user updates
+- update help page with Login/Signup 

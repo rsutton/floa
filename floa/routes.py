@@ -9,7 +9,8 @@ bp = Blueprint(
     url_prefix="/"
 )
 
-catalog = loa.get_loa()
+
+catalog = loa.get_latest()
 
 @app.errorhandler(404)
 def handle_404(err):
@@ -42,6 +43,5 @@ def update_book_status():
             id=request.json['id'],
             status=request.json['status']
         )
-        return "OK"
-    else:
-        return '<a class="button" href="/login">Google Login</a>'
+        current_user.save()
+    return "OK"

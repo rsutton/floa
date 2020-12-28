@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_user
 from flask_login.utils import login_required, logout_user
 from floa.models.user import User
-
+from floa.extensions import loa
 
 bp = Blueprint(
     name='auth',
@@ -24,6 +24,8 @@ def login_post():
         # flash something here
         return redirect(url_for('auth.login'))
     login_user(user, remember=True)
+    # update user's library with latest catalog
+    user.library.update(loa.catalog)
     return redirect(url_for('home.home'))
 
 

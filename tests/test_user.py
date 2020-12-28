@@ -36,7 +36,7 @@ class TestUser(unittest.TestCase):
     def test_add_sets_key(self, mock_commit):
         mock_commit.return_value = 23
         user = User('foo', 'foo@bar.com')
-        user.add()
+        user.save()
         self.assertEqual(user._key, 23)
 
     @patch('floa.models.db.Database.query')

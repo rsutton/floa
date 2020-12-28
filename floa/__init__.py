@@ -27,6 +27,7 @@ def create_app():
         # must put extensions before register_blueprint
         # because it doesn't return here
         db.init_db(app)
+
         login_manager.login_view = 'auth.login'
         login_manager.init_app(app)
 

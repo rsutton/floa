@@ -35,9 +35,12 @@ class User(UserMixin):
                 'id': self.id,
                 'name': self.name,
                 'email': self.email,
-                'library': self.library,
+                'library': self.library.library,
                 'created_date': self.created_date
             }
+
+    def save(self):
+        self._key = db.commit(self.__repr__())
 
     @staticmethod
     def user_from_record(record):
@@ -58,9 +61,6 @@ class User(UserMixin):
         if record:
             user = User.user_from_record(record)
         return user
-
-    def add(self):
-        self._key = db.commit(self.__repr__())
 
     @staticmethod
     def get_by_email(email):

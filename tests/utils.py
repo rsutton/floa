@@ -10,7 +10,7 @@ def generate_database(count, start=0):
         lib = generate_library(lib_len)
         result.append(
             {
-                'key': i,
+                'key': -1,
                 'name': f'user-{i}',
                 'email': f'user-{i}@foo.com',
                 'library': lib,

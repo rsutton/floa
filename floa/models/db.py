@@ -35,11 +35,6 @@ class Database(object):
             self._lock = FileLock(lockfile, timeout)
         return self._lock
 
-    def get_db(self):
-        if 'db' not in g:
-            g.db = self
-        return g.db
-
     def load(self):
         with self.lock.acquire():
             with open(self.filename, 'rb') as f:
@@ -57,9 +52,17 @@ class Database(object):
             f = open(self.filename, 'r+b')
             data = Database.get_pickle_data(f)
             if record.get('key') == -1:
-                key = len(data)
+                # add new record
+                key = len(data) + 1
                 record['key'] = key
-            data.append(record)
+                data.append(record)
+            else:
+                # update existing record
+                for i in data:
+                    if i.get('key') == record.get('key'):
+                        for k in record.keys():
+                            i[k] = record[k]
+                        break
             # return to beginning of file since
             # we are overwriting all of the data
             f.seek(0)
