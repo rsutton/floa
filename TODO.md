@@ -17,3 +17,6 @@
 - update help page with Login/Signup 
 
 - db dump tool
+- ~~db index to speed up queries~~
+- ~~private data member instead of reading file on every query~~
+- 

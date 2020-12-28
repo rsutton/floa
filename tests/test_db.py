@@ -61,6 +61,7 @@ class TestDatabase(unittest.TestCase):
         self.assertIsNone(result)
 
     def test_rebuild_index(self):
+        username = f'user-{self.num_of_records - 1}'
         index = self.db.rebuild_index()
-        result = self.db.query('name', f'user-{self.num_of_records - 1}')
+        result = self.db.query('name', username)
         self.assertEqual(index[result['id']], self.db._data.index(result))
