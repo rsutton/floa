@@ -2,8 +2,9 @@
 
 - bulk update/multiple item selection in UI
 
-- LoA checks for updates on startup. For long running server this
-    needs to be at least daily.
+- ~~LoA checks for updates on startup. For long running server this~~
+    ~~needs to be at least daily.~~
+    - ~~set 12 hour interval, will check whenever / is hit~~
 
 - multiple user/libraries?
   - ~~at user logon, check catalog and apply updates to their library~~

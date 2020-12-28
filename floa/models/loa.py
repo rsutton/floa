@@ -9,6 +9,7 @@ class LoA(object):
 
     loa_url = 'https://loa.org/books/loa_collection'
     date_format = '%d-%b-%Y %H:%M:%S'
+    refresh_interval = 12*60*60  # 12 hours
 
     def __init__(self, catalog=[], url=loa_url):
         self._catalog = catalog
@@ -47,6 +48,15 @@ class LoA(object):
     def sort(lst):
         assert(isinstance(lst, list))
         return sorted(lst, key=lambda i: i['id'])
+
+    def check_for_updates(self):
+        if self.last_update is None or self.catalog is None:
+            self.get_latest()
+        else:
+            last = dt.strptime(self.last_update, self.date_format)
+            now = dt.now()
+            if (now - last).seconds > self.refresh_interval:
+                self.get_latest()
 
     def get_latest(self, url=loa_url):
         content = self.loa_request(url)

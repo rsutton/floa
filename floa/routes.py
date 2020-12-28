@@ -1,3 +1,4 @@
+from datetime import datetime as dt
 from flask import Blueprint, render_template, request, current_app as app
 from flask_login import current_user
 from floa.extensions import loa
@@ -9,8 +10,6 @@ bp = Blueprint(
     url_prefix="/"
 )
 
-
-catalog = loa.get_latest()
 
 @app.errorhandler(404)
 def handle_404(err):
@@ -25,15 +24,16 @@ def handle_500(err):
 @app.context_processor
 def context_process():
     last_update = loa.last_update
-    catalog_count = len(catalog)
+    catalog_count = len(loa.catalog)
     return dict(last_update=last_update, catalog_count=catalog_count)
 
 
 @bp.route("/")
 def home():
+    loa.check_for_updates()
     return render_template(
             'home.html',
-            data=dict(catalog=catalog)
+            data=dict(catalog=loa.catalog)
         )
 
 @bp.route("/_update/item", methods=["POST"])
