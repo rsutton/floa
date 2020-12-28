@@ -84,6 +84,13 @@ class Database(object):
         return idx
 
     def query(self, field, value):
-        for u in self._data:
-            if u.get(field) == value:
-                return u
+        record = None
+        try:
+            idx = self._index[value]
+            record = self._data[idx]
+        except KeyError:
+            for r in self._data:
+                if r.get(field) == value:
+                    record = r
+                    break
+        return record
