@@ -10,14 +10,15 @@
   - ~~at user logon, check catalog and apply updates to their library~~
   - oauth - make Google connection
   - new user signup
-  - ~~anonymous can view catalog and 'create' bookshelf but it doesn't
-  save the session~~
+  - ~~anonymous can view catalog and 'create' bookshelf but it doesn't save the changes~~
   - ~~logout link~~
 
 - ~~save user updates~~
 - update help page with Login/Signup 
 
-- db dump tool
+- db admin tool
+  - view and edit records
+  - backup, import/export db
 - ~~db index to speed up queries~~
 - ~~private data member instead of reading file on every query~~
 - 
