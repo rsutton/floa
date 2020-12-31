@@ -50,13 +50,19 @@ class LoA(object):
         return sorted(lst, key=lambda i: i['id'])
 
     def check_for_updates(self):
+        updates_available = False
         if self.last_update is None or self.catalog is None:
             self.get_latest()
+            updates_available = True
         else:
             last = dt.strptime(self.last_update, self.date_format)
             now = dt.now()
             if (now - last).seconds > self.refresh_interval:
-                self.get_latest()
+                before = len(self.catalog)
+                after = self.get_latest()
+                if after > before:
+                    updates_available = True
+        return updates_available
 
     def get_latest(self, url=loa_url):
         content = self.loa_request(url)

@@ -30,7 +30,8 @@ def context_process():
 
 @bp.route("/")
 def home():
-    loa.check_for_updates()
+    if loa.check_for_updates():
+        current_user.library.update(loa.catalog)
     return render_template(
             'home.html',
             data=dict(catalog=loa.catalog)
