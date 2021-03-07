@@ -6,17 +6,13 @@ const status_icons = ["fa-circle-o", "fa-check", "fa-heart", "fa-star"];
 
 $(document).ready(function(){
 
-    // init_page()
+    // show bookshelf and update icons
+    showView("Bookshelf");
+    $( '.content-listing' ).each(function(){
+        let status = $(this).attr('data-status')
+        $(this).children('.content-listing__control').removeClass(iconClassMatcher).addClass(status_icons[status]);
+    });
 
-    // // initialize home view
-    // function init_page(){
-        $( '.content-listing' ).each(function(){
-            let status = $(this).attr('data-status')
-            $(this).children('.content-listing__control').removeClass(iconClassMatcher).addClass(status_icons[status]);
-        });
-        update_bookshelf_counter();
-        showView("Bookshelf");
-    // }
     // handle checkbox status
     function iconClassMatcher(index, className){
         let matchedClasses = className.match(/(^|\s)fa-\S+/g)
@@ -67,7 +63,7 @@ $(document).ready(function(){
 
     // view controllers
     function showView(view){
-        // let counter = update_bookshelf_counter();
+        let counter = update_bookshelf_counter();
         $('a.nav__link').each(function(){ $(this).removeClass("active"); });
         $('a.nav__link:contains("' + view + '")').addClass("active");
         filterList(view);
@@ -100,6 +96,7 @@ $(document).ready(function(){
             }
         });
         $( '.counter' ).text(counter);
+        return counter;
     }
 
 });

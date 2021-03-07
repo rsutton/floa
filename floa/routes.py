@@ -1,7 +1,7 @@
-from datetime import datetime as dt
-from flask import Blueprint, render_template, request, current_app as app
+from flask import Blueprint, render_template, request, session, current_app as app
 from flask_login import current_user
 from floa.extensions import loa
+from floa.models.library import Library
 
 
 bp = Blueprint(
@@ -9,7 +9,6 @@ bp = Blueprint(
     import_name=__name__,
     url_prefix="/"
 )
-
 
 @app.errorhandler(404)
 def handle_404(err):
@@ -25,12 +24,21 @@ def handle_500(err):
 def context_process():
     last_update = loa.last_update
     catalog_count = len(loa.catalog)
-    return dict(last_update=last_update, catalog_count=catalog_count)
+    return dict(
+        last_update=last_update,
+        catalog_count=catalog_count,
+        session_library=session['LIBRARY'])
 
 
 @bp.route("/")
 def home():
-    loa.check_for_updates()
+    if current_user.is_authenticated:
+        session['LIBRARY'] = current_user.library.library
+    else:
+        if 'LIBRARY' not in session:
+            print('refreshing library')
+            session['LIBRARY'] = Library().update(loa.catalog).library
+
     return render_template(
             'home.html',
             data=dict(catalog=loa.catalog)
@@ -38,10 +46,16 @@ def home():
 
 @bp.route("/_update/item", methods=["POST"])
 def update_book_status():
+    # create library list from the session object
+    library = Library(library=session['LIBRARY'])
+    library.set_status(
+        id=request.json['id'],
+        status=request.json['status']
+    )
+    # save updated library to session
+    session['LIBRARY'] = library.library
+
     if current_user.is_authenticated:
-        current_user.library.set_status(
-            id=request.json['id'],
-            status=request.json['status']
-        )
+        current_user.library = library
         current_user.save()
     return "OK"

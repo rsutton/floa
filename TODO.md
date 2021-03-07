@@ -1,5 +1,16 @@
 # TODO
 
+- ~~library update only happens at login or on status change. if there are new items
+and the user is already authenticated, those items will not be added to the 
+  library correctly, i.e. missing status value. Need a call to library.update()
+  if new items are found in loa.check_for_updates() for the current user.~~
+
+- ~~remove anonymous user check status=0 from home page. handle the anon user in code.~~
+
+- ~~anonymous user should be able to 'try' the app, meaning that item status 
+changes persist between pages. currently the bookshelf page does a full load
+and clears any changes.~~
+
 - bulk update/multiple item selection in UI
 
 - ~~LoA checks for updates on startup. For long running server this~~

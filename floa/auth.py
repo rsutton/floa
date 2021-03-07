@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, session, url_for
 from flask_login import login_user
 from flask_login.utils import login_required, logout_user
 from floa.models.user import User
@@ -37,6 +37,7 @@ def login_callback():
 @bp.route('/logout')
 @login_required
 def logout():
+    session.pop("LIBRARY", None)
     logout_user()
     return redirect(url_for('home.home'))
 

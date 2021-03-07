@@ -1,5 +1,4 @@
 from filelock import FileLock
-from flask import g
 import os
 import pickle
 

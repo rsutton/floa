@@ -42,6 +42,7 @@ class Library(object):
                     self.library[id] = Status.NEW.value
             else:
                 self.library.append(Status.NEW.value)
+        return self
 
     def import_json(self, fname):
         with open(fname, 'r') as f:
@@ -50,3 +51,6 @@ class Library(object):
     def export_json(self, fname):
         with open(fname, 'w') as f:
             json.dump(self.library, f)
+
+    def dump(self):
+        print(str(self.library)[1:-1])

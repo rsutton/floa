@@ -13,22 +13,21 @@
                 Head over to the <b style="color:red">New</b> page and start adding books to your bookshelf.
                 Use the <i class="fa fa-search"> Search</i> tool or scroll through the list to find some titles that
                 you own. Click on the <i class="fa fa-star"></i> twice to change the icon to a <i class="fa fa-check"></i> and
-                that volume will be added to your bookshelf. <hr>
+                that volume will be added to your bookshelf. <br><b>An account is required to save items to the bookshelf.</b><hr>
                 The icon indicates the "status" of a title. Multiple clicks will cycle through all of the status indicators.<br> 
                 <i class="fa fa-check"></i> means that the book is on your bookshelf.<br>
                 <i class="fa fa-heart"></i> means that you Wish that you had that book.<br>
                 <i class="fa fa-star"></i> says it is new since the catalog was updated from the Library of America website.<br>
                 Finally, the <i class="fa fa-circle-o"></i> removes the item from the <b style="color:red">New</b> list but remains in the catalog<hr>
-                You can click on a book title and you will be sent to that volume's detail page on the Library of America website.
+                You can click on a book title and you will be sent to that
+                volume's detail page on the Library of America website.
+                
             </div>
         </div>
+
         <ul class="content-list">
             {% for book in data.catalog %}
-            {% if current_user.is_anonymous %}
-            {% set status = 0 %}
-            {% else %}
-            {% set status = current_user.library.library[ book['id'] ]  %}
-            {% endif %}
+            {% set status = session_library[ book['id'] ]  %}
             <li class="content-listing" data-id={{ book['id'] }} data-status={{ status }} >
                 <div class="content-listing__control fa fa-circle-o"></div>
                 <div class="content-listing__details">

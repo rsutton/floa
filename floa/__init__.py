@@ -1,5 +1,5 @@
 from flask import Flask
-from floa.extensions import db, login_manager
+from floa.extensions import db, loa, login_manager
 
 
 def create_app():
@@ -30,6 +30,7 @@ def create_app():
 
         login_manager.login_view = 'auth.login'
         login_manager.init_app(app)
+        loa.check_for_updates()
 
         from floa.models.user import User
         # Setup oauth2 here
