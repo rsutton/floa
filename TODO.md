@@ -32,4 +32,7 @@ and clears any changes.~~
   - backup, import/export db
 - ~~db index to speed up queries~~
 - ~~private data member instead of reading file on every query~~
-- 
+- try sqlite3
+
+- Bug
+  - ~~user library does not update if logged in when a new catalog item is added~~

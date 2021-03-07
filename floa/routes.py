@@ -38,7 +38,6 @@ def home():
         if 'LIBRARY' not in session:
             print('refreshing library')
             session['LIBRARY'] = Library().update(loa.catalog).library
-
     return render_template(
             'home.html',
             data=dict(catalog=loa.catalog)
