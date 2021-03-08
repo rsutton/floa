@@ -33,9 +33,6 @@ def create_app():
         loa.check_for_updates()
 
         from floa.models.user import User
-        # Setup oauth2 here
-        # https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html
-
         # Flask-Login helper to retrieve a user from our db
         @login_manager.user_loader
         def load_user(user_id):
