@@ -1,4 +1,10 @@
-from flask import Blueprint, render_template, request, session, current_app as app
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    session,
+    current_app as app
+    )
 from flask_login import current_user
 from floa.extensions import loa
 from floa.models.library import Library

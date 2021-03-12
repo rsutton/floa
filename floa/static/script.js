@@ -7,11 +7,11 @@ const status_icons = ["fa-circle-o", "fa-check", "fa-heart", "fa-star"];
 $(document).ready(function(){
 
     // show bookshelf and update icons
-    showView("Bookshelf");
     $( '.content-listing' ).each(function(){
         let status = $(this).attr('data-status')
         $(this).children('.content-listing__control').removeClass(iconClassMatcher).addClass(status_icons[status]);
     });
+    showView("Bookshelf");
 
     // handle checkbox status
     function iconClassMatcher(index, className){

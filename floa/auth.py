@@ -1,17 +1,17 @@
 from flask import (
     Blueprint,
-    current_app as app,
     render_template,
     request,
     redirect,
     session,
     url_for)
-from flask.cli import with_appcontext
 from flask_login import login_user
 from flask_login.utils import login_required, logout_user
+from oauthlib.oauth2.rfc6749.clients.base import AUTH_HEADER
 from floa.models.user import User
 from floa.extensions import loa, client
 from instance.config import (
+    AUTH_ENABLED,
     GOOGLE_DISCOVERY_URL,
     GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET)
@@ -31,45 +31,44 @@ def get_google_provider_cfg():
 
 @bp.route('/login')
 def login():
-    # Find out what URL to hit for Google login
-    google_provider_cfg = get_google_provider_cfg()
-    authorization_endpoint = google_provider_cfg["authorization_endpoint"]
+    if AUTH_ENABLED:
+        # Find out what URL to hit for Google login
+        google_provider_cfg = get_google_provider_cfg()
+        authorization_endpoint = google_provider_cfg["authorization_endpoint"]
 
-    # Use library to construct the request for Google login and provide
-    # scopes that let you retrieve user's profile from Google
-    request_uri = client.prepare_request_uri(
-        authorization_endpoint,
-        redirect_uri=request.base_url + "/callback",
-        scope=["openid", "email", "profile"],
-    )
-    return redirect(request_uri)
+        # Use library to construct the request for Google login and provide
+        # scopes that let you retrieve user's profile from Google
+        request_uri = client.prepare_request_uri(
+            authorization_endpoint,
+            redirect_uri=request.base_url + "/callback",
+            scope=["openid", "email", "profile"],
+        )
+        return redirect(request_uri)
+    else:
+        return render_template('login.html')
 
-# @bp.route('/login_post', methods=['POST'])
-# def login_post():
-#     # replace with lookup from Google oauth response
-#     user = User.get_by_email(request.form.get('email'))
-#     if not user:
-#         # flash something here
-#         return redirect(url_for('auth.login'))
-#     login_user(user, remember=True)
-#     # update user's library with latest catalog
-#     user.library.update(loa.catalog)
-#     return redirect(url_for('home.home'))
+@bp.route('/login_post', methods=['POST'])
+def login_post():
+    # use when AUTH_ENABLED = False else login_callback
+    user = User.get_by_email(request.form.get('email'))
+    if not user:
+        # flash something here
+        return redirect(url_for('auth.login'))
+    login_user(user, remember=True)
+    # update user's library with latest catalog
+    user.library.update(loa.catalog)
+    return redirect(url_for('home.home'))
 
 
 @bp.route('/login/callback')
 def login_callback():
     # Get authorization code Google sent back to you
     code = request.args.get("code")
-    print(f'code: {code}')
     # Find out what URL to hit to get tokens that allow you to ask for
     # things on behalf of a user
     google_provider_cfg = get_google_provider_cfg()
-    print(f'provider: {google_provider_cfg}')
     token_endpoint = google_provider_cfg["token_endpoint"]
-    print(f'token_endpoint: {token_endpoint}')
-    print(f'request_url: {request.url}')
-    print(f'redirect: {request.base_url}')
+
     # Prepare and send a request to get tokens! Yay tokens!
     token_url, headers, body = client.prepare_token_request(
         token_endpoint,
@@ -85,7 +84,6 @@ def login_callback():
     )
 
     # Parse the tokens!
-    print(json.dumps(token_response.json()))
     client.parse_request_body_response(json.dumps(token_response.json()))
 
     # Now that you have tokens (yay) let's find and hit the URL
@@ -106,7 +104,6 @@ def login_callback():
     else:
         return "User email not available or not verified by Google.", 400
 
-
     # Doesn't exist? Add it to the database.
     # if not User.get(unique_id):
     #     User.create(unique_id, users_name, users_email, picture)
@@ -117,6 +114,7 @@ def login_callback():
     if not user:
         # flash something here
         return redirect(url_for('auth.login'))
+
     login_user(user, remember=True)
     # update user's library with latest catalog
     user.library.update(loa.catalog)
