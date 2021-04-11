@@ -26,6 +26,10 @@
         </div>
 
         <ul class="content-list">
+            <b class="content-listing__header">Status</b>
+            <b class="content-listing__header">No</b>
+            <b class="content-listing__header">Title</b>
+            <hr>
             {% for book in data.catalog %}
             {% set status = session_library[ book['id'] ]  %}
             <li class="content-listing" data-id={{ book['id'] }} data-status={{ status }} >

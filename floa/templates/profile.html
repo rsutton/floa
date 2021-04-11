@@ -2,7 +2,15 @@
 
 {% block content %}
 <div class="logout">
-    <p>Future User Profile Page </p>
+    <p>User Profile Page </p>
+    <table>
+        <tr><td>Name</td><td>{{current_user.name}}</td></tr>
+        <tr><td>Email</td><td>{{current_user.email}}</td></tr>
+        <tr><td>Id</td><td>{{current_user.id}}</td></tr>
+    </table>
+    <b>Library</b><br>
+    {{current_user.library.library}}
+    <hr>
     <form action="/logout">
         <input type="submit" value="Logout" />
     </form>

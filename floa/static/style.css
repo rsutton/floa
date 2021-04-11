@@ -146,6 +146,12 @@ i.counter{
 .content-listing {
     padding-bottom: 28px;
 }
+.content-listing__header {
+    font-style: normal;
+    line-height: 25px;
+    font-weight: 500;
+    padding-right: 20px;
+}
 .content-listing__control {
     float: left;
     width: 5%;

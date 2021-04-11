@@ -8,7 +8,17 @@ class Status(enum.Enum):
     HAVE = 1
     WISH = 2
     NEW  = 3
+    OOS  = 4 # out of stock
+    WOOS = 5 # wish and oos
 
+# 00000 - 0 in catalog
+# 00001 - 1 on shelf
+# 00010 - 2 wish 
+# 00100 - 8 new
+# 01000 - 16 out of stock
+# 10000 - 32 gap in catalog
+
+# 01010 - in wish list and out of stock
 
 class Library(object):
 
@@ -41,7 +51,7 @@ class Library(object):
                 if self.library[id] == Status.MISSING.value:
                     self.library[id] = Status.NEW.value
             else:
-                self.library.append(Status.NEW.value)
+                self.library.append(Status.NOT_HAVE.value)
         return self
 
     def import_json(self, fname):

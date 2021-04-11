@@ -106,7 +106,7 @@ def login_callback():
 
     # Doesn't exist? Add it to the database.
     # if not User.get(unique_id):
-    #     User.create(unique_id, users_name, users_email, picture)
+    #     user = User(unique_id, users_name, users_email)
 
     # Begin user session by logging the user in
     # replace with lookup from Google oauth response

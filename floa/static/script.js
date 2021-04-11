@@ -2,7 +2,7 @@
 var counter = 0;
 const $SCRIPT_ROOT = location.origin;
 const view_labels = ["Catalog", "Bookshelf", "Wish List", "New"];
-const status_icons = ["fa-circle-o", "fa-check", "fa-heart", "fa-star"];
+const status_icons = ["fa-circle-o", "fa-check", "fa-heart", "fa-star", "fa-warning"];
 
 $(document).ready(function(){
 
