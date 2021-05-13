@@ -51,7 +51,7 @@ class Library(object):
                 if self.library[id] == Status.MISSING.value:
                     self.library[id] = Status.NEW.value
             else:
-                self.library.append(Status.NOT_HAVE.value)
+                self.library.append(Status.NEW.value)
         return self
 
     def import_json(self, fname):

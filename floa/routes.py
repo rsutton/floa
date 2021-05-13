@@ -39,10 +39,13 @@ def context_process():
 @bp.route("/")
 def home():
     if current_user.is_authenticated:
-        session['LIBRARY'] = current_user.library.library
+        if loa.time_for_update():
+            session['LIBRARY'] = Library(library=current_user.library.library)\
+                .update(loa.catalog).library
+        else:
+            session['LIBRARY'] = current_user.library.library
     else:
         if 'LIBRARY' not in session:
-            print('refreshing library')
             session['LIBRARY'] = Library().update(loa.catalog).library
     return render_template(
             'home.html',
