@@ -41,17 +41,19 @@ class Library(object):
         self.library[id] = status
 
     def update(self, items):
+        new_library = (len(self.library) == 1)
+        print(f"new_library: {new_library}")
         for item in items:
-            nl = len(self.library)
+            num = len(self.library)
             id = item.get('id')
-            while (id > nl):
+            while (id > num):
                 self.library.append(-1)
-                nl = len(self.library)
-            if (id < nl):
+                num = len(self.library)
+            if (id < num):
                 if self.library[id] == Status.MISSING.value:
                     self.library[id] = Status.NEW.value
             else:
-                self.library.append(Status.NEW.value)
+                self.library.append(Status.NOT_HAVE.value) if new_library elsec self.library.append(Status.NEW.value)
         return self
 
     def import_json(self, fname):
