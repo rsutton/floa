@@ -1,4 +1,2 @@
-from instance.config import SECRET_KEY
+import instance.config 
 
-DEBUG = False
-DATABASE = 'my-database.data'
