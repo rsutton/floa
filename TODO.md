@@ -1,6 +1,7 @@
 # TODO
 - Installation and Setup instructions
   - create an 'instance' with config data
+  - default config file
   
 - Out of Stock (or Out of Print) status
   - Refactor status as binary digits so that an item may have multiple status'
