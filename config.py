@@ -1,4 +1,5 @@
-from instance.config import SECRET_KEY
+import instance.config 
 
 DEBUG = False
 DATABASE = 'myloa.data'
+
