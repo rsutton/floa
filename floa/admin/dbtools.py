@@ -4,10 +4,11 @@ from uuid import uuid4
 import io
 import binascii
 
-filename = 'my-database.data'
+filename = '../../instance/myloa.data'
+
 with open(filename, 'rb') as f:
     data = pickle.load(f)
-    print(data)
+    # print(data)
     record = [{
         'id': str(uuid4()),
         'name': data[0].get('name'),
@@ -16,6 +17,8 @@ with open(filename, 'rb') as f:
         'created_date': data[0].get('created_date'),
         'deleted_date': data[0].get('deleted_date'),
         }]
+    print(record)
+
 
 with open(filename, 'wb') as f:
     pickle.dump(record, f)

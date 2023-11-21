@@ -93,14 +93,11 @@ class LoA(object):
 
     def build_catalog(self, books, url=loa_url):
         assert(isinstance(books, ResultSet))
-        url_root = "{}://{}".format(
-                urlparse(url).scheme, urlparse(url).hostname
-            )
         result = []
         for book in books:
             id = int(book.find('i', class_='book-listing__number').text)
             title = book.find('b', class_='content-listing__title').text
-            link = url_root + book.find('a')['href']
+            link = book.find('a')['href']
             book = {"id": id, "title": title, "link": link}
             result.append(book)
         return self.sort(result)
